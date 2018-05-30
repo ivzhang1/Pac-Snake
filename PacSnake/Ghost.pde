@@ -1,2 +1,27 @@
 public class Ghost{
+  private int _color;
+  private Position _pos;
+  private boolean alive;
+  private boolean isVulnerable;
+  
+  public boolean isAlive(){
+    return alive;
+  }
+  
+  public void kill(){
+    alive = false;
+  }
+  
+  public boolean isVul(){
+    return isVulnerable;
+  }
+  
+  public void setVul(){
+    isVulnerable = true;
+  }
+  
+  public void notVul(){
+    isVulnerable = false;
+  }
+  
 }
