@@ -18,7 +18,7 @@ public class Position{
     xcor = x;
   }
   
-  public int getYcor(int y){
+  public void setYcor(int y){
     ycor = y;
   }
 }

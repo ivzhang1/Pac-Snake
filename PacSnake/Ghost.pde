@@ -12,6 +12,9 @@ public class Ghost{
     alive = false;
   }
   
+  public void move(){
+  }
+  
   public boolean isVul(){
     return isVulnerable;
   }
@@ -24,4 +27,6 @@ public class Ghost{
     isVulnerable = false;
   }
   
+  public void nextMove(){
+  }
 }
