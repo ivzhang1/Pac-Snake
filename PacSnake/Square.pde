@@ -1,10 +1,31 @@
 public class Square{
   
   private int contents;
-  //private final boolean isBlock;
+  private final Boolean isBlock;
   
-  public boolean moveable(){
-    return false;
+  public Square(int material){
+    if (material == 0){
+      contents = 0;
+      isBlock = true; 
+    }else{
+      contents = material;
+      isBlock = false; 
+    }
+  }
+  
+  public Boolean movable(){
+    return !isBlock; 
+  }
+  
+  public int getContent(){
+    return contents;
+  }
+  
+  public void setEmpty(){
+    if (isBlock){
+      throw new IllegalArgumentException(); //<>//
+    }
+    contents = 1;
   }
   
 }

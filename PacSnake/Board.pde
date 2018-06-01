@@ -15,7 +15,7 @@ public class Board{
   try{
      mazeF = new Scanner(new File(fileName));
   } catch(FileNotFoundException e){
-    print("enter a valid file" + fileName);
+    print("enter a valid file |" + fileName);
     exit();
   }
   while(mazeF.hasNext()){
