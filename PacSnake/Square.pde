@@ -4,7 +4,7 @@ public class Square{
   FINAL private isBlock;
   
   public movable(){
-  
+    
   }
   
 }
