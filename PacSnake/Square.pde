@@ -13,10 +13,19 @@ public class Square{
     }
   }
   
+  public Boolean movable(){
+    return !isBlock; 
+  }
   
+  public int getContent(){
+    return contents;
+  }
   
-  public movable(){
-    
+  public void setEmpty(){
+    if (isBlock){
+      throw new IllegalArgumentException(); //<>//
+    }
+    contents = 1;
   }
   
 }
