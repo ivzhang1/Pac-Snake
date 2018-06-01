@@ -1,5 +1,6 @@
 public class Board{
-  private int[] map;
+
+  private Square[] map;
   private HashMap<Integer, Integer> values;
   
   private int startX, startY;
