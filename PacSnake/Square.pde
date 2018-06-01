@@ -1,7 +1,7 @@
 public class Square{
   
   private int contents;
-  FINAL private isBlock;
+  private final boolean isBlock;
   
   public movable(){
   
