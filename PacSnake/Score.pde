@@ -1,32 +1,33 @@
-import java.util.Collections;
+import java.util.Collections; //<>//
 import java.util.*;
 
-public class Score{
-  private ArrayList<Integer> scores;
+public class Score implements Comparable<Score>{
+  
+  private final int value;
+  private final String name;
   
   public Score(){
+    this(0,"");
   }
   
-  //***We have to add name to Scores somehow
-  public void addScore(int score, String name){
-    scores.add(score);
+  public Score(int value, String name){
+    this.value = value;
+    this.name = name;
   }
   
-  //returns a sorted list of scres: highest to lowest
-  public ArrayList<Integer> highestScores(){
-    Collections.sort(scores);
-    return scores;
+  public int getValue(){
+    return this.value;
   }
   
-  public ArrayList<Integer> highestScores(int n){
-    Collections.sort(scores);
-    if (n >= scores.size()){ //<>//
-      return highestScores();
-    }else{
-      ArrayList<Integer> highestNScores = new ArrayList<Integer>(scores.subList(scores.size()-n, scores.size()));
-      return highestNScores;
-    }
+  public String getName(){
+    return this.name;
   }
+  
+  public int compareTo(Score other){
+    int otherValue = other.getValue();
+    return this.getValue() - otherValue;
+  }
+  
   
   
   
