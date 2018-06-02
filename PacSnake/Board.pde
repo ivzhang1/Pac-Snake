@@ -6,8 +6,7 @@ public class Board {
 
   private Square[][] map;
   private HashMap<Integer, Integer> values;
-
-  private int startX, startY;
+  private Position start;
   private int size;
 
   public Board(String fileName) {    
@@ -32,8 +31,13 @@ public class Board {
       for (char x : mazeL) {         
         //println(count + "" +  oCount);
         if(x-48 == 8){
-          startX = count;
-          startY = oCount;
+          if(start == null){
+            start = new Position(count, oCount);
+          }
+          else{
+            print("More than one start");
+            throw new IllegalArgumentException();
+          }
         }
         map[count][oCount] = new Square(x-48);         
         oCount++;
@@ -42,12 +46,8 @@ public class Board {
     }            
   }
   
-  public int getStartX(){
-    return startX;
-  }
-  
-  public int getStartY(){
-    return startY;
+  public Position getStart(){
+    return start;
   }
   
   public int getValue(int x, int y){

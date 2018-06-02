@@ -7,9 +7,13 @@ private PacThing main;
 
 //pushMatrix(), popMatrix()
 public void setup(){
-  Board b = new Board("default.txt");
+  board = new Board("default.txt");
   //print(b.getValue(b.getStartX(),b.getStartY()));
-  PacThing pac = new PacThing(b.getStartX(),b.getStartY());
+  main = new PacThing(board.getStart());
+  livesLeft = 5;
+  pointsEarned = 0;
+  scoreboard = new Score();
+  ghosts = new Ghost[4];
 }
 
 public void draw(){
@@ -17,12 +21,15 @@ public void draw(){
 
 public void keyPressed(){
   if(keyCode == UP){
-    
+     main.changeDirection(1);
   }
   else if(keyCode == DOWN){
+     main.changeDirection(-1);
   }
   else if(keyCode == LEFT){
+     main.changeDirection(-2);
   }
   else if(keyCode == RIGHT){
+     main.changeDirection(2);
   }
 }

@@ -5,6 +5,7 @@ public class Score{
   private ArrayList<Integer> scores;
   
   public Score(){
+    scores = new ArrayList<Integer>();
   }
   
   //***We have to add name to Scores somehow
