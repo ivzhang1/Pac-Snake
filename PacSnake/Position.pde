@@ -4,6 +4,13 @@ public class Position{
   private int ycor;
   
   public Position(){
+    xcor = 0;
+    ycor = 0;
+  }
+  
+  public Position(int x, int y){
+    xcor = x;
+    ycor = y;
   }
   
   public int getXcor(){

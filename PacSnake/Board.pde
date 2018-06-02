@@ -30,12 +30,27 @@ public class Board {
       //print(Arrays.toString(mazeL));       
       int oCount = 0;        
       for (char x : mazeL) {         
-        //println(count + "" +  oCount);         
+        //println(count + "" +  oCount);
+        if(x-48 == 8){
+          startX = count;
+          startY = oCount;
+        }
         map[count][oCount] = new Square(x-48);         
         oCount++;
       }       
       count++;
     }            
-
+  }
+  
+  public int getStartX(){
+    return startX;
+  }
+  
+  public int getStartY(){
+    return startY;
+  }
+  
+  public int getValue(int x, int y){
+    return map[x][y].getContent();
   }
 }
