@@ -7,6 +7,7 @@ private PacThing main;
 
 //pushMatrix(), popMatrix()
 public void setup(){
+  Board b = new Board("Pac-Snake/default.txt");
 }
 
 public void draw(){

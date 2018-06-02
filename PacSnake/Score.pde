@@ -1,4 +1,5 @@
 import java.util.Collections;
+import java.util.*;
 
 public class Score{
   private ArrayList<Integer> scores;
@@ -15,6 +16,16 @@ public class Score{
   public ArrayList<Integer> highestScores(){
     Collections.sort(scores);
     return scores;
+  }
+  
+  public ArrayList<Integer> highestScores(int n){
+    Collections.sort(scores);
+    if (n >= scores.size()){ //<>//
+      return highestScores();
+    }else{
+      ArrayList<Integer> highestNScores = new ArrayList<Integer>(scores.subList(scores.size()-n, scores.size()));
+      return highestNScores;
+    }
   }
   
   
