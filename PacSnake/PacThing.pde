@@ -9,6 +9,10 @@ public class PacThing {
     pos = start;
   }
 
+  public Position getPos(){
+    return pos;
+  }
+  
   public void move() {
   }
 
