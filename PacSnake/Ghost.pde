@@ -1,4 +1,4 @@
-public class Ghost{
+abstract class Ghost{
   private int _color;
   private Position _pos;
   private boolean alive;
