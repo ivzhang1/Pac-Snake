@@ -1,13 +1,15 @@
 public class Ghost{
   private color _color;
   private Position _pos;
+  private String type;
   private boolean alive;
   private boolean isVulnerable;
   
-  public Ghost(color _c, Position _p){
+  public Ghost(color _c, Position _p, String ty){
      _color = _c;
      _pos = _p;
     alive = true;
+    type = ty;
   }
   
   public boolean isAlive(){

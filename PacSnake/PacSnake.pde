@@ -14,6 +14,10 @@ public void setup(){
   pointsEarned = 0;
   scoreboard = new Score();
   ghosts = new Ghost[4];
+  ghosts[0] = new Ghost(color(255,12,19), board.getRandomGhostSpawn(), "BLINKY"); //BLINKY
+  ghosts[1] = new Ghost(color(242, 174, 175), board.getRandomGhostSpawn(), "PINKY"); //PINKY
+  ghosts[2] = new Ghost(color(27,177,230), board.getRandomGhostSpawn(), "INKY"); //INKY
+  ghosts[3] = new Ghost(color(246, 126, 22), board.getRandomGhostSpawn(), "CLYDE"); //CLYDE
 }
 
 public void draw(){

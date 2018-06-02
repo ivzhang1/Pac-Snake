@@ -7,13 +7,16 @@ public class Board {
   private Square[][] map;
   private HashMap<Integer, Integer> values;
   private Position start;
+  private Position[] ghostSpawns;
   private int size;
 
   public Board(String fileName) {    
     Scanner mazeF = null;     
     int xSize = 17;     
     int ySize = 58;     
-    map = new Square[xSize][ySize];    
+    map = new Square[xSize][ySize];
+    ghostSpawns = new Position[24];
+    int gsCount = 0;
     try {       
       File f = new File(sketchPath(), fileName);       
       mazeF = new Scanner(f);
@@ -30,27 +33,39 @@ public class Board {
       int oCount = 0;        
       for (char x : mazeL) {         
         //println(count + "" +  oCount);
-        if(x-48 == 8){
-          if(start == null){
+        if (x-48 == 8) {
+          if (start == null) {
             start = new Position(count, oCount);
-          }
-          else{
+          } else {
             print("More than one start");
             throw new IllegalArgumentException();
           }
         }
+        if (x-48 == 9) {
+          if (gsCount < 24) {
+            ghostSpawns[gsCount] = new Position(count, oCount);
+            gsCount++;
+          }
+        }
+
         map[count][oCount] = new Square(x-48);         
         oCount++;
       }       
       count++;
-    }            
+    }
   }
-  
-  public Position getStart(){
+
+  public Position getStart() {
     return start;
   }
-  
-  public int getValue(int x, int y){
+
+  public Position getRandomGhostSpawn() {
+    Random ran = new Random();
+    int x = ran.nextInt(ghostSpawns.length);
+    return ghostSpawns[x];
+  }
+
+  public int getValue(int x, int y) {
     return map[x][y].getContent();
   }
 }

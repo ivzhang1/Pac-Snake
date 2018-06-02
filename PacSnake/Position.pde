@@ -28,4 +28,8 @@ public class Position{
   public void setYcor(int y){
     ycor = y;
   }
+  
+  public void printPos(){
+    print(xcor + "," + ycor);
+  }
 }
