@@ -58,6 +58,10 @@ public class Board {
   public Position getStart() {
     return start;
   }
+  
+  public Square[][] getMap(){
+    return map;
+  }
 
   public Position getRandomGhostSpawn() {
     Random ran = new Random();
