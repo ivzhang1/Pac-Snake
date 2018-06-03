@@ -5,6 +5,8 @@ public class Clyde{
   private boolean alive;
   private boolean isVulnerable;
   
-
+  public Clyde(){
+  
+  }
   
 }

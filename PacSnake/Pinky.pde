@@ -5,6 +5,8 @@ public class Pinky{
   private boolean alive;
   private boolean isVulnerable;
   
-
+  public Pinky(){
+  
+  }
   
 }

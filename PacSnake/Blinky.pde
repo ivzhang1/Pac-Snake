@@ -5,6 +5,9 @@ public class Blinky{
   private boolean alive;
   private boolean isVulnerable;
   
+  public Blinky(){
+  
+  }
 
   
 }
