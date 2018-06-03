@@ -44,7 +44,7 @@ public class Scores {
     for (Score i: scoreList){
       gath += i;
     }
-    return scoreList.toString();
+    return gath;
   }
   
 }

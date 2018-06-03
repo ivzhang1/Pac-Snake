@@ -1,4 +1,4 @@
-import java.util.Collections; //<>//
+import java.util.Collections; //<>// //<>//
 import java.util.*;
 
 public class Score implements Comparable<Score>{
@@ -28,6 +28,9 @@ public class Score implements Comparable<Score>{
     return this.getValue() - otherValue;
   }
   
+  public String toString(){
+    return "[" + this.name + " :" + this.value + "]";
+  }
   
   
   
