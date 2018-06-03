@@ -1,16 +1,10 @@
-public class Ghost {
-  private color _color;
+public abstract class Ghost{
+
   private Position _pos;
   private String type;
   private boolean alive;
   private boolean isVulnerable;
-
-  public Ghost(color _c, Position _p, String ty) {
-    _color = _c;
-    _pos = _p;
-    alive = true;
-    type = ty;
-  }
+  private int secondsLeft;
 
   public boolean isAlive() {
     return alive;
@@ -26,9 +20,15 @@ public class Ghost {
   
   public void kill() {
     alive = false;
+    secondsLeft = 1000;
   }
-
-  public void move() {
+  
+  public void move(Position pacPos){
+    if (!alive){
+      secondsLeft -= 1;
+      return;
+    }
+    nextMove(pacPos);
   }
 
   public boolean isVul() {
@@ -37,12 +37,15 @@ public class Ghost {
 
   public void setVul() {
     isVulnerable = true;
+    secondsLeft = 10;
   }
 
   public void notVul() {
     isVulnerable = false;
   }
+  
+  
+  public void nextMove(Position pacPos){
 
-  public void nextMove() {
   }
 }

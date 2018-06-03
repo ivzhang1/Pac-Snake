@@ -1,7 +1,7 @@
 private int livesLeft;
 private int pointsEarned;
 private Board board;
-private Score scoreboard;
+private Scores scoreboard;
 private Ghost[] ghosts;
 private PacThing main;
 
@@ -14,12 +14,12 @@ public void setup() {
   main = new PacThing(board.getStart());
   livesLeft = 5;
   pointsEarned = 0;
-  scoreboard = new Score();
+  scoreboard = new Scores();
   ghosts = new Ghost[4];
-  ghosts[0] = new Ghost(color(255, 12, 19), board.getRandomGhostSpawn(), "BLINKY"); //BLINKY
-  ghosts[1] = new Ghost(color(242, 174, 175), board.getRandomGhostSpawn(), "PINKY"); //PINKY
-  ghosts[2] = new Ghost(color(27, 177, 230), board.getRandomGhostSpawn(), "INKY"); //INKY
-  ghosts[3] = new Ghost(color(246, 126, 22), board.getRandomGhostSpawn(), "CLYDE"); //CLYDE
+  ghosts[0] = new Blinky(board.getRandomGhostSpawn(), "BLINKY");
+  ghosts[1] = new Clyde(board.getRandomGhostSpawn(), "CLYDE"); 
+  ghosts[2] = new Inky(board.getRandomGhostSpawn(), "INKY"); 
+  ghosts[3] = new Pinky(board.getRandomGhostSpawn(), "PINKY"); 
 }
 
 public void drawBoard() {
@@ -57,15 +57,18 @@ public void drawPelletB(int x, int y) {
   float y_c = float(y);
   image(loadImage(sketchPath() + "/sprites/PELLET.png"), x_c, y_c, 1.5f, 1.5f);
 }
+
 public void drawFruit(int x, int y) {
   float x_c = float(x);
   float y_c = float(y);
   image(loadImage(sketchPath() + "/sprites/FRUIT.png"), x_c, y_c, 1.0f, 1.0f);
 }
+
 public void drawPMan() {
   Position p = main.getPos();
   image(loadImage(sketchPath() + "/sprites/PMAN.png"), p.getXcor(), p.getYcor(), width/10, height/10);
 }
+
 public void drawGhosts() {
   for (Ghost g : ghosts) {
     Position p = g.getPos();
@@ -101,4 +104,5 @@ public void keyPressed() {
     main.changeDirection(2);
     break;
   }
+
 }
