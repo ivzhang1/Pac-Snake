@@ -72,8 +72,8 @@ public void drawPMan() {
 public void drawGhosts() {
   for (Ghost g : ghosts) {
     Position p = g.getPos();
-    int x = p.getXcor() * width/10;
-    int y = p.getYcor(); //* height/10;
+    int x = p.getXcor()/board.getXSize() * width;
+    int y = p.getYcor()/board.getYSize() * height;
     image(loadImage(sketchPath() + "/sprites/" + g.getType() + ".png"), x, y, width/10, height/10);
   }
 }

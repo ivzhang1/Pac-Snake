@@ -6,14 +6,16 @@ public class Board {
 
   private Square[][] map;
   private HashMap<Integer, Integer> values;
+  private int xSize;
+  private int ySize;  
   private Position start;
   private Position[] ghostSpawns;
   private int size;
 
   public Board(String fileName) {    
     Scanner mazeF = null;     
-    int xSize = 17;     
-    int ySize = 58;     
+    xSize = 17;     
+    ySize = 58;     
     map = new Square[xSize][ySize];
     ghostSpawns = new Position[24];
     int gsCount = 0;
@@ -57,6 +59,14 @@ public class Board {
 
   public Position getStart() {
     return start;
+  }
+  
+  public int getXSize(){
+    return xSize;
+  }
+ 
+  public int getYSize(){
+    return ySize;
   }
   
   public Square[][] getMap(){
