@@ -22,6 +22,10 @@ public class Inky extends Ghost{
     return _pos;
   }
   
+  public String getType(){
+    return type;
+  }
+  
   public String toString(){
     return type;
   }

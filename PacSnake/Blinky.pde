@@ -18,6 +18,10 @@ public class Blinky extends Ghost{
     return _pos;
   }
   
+  public String getType(){
+    return type;
+  }
+  
   public void nextMove(Position pacPos){
   
   }

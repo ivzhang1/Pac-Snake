@@ -22,6 +22,10 @@ public class Clyde extends Ghost{
     return _pos;
   }
   
+  public String getType(){
+    return type;
+  }
+  
   public String toString(){
     return type;
   }
