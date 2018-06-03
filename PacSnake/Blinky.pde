@@ -11,7 +11,7 @@ public class Blinky{
     secondsLeft = 0;
   }
   
-  public void nextMove(){
+  public void nextMove(Position pacPos){
   
   }
 

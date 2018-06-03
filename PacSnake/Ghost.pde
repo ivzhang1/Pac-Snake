@@ -8,12 +8,18 @@ public class Ghost{
   public boolean isAlive(){
     return alive;
   }
-  
+   
   public void kill(){
     alive = false;
+    secondsLeft = 1000;
   }
   
-  public void move(){
+  public void move(Position pacPos){
+    if (!alive){
+      secondsLeft -= 1;
+      return;
+    }
+    nextMove(pacPos);
   }
   
   public boolean isVul(){
@@ -29,6 +35,6 @@ public class Ghost{
     isVulnerable = false;
   }
   
-  public void nextMove(){
+  public void nextMove(Position pacPos){
   }
 }
