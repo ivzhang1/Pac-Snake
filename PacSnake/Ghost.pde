@@ -3,6 +3,7 @@ public class Ghost{
   private Position _pos;
   private boolean alive;
   private boolean isVulnerable;
+  private int secondsLeft;
   
   public boolean isAlive(){
     return alive;
@@ -21,9 +22,10 @@ public class Ghost{
   
   public void setVul(){
     isVulnerable = true;
+    secondsLeft = 10;
   }
   
-  public void notVul(){
+  public void setNotVul(){
     isVulnerable = false;
   }
   

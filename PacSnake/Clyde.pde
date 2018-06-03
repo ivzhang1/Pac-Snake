@@ -11,7 +11,7 @@ public class Clyde{
     secondsLeft = 0;
   }
   
-  public void move(){
+  public void nextMove(){
   
   }
   
