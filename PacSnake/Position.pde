@@ -29,7 +29,7 @@ public class Position{
     ycor = y;
   }
   
-  public void printPos(){
-    print(xcor + "," + ycor);
+  public String toString(){
+    return (xcor + "," + ycor);
   }
 }

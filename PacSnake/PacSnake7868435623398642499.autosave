@@ -1,5 +1,3 @@
-import java.util.*;
-
 private int livesLeft;
 private int pointsEarned;
 private Board board;
@@ -7,6 +5,7 @@ private Scores scoreboard;
 private Ghost[] ghosts;
 private PacThing main;
 
+//pushMatrix(), popMatrix()
 public void setup() {
   size(600, 600);
   background(color(0, 0, 0));
@@ -17,10 +16,10 @@ public void setup() {
   pointsEarned = 0;
   scoreboard = new Scores();
   ghosts = new Ghost[4];
-  ghosts[0] = (Ghost) new Blinky(board.getRandomGhostSpawn(), "BLINKY");
-  ghosts[1] = (Ghost) new Clyde(board.getRandomGhostSpawn(), "CLYDE"); 
-  ghosts[2] = (Ghost) new Inky(board.getRandomGhostSpawn(), "INKY"); 
-  ghosts[3] = (Ghost) new Pinky(board.getRandomGhostSpawn(), "PINKY"); 
+  //ghosts[0] = new Blinky(board.getRandomGhostSpawn(), "BLINKY");
+  //ghosts[1] = new Clyde(board.getRandomGhostSpawn(), "CLYDE"); 
+  //ghosts[2] = new Inky(board.getRandomGhostSpawn(), "INKY"); 
+  //ghosts[3] = new Pinky(board.getRandomGhostSpawn(), "PINKY"); 
 }
 
 public void drawBoard() {
@@ -67,17 +66,15 @@ public void drawFruit(int x, int y) {
 
 public void drawPMan() {
   Position p = main.getPos();
-  image(loadImage(sketchPath() + "/sprites/PMAN.png"), p.getXcor(), p.getYcor(), width/25, height/25);
+  image(loadImage(sketchPath() + "/sprites/PMAN.png"), p.getXcor(), p.getYcor(), width/10, height/10);
 }
 
 public void drawGhosts() {
   for (Ghost g : ghosts) {
     Position p = g.getPos();
-    float x_ratio = (float)p.getXcor()/board.getXSize();
-    float y_ratio = (float)p.getYcor()/board.getYSize();
-    float x = x_ratio * width;
-    float y = y_ratio * height;
-    image(loadImage(sketchPath() + "/sprites/" + g.getType() + ".png"), x, y, width/25, height/25);
+    int x = p.getXcor() * width/10;
+    int y = p.getYcor(); //* height/10;
+    image(loadImage(sketchPath() + "/sprites/" + g.getType() + ".png"), x, y, width/10, height/10);
   }
 }
 
