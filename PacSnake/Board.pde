@@ -33,7 +33,7 @@ public class Board {
       int oCount = 0;        
       for (char x : mazeL) {         
         //println(count + "" +  oCount);
-        if (x-48 == 8) {
+        if (x == 56) {
           if (start == null) {
             start = new Position(count, oCount);
           } else {
@@ -41,7 +41,7 @@ public class Board {
             throw new IllegalArgumentException();
           }
         }
-        if (x-48 == 9) {
+        if (x == 57) {
           if (gsCount < 24) {
             ghostSpawns[gsCount] = new Position(count, oCount);
             gsCount++;

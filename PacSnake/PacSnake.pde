@@ -17,12 +17,10 @@ public void setup() {
   pointsEarned = 0;
   scoreboard = new Scores();
   ghosts = new Ghost[4];
-  
   ghosts[0] = (Ghost) new Blinky(board.getRandomGhostSpawn(), "BLINKY");
   ghosts[1] = (Ghost) new Clyde(board.getRandomGhostSpawn(), "CLYDE"); 
   ghosts[2] = (Ghost) new Inky(board.getRandomGhostSpawn(), "INKY"); 
   ghosts[3] = (Ghost) new Pinky(board.getRandomGhostSpawn(), "PINKY"); 
-  println(Arrays.toString(ghosts));
 }
 
 public void drawBoard() {
@@ -69,17 +67,15 @@ public void drawFruit(int x, int y) {
 
 public void drawPMan() {
   Position p = main.getPos();
-  image(loadImage(sketchPath() + "/sprites/PMAN.png"), p.getXcor(), p.getYcor(), width/10, height/10);
+  image(loadImage(sketchPath() + "/sprites/PMAN.png"), p.getXcor(), p.getYcor(), width/12, height/12);
 }
 
 public void drawGhosts() {
   for (Ghost g : ghosts) {
     Position p = g.getPos();
-    println(g);
-    println(p + " is the position");
-    int x = p.getXcor() * width/10;
+    int x = p.getXcor() + width/10;
     int y = p.getYcor(); //* height/10;
-    image(loadImage(sketchPath() + "/sprites/" + g.getType() + ".png"), x, y, width/10, height/10);
+    image(loadImage(sketchPath() + "/sprites/" + g.getType() + ".png"), x, y, width/12, height/12);
   }
 }
 
