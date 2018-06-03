@@ -1,3 +1,5 @@
+import java.util.*;
+
 private int livesLeft;
 private int pointsEarned;
 private Board board;
@@ -5,7 +7,6 @@ private Scores scoreboard;
 private Ghost[] ghosts;
 private PacThing main;
 
-//pushMatrix(), popMatrix()
 public void setup() {
   size(600, 600);
   background(color(0, 0, 0));
@@ -16,10 +17,12 @@ public void setup() {
   pointsEarned = 0;
   scoreboard = new Scores();
   ghosts = new Ghost[4];
-  ghosts[0] = new Blinky(board.getRandomGhostSpawn(), "BLINKY");
-  ghosts[1] = new Clyde(board.getRandomGhostSpawn(), "CLYDE"); 
-  ghosts[2] = new Inky(board.getRandomGhostSpawn(), "INKY"); 
-  ghosts[3] = new Pinky(board.getRandomGhostSpawn(), "PINKY"); 
+  
+  ghosts[0] = (Ghost) new Blinky(board.getRandomGhostSpawn(), "BLINKY");
+  ghosts[1] = (Ghost) new Clyde(board.getRandomGhostSpawn(), "CLYDE"); 
+  ghosts[2] = (Ghost) new Inky(board.getRandomGhostSpawn(), "INKY"); 
+  ghosts[3] = (Ghost) new Pinky(board.getRandomGhostSpawn(), "PINKY"); 
+  println(Arrays.toString(ghosts));
 }
 
 public void drawBoard() {
@@ -72,6 +75,8 @@ public void drawPMan() {
 public void drawGhosts() {
   for (Ghost g : ghosts) {
     Position p = g.getPos();
+    println(g);
+    println(p + " is the position");
     int x = p.getXcor() * width/10;
     int y = p.getYcor(); //* height/10;
     image(loadImage(sketchPath() + "/sprites/" + g.getType() + ".png"), x, y, width/10, height/10);

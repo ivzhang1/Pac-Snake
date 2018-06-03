@@ -18,4 +18,12 @@ public class Inky extends Ghost{
   
   }
   
+  public Position getPos() {
+    return _pos;
+  }
+  
+  public String toString(){
+    return type;
+  }
+  
 }

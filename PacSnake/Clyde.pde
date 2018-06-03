@@ -17,5 +17,13 @@ public class Clyde extends Ghost{
   public void nextMove(Position pacPos){
   
   }
+
+  public Position getPos() {
+    return _pos;
+  }
+  
+  public String toString(){
+    return type;
+  }
   
 }

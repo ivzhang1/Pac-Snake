@@ -44,8 +44,12 @@ public abstract class Ghost{
     isVulnerable = false;
   }
   
-  
   public void nextMove(Position pacPos){
 
   }
+  
+  public String toString(){
+    return type;
+  }
+  
 }
