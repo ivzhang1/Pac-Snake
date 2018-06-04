@@ -25,7 +25,7 @@ public abstract class Ghost{
   
   public void move(Position pacPos){
     if (!alive){
-      secondsLeft -= 1;
+      secondsLeft = secondsLeft - 1;
       return;
     }
     nextMove(pacPos);
@@ -37,16 +37,14 @@ public abstract class Ghost{
 
   public void setVul() {
     isVulnerable = true;
-    secondsLeft = 10;
+    secondsLeft = 100;
   }
 
   public void notVul() {
     isVulnerable = false;
   }
   
-  public void nextMove(Position pacPos){
-
-  }
+  public abstract void nextMove(Position pacPos);
   
   public String toString(){
     return type;

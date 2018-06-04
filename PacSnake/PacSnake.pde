@@ -13,7 +13,6 @@ public void setup() {
   size(900, 900);
   background(color(0, 0, 0));
   board = new Board("default.txt");
-  //print(b.getValue(b.getStartX(),b.getStartY()));
   main = new PacThing(board.getStart());
   livesLeft = 5;
   pointsEarned = 0;
@@ -32,7 +31,7 @@ public void drawBoard() {
       int content = mapy[r][c].getContent();
 
       if (content == 0) {
-//print(content);
+        //print(content);
 
         drawWall(r, c);
       } else if (content == 2) {
@@ -51,7 +50,7 @@ public void drawWall(int x_c, int y_c) {
   float y_ratio = (float)(y_c)/board.getYSize();
   float x = x_ratio * height;
   float y = y_ratio * width;
-  println("This is x: " + y + "y: " + x);
+  //println("This is x: " + y + "y: " + x);
 
   image(loadImage(sketchPath() + "/sprites/WALL.png"), y, x, width/60, height/60);
 }
@@ -89,7 +88,7 @@ public void drawPMan() {
   image(loadImage(sketchPath() + "/sprites/PMAN.png"), y, x, width/40, height/40);
 }
 
-public void drawGhosts(){
+public void drawGhosts() {
   for (Ghost g : ghosts) {
     Position p = g.getPos();
     float x_ratio = (float)p.getXcor()/board.getXSize();
@@ -125,4 +124,4 @@ public void keyPressed() {
     main.changeDirection(2);
     break;
   }
-}
+}  
