@@ -7,6 +7,8 @@ private Scores scoreboard;
 private Ghost[] ghosts;
 private PacThing main;
 
+
+
 public void setup() {
   size(600, 600);
   background(color(0, 0, 0));
@@ -28,7 +30,10 @@ public void drawBoard() {
   for (int r = 0; r < mapy.length; r++) {
     for (int c = 0; c < mapy[0].length; c++) {
       int content = mapy[r][c].getContent();
+
       if (content == 0) {
+//print(content);
+
         drawWall(r, c);
       } else if (content == 2) {
         drawPelletS(r, c);
@@ -41,28 +46,37 @@ public void drawBoard() {
   }
 }
 
-public void drawWall(int x, int y) {
-  float x_c = float(x);
-  float y_c = float(y);
-  image(loadImage(sketchPath() + "/sprites/WALL.png"), x_c, y_c, 2.0f, 2.0f);
+public void drawWall(int x_c, int y_c) {
+  float x_ratio = (float)x_c/board.getXSize();
+  float y_ratio = (float)y_c/board.getYSize();
+  float x = x_ratio * height;
+  float y = y_ratio * width;
+
+  image(loadImage(sketchPath() + "/sprites/WALL.png"), y, x, width/60, height/60);
 }
 
-public void drawPelletS(int x, int y) {
-  float x_c = float(x);
-  float y_c = float(y);
-  image(loadImage(sketchPath() + "/sprites/PELLET.png"), x_c, y_c, 1.0f, 1.0f);
+public void drawPelletS(int x_c, int y_c) {
+  float x_ratio = (float)x_c/board.getXSize();
+  float y_ratio = (float)y_c/board.getYSize();
+  float x = x_ratio * height;
+  float y = y_ratio * width;
+  image(loadImage(sketchPath() + "/sprites/PELLET.png"), y, x, width/60, height/60);
 }
 
-public void drawPelletB(int x, int y) {
-  float x_c = float(x);
-  float y_c = float(y);
-  image(loadImage(sketchPath() + "/sprites/PELLET.png"), x_c, y_c, 1.5f, 1.5f);
+public void drawPelletB(int x_c, int y_c) {
+  float x_ratio = (float)x_c/board.getXSize();
+  float y_ratio = (float)y_c/board.getYSize();
+  float x = x_ratio * height;
+  float y = y_ratio * width;
+  image(loadImage(sketchPath() + "/sprites/PELLET.png"), y, x, width/50, height/50);
 }
 
-public void drawFruit(int x, int y) {
-  float x_c = float(x);
-  float y_c = float(y);
-  image(loadImage(sketchPath() + "/sprites/FRUIT.png"), x_c, y_c, 1.0f, 1.0f);
+public void drawFruit(int x_c, int y_c) {
+  float x_ratio = (float)x_c/board.getXSize();
+  float y_ratio = (float)y_c/board.getYSize();
+  float x = x_ratio * height;
+  float y = y_ratio * width;
+  image(loadImage(sketchPath() + "/sprites/FRUIT.png"), y, x, width/50, height/50);
 }
 
 public void drawPMan() {
@@ -87,12 +101,11 @@ public void drawGhosts() {
 
 public void draw() {
   background(color(0, 0, 0));
-  pushMatrix();
-  float ang = radians(90);
-  //rotate(ang);    
+  //rotate(ang);   
   drawPMan();
   drawGhosts();
-  popMatrix();
+  drawBoard();
+  print("Finished");
 }
 
 
