@@ -11,7 +11,6 @@ public void setup() {
   size(600, 600);
   background(color(0, 0, 0));
   board = new Board("default.txt");
-  //print(b.getValue(b.getStartX(),b.getStartY()));
   main = new PacThing(board.getStart());
   livesLeft = 5;
   pointsEarned = 0;
