@@ -20,7 +20,7 @@ public void setup() {
   ghosts[0] = (Ghost) new Blinky(board.getRandomGhostSpawn(), "BLINKY");
   ghosts[1] = (Ghost) new Clyde(board.getRandomGhostSpawn(), "CLYDE"); 
   ghosts[2] = (Ghost) new Inky(board.getRandomGhostSpawn(), "INKY"); 
-  ghosts[3] = (Ghost) new Pinky(board.getRandomGhostSpawn(), "PINKY"); 
+  ghosts[3] = (Ghost) new Pinky(board.getRandomGhostSpawn(), "PINKY");
 }
 
 public void drawBoard() {
@@ -67,7 +67,11 @@ public void drawFruit(int x, int y) {
 
 public void drawPMan() {
   Position p = main.getPos();
-  image(loadImage(sketchPath() + "/sprites/PMAN.png"), p.getXcor(), p.getYcor(), width/25, height/25);
+  float x_ratio = (float)p.getXcor()/board.getXSize();
+  float y_ratio = (float)p.getYcor()/board.getYSize();
+  float x = x_ratio * height;
+  float y = y_ratio * width;
+  image(loadImage(sketchPath() + "/sprites/PMAN.png"), y, x, width/25, height/25);
 }
 
 public void drawGhosts() {
@@ -75,19 +79,19 @@ public void drawGhosts() {
     Position p = g.getPos();
     float x_ratio = (float)p.getXcor()/board.getXSize();
     float y_ratio = (float)p.getYcor()/board.getYSize();
-    float x = x_ratio * width;
-    float y = y_ratio * height;
-    image(loadImage(sketchPath() + "/sprites/" + g.getType() + ".png"), x, y, width/25, height/25);
+    float x = x_ratio * height;
+    float y = y_ratio * width;
+    image(loadImage(sketchPath() + "/sprites/" + g.getType() + ".png"), y, x, width/25, height/25);
   }
 }
 
 public void draw() {
   background(color(0, 0, 0));
   pushMatrix();
-    float ang = radians(90);
-    //rotate(ang);    
-    drawPMan();
-    drawGhosts();
+  float ang = radians(90);
+  //rotate(ang);    
+  drawPMan();
+  drawGhosts();
   popMatrix();
 }
 
@@ -107,5 +111,4 @@ public void keyPressed() {
     main.changeDirection(2);
     break;
   }
-
 }
