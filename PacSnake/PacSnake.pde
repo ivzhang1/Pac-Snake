@@ -10,7 +10,7 @@ private PacThing main;
 
 
 public void setup() {
-  size(900, 900);
+  size(700, 700);
   background(color(0, 0, 0));
   board = new Board("default.txt");
   main = new PacThing(board.getStart());
@@ -29,7 +29,6 @@ public void drawBoard() {
   for (int r = 0; r < mapy.length; r++) {
     for (int c = 0; c < mapy[0].length; c++) {
       int content = mapy[r][c].getContent();
-
       if (content == 0) {
         //print(content);
 
@@ -51,6 +50,9 @@ public void drawWall(int x_c, int y_c) {
   float x = x_ratio * height;
   float y = y_ratio * width;
   //println("This is x: " + y + "y: " + x);
+  if(y_c == board.getMap().length || y_c == board.getMap().length-1){
+    println(y_c);
+  }
 
   image(loadImage(sketchPath() + "/sprites/WALL.png"), y, x, width/60, height/60);
 }
@@ -60,7 +62,7 @@ public void drawPelletS(int x_c, int y_c) {
   float y_ratio = (float)y_c/board.getYSize();
   float x = x_ratio * height;
   float y = y_ratio * width;
-  image(loadImage(sketchPath() + "/sprites/PELLET.png"), y-1, x, width/60, height/60);
+  image(loadImage(sketchPath() + "/sprites/PELLET.png"), y, x, width/60, height/60);
 }
 
 public void drawPelletB(int x_c, int y_c) {
@@ -68,7 +70,7 @@ public void drawPelletB(int x_c, int y_c) {
   float y_ratio = (float)y_c/board.getYSize();
   float x = x_ratio * height;
   float y = y_ratio * width;
-  image(loadImage(sketchPath() + "/sprites/PELLET.png"), y-1, x, width/50, height/50);
+  image(loadImage(sketchPath() + "/sprites/PELLET.png"), y, x, width/50, height/50);
 }
 
 public void drawFruit(int x_c, int y_c) {
@@ -76,7 +78,7 @@ public void drawFruit(int x_c, int y_c) {
   float y_ratio = (float)y_c/board.getYSize();
   float x = x_ratio * height;
   float y = y_ratio * width;
-  image(loadImage(sketchPath() + "/sprites/FRUIT.png"), y-1, x, width/50, height/50);
+  image(loadImage(sketchPath() + "/sprites/FRUIT.png"), y, x, width/50, height/50);
 }
 
 public void drawPMan() {
