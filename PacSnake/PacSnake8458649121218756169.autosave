@@ -10,7 +10,7 @@ private PacThing main;
 
 
 public void setup() {
-  size(700, 700);
+  size(900, 900);
   background(color(0, 0, 0));
   board = new Board("default.txt");
   main = new PacThing(board.getStart());
@@ -32,10 +32,6 @@ public void draw() {
   print("Finished");
 }
 
-public void insertImage(String end, float yLoc, float xLoc, int ySize, int xSize){
-  image(loadImage(sketchPath() + "/sprites/" + end), yLoc, xLoc, ySize, xSize);
-}
-
 public void drawPMan() {
   Position p = main.getPos();
   float x_ratio = (float)p.getXcor()/board.getXSize();
@@ -52,8 +48,12 @@ public void drawGhosts() {
     float y_ratio = (float)p.getYcor()/board.getYSize();
     float x = x_ratio * height;
     float y = y_ratio * width;
-    insertImage(g.getType() + ".png", y, x, width/40, height/40);
+    insertImage(g.getType()+".png", y, x, width/40, height/40);
   }
+}
+
+public void insertImage(String end, float yLoc, float xLoc, int ySize, int xSize){
+  image(loadImage(sketchPath() + "/sprites/" + end), yLoc, xLoc, ySize, xSize);
 }
 
 public void drawBoard() {
@@ -80,10 +80,6 @@ public void drawWall(int x_c, int y_c) {
   float y_ratio = (float)(y_c)/board.getYSize();
   float x = x_ratio * height;
   float y = y_ratio * width;
-  //println("This is x: " + y + "y: " + x);
-  if(y_c == board.getMap().length || y_c == board.getMap().length-1){
-    println(y_c);
-  }
   insertImage("WALL.png", y, x, width/60, height/60);
 }
 
@@ -92,7 +88,7 @@ public void drawPelletS(int x_c, int y_c) {
   float y_ratio = (float)y_c/board.getYSize();
   float x = x_ratio * height;
   float y = y_ratio * width;
-  insertImage("PELLET.png", y, x, width/60, height/60);
+  insertImage("PELLET.png", y-1, x, width/60, height/60);
 }
 
 public void drawPelletB(int x_c, int y_c) {
@@ -100,7 +96,7 @@ public void drawPelletB(int x_c, int y_c) {
   float y_ratio = (float)y_c/board.getYSize();
   float x = x_ratio * height;
   float y = y_ratio * width;
-  image(loadImage(sketchPath() + "/sprites/PELLET.png"), y, x, width/50, height/50);
+  insertImage("PELLET.png", y-1, x, width/50, height/50);
 }
 
 public void drawFruit(int x_c, int y_c) {
@@ -108,7 +104,7 @@ public void drawFruit(int x_c, int y_c) {
   float y_ratio = (float)y_c/board.getYSize();
   float x = x_ratio * height;
   float y = y_ratio * width;
-  image(loadImage(sketchPath() + "/sprites/FRUIT.png"), y, x, width/50, height/50);
+  insertImage("FRUIT.png", y-1, x, width/50, height/50);
 }
 
 
