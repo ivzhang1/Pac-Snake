@@ -87,7 +87,7 @@ public void drawWall(int x_c, int y_c) {
   float x = x_ratio * height;
   float y = y_ratio * width;
   //println("This is x: " + y + "y: " + x);
-  insertImage("WALL.png", y, x, width/60, height/60);
+  insertImage("WALL.png", y, x, width/60, height/15);
 }
 
 public void drawPelletS(int x_c, int y_c) {
