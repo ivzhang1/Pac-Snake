@@ -6,14 +6,14 @@ private Board board;
 private Scores scoreboard;
 private Ghost[] ghosts;
 private PacThing main;
-
+private boolean optimized = true;
 
 
 public void setup() {
   size(700, 700);
   background(color(0, 0, 0));
   board = new Board("default.txt");
-  main = new PacThing(board.getStart());
+  main = new PacThing(board.getStart(), board);
   livesLeft = 5;
   pointsEarned = 0;
   scoreboard = new Scores();
@@ -29,20 +29,26 @@ public void draw() {
   drawPMan();
   drawGhosts();
   drawBoard();
-  print("Finished");
+  main.move();
+  //print("Finished");
 }
 
 public void insertImage(String end, float yLoc, float xLoc, int ySize, int xSize){
-  image(loadImage(sketchPath() + "/sprites/" + end), yLoc, xLoc, ySize, xSize);
+  String faster = "";
+  if(optimized){
+    faster = "optimized/";
+  }
+  image(loadImage(sketchPath() + "/sprites/" + faster + end), yLoc, xLoc, ySize, xSize);
 }
 
 public void drawPMan() {
   Position p = main.getPos();
+  //print(p.getYcor());
   float x_ratio = (float)p.getXcor()/board.getXSize();
   float y_ratio = (float)p.getYcor()/board.getYSize();
   float x = x_ratio * height;
   float y = y_ratio * width;
-  insertImage("PMAN.png", y, x, width/40, height/40);
+  insertImage(main.getTitle()+".png", y, x, width/40, height/40);
 }
 
 public void drawGhosts() {
@@ -81,9 +87,6 @@ public void drawWall(int x_c, int y_c) {
   float x = x_ratio * height;
   float y = y_ratio * width;
   //println("This is x: " + y + "y: " + x);
-  if(y_c == board.getMap().length || y_c == board.getMap().length-1){
-    println(y_c);
-  }
   insertImage("WALL.png", y, x, width/60, height/60);
 }
 
@@ -100,7 +103,7 @@ public void drawPelletB(int x_c, int y_c) {
   float y_ratio = (float)y_c/board.getYSize();
   float x = x_ratio * height;
   float y = y_ratio * width;
-  image(loadImage(sketchPath() + "/sprites/PELLET.png"), y, x, width/50, height/50);
+  insertImage("PELLET.png", y, x, width/50, height/50);
 }
 
 public void drawFruit(int x_c, int y_c) {
@@ -108,7 +111,7 @@ public void drawFruit(int x_c, int y_c) {
   float y_ratio = (float)y_c/board.getYSize();
   float x = x_ratio * height;
   float y = y_ratio * width;
-  image(loadImage(sketchPath() + "/sprites/FRUIT.png"), y, x, width/50, height/50);
+  insertImage("FRUIT.png", y, x, width/50, height/50);
 }
 
 
