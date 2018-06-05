@@ -24,15 +24,40 @@ public void setup() {
   ghosts[3] = (Ghost) new Pinky(board.getRandomGhostSpawn(), "PINKY");
 }
 
+public void draw() {
+  background(color(0, 0, 0));
+  drawPMan();
+  drawGhosts();
+  drawBoard();
+  print("Finished");
+}
+
+public void drawPMan() {
+  Position p = main.getPos();
+  float x_ratio = (float)p.getXcor()/board.getXSize();
+  float y_ratio = (float)p.getYcor()/board.getYSize();
+  float x = x_ratio * height;
+  float y = y_ratio * width;
+  image(loadImage(sketchPath() + "/sprites/PMAN.png"), y, x, width/40, height/40);
+}
+
+public void drawGhosts() {
+  for (Ghost g : ghosts) {
+    Position p = g.getPos();
+    float x_ratio = (float)p.getXcor()/board.getXSize();
+    float y_ratio = (float)p.getYcor()/board.getYSize();
+    float x = x_ratio * height;
+    float y = y_ratio * width;
+    image(loadImage(sketchPath() + "/sprites/" + g.getType() + ".png"), y, x, width/40, height/40);
+  }
+}
+
 public void drawBoard() {
   Square[][] mapy = board.getMap();
   for (int r = 0; r < mapy.length; r++) {
     for (int c = 0; c < mapy[0].length; c++) {
       int content = mapy[r][c].getContent();
-
       if (content == 0) {
-        //print(content);
-
         drawWall(r, c);
       } else if (content == 2) {
         drawPelletS(r, c);
@@ -44,6 +69,7 @@ public void drawBoard() {
     }
   }
 }
+
 
 public void drawWall(int x_c, int y_c) {
   float x_ratio = (float)(x_c)/board.getXSize();
@@ -77,35 +103,6 @@ public void drawFruit(int x_c, int y_c) {
   float x = x_ratio * height;
   float y = y_ratio * width;
   image(loadImage(sketchPath() + "/sprites/FRUIT.png"), y-1, x, width/50, height/50);
-}
-
-public void drawPMan() {
-  Position p = main.getPos();
-  float x_ratio = (float)p.getXcor()/board.getXSize();
-  float y_ratio = (float)p.getYcor()/board.getYSize();
-  float x = x_ratio * height;
-  float y = y_ratio * width;
-  image(loadImage(sketchPath() + "/sprites/PMAN.png"), y, x, width/40, height/40);
-}
-
-public void drawGhosts() {
-  for (Ghost g : ghosts) {
-    Position p = g.getPos();
-    float x_ratio = (float)p.getXcor()/board.getXSize();
-    float y_ratio = (float)p.getYcor()/board.getYSize();
-    float x = x_ratio * height;
-    float y = y_ratio * width;
-    image(loadImage(sketchPath() + "/sprites/" + g.getType() + ".png"), y, x, width/40, height/40);
-  }
-}
-
-public void draw() {
-  background(color(0, 0, 0));
-  //rotate(ang);   
-  drawPMan();
-  drawGhosts();
-  drawBoard();
-  print("Finished");
 }
 
 
