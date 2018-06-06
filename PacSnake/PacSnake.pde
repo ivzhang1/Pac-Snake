@@ -6,6 +6,7 @@ private Board board;
 private Scores scoreboard;
 private Ghost[] ghosts;
 private PacThing main;
+private boolean optimized = true;
 
 public void setup() {
   size(560, 720);
@@ -16,31 +17,36 @@ public void setup() {
   pointsEarned = 0;
   scoreboard = new Scores();
   ghosts = new Ghost[4];
-  ghosts[0] = (Ghost) new Blinky(board.getRandomGhostSpawn(), "BLINKY");
-  ghosts[1] = (Ghost) new Clyde(board.getRandomGhostSpawn(), "CLYDE"); 
-  ghosts[2] = (Ghost) new Inky(board.getRandomGhostSpawn(), "INKY"); 
-  ghosts[3] = (Ghost) new Pinky(board.getRandomGhostSpawn(), "PINKY");
+  ghosts[0] = (Ghost) new Blinky(board.getRandomGhostSpawn(), "BLINKY", board.getMap());
+  ghosts[1] = (Ghost) new Clyde(board.getRandomGhostSpawn(), "CLYDE", board.getMap()); 
+  ghosts[2] = (Ghost) new Inky(board.getRandomGhostSpawn(), "INKY", board.getMap()); 
+  ghosts[3] = (Ghost) new Pinky(board.getRandomGhostSpawn(), "PINKY", board.getMap());
   drawPMan();
   drawGhosts();
-  drawBoard();
-  findOccupied();
-  for (Ghost g : ghosts){
-    println(g.getPos());
-    Position p = g.getPos();
-    println(board.isOccupied(p));
-  }
+  drawBoard(true);
+  //findOccupied();
+  //for (Ghost g : ghosts) {
+  //  //println(g.getPos());
+  //  Position p = g.getPos();
+  //  //println(board.isOccupied(p));
+  //}
 }
 
 public void draw() {
-  
+  for(int i = 0; i < 4; i++){
+    ghosts[i].nextMove(ghosts[i].getPos());
+  }
+  main.move();
+  drawEverything();
+  println("fin");
 }
 
-public void findOccupied(){
+public void findOccupied() {
   String gath = "";
   Square[][] mapy = board.getMap();
   for (int r = 0; r < mapy.length; r++) {
     for (int c = 0; c < mapy[0].length; c++) {
-      if (mapy[r][c].occupied()){
+      if (mapy[r][c].occupied()) {
         gath += r + " " + c + "    ";
       }
     }
@@ -49,12 +55,25 @@ public void findOccupied(){
 }
 
 public void insertImage(String end, float yLoc, float xLoc, int ySize, int xSize) {
-  image(loadImage(sketchPath() + "/sprites/" + end), yLoc, xLoc, ySize, xSize);
+  String x = "";
+  if(optimized){
+    x = "optimized/";
+  }
+  image(loadImage(sketchPath() + "/sprites/" + x + end), yLoc, xLoc, ySize, xSize);
 }
+
+public void drawEverything() {
+  background(color(0,0,0));
+  drawBoard(true);
+  drawPMan();
+  drawGhosts();
+  //findOccupied();
+}
+
 
 public void drawPMan() {
   Position p = main.getPos();
-  insertImage("2PMAN.png", p.getYcor()*20, p.getXcor()*20, 20, 20);
+  insertImage(main.getDirection() + "PMAN.png", p.getYcor()*20, p.getXcor()*20, 20, 20);
 }
 
 public void drawGhosts() {
@@ -64,12 +83,12 @@ public void drawGhosts() {
   }
 }
 
-public void drawBoard() {
+public void drawBoard(boolean drawWalls) {
   Square[][] mapy = board.getMap();
   for (int r = 0; r < mapy.length; r++) {
     for (int c = 0; c < mapy[0].length; c++) {
       int content = mapy[r][c].getContent();
-      if (content == 0) {
+      if (content == 0 && drawWalls) {
         drawWall(r, c);
       } else if (content == 2) {
         drawPelletS(r, c);
@@ -114,19 +133,19 @@ public void keyPressed() {
   switch(keyCode) {
   case UP:
     main.changeDirection(1);
-    println("up");
+    //println("up");
     break;
   case DOWN:
     main.changeDirection(-1);
-    println("down");
+    //println("down");
     break;
   case LEFT:
     main.changeDirection(-2); 
-    println("left");
+    //println("left");
     break;
   case RIGHT:
     main.changeDirection(2);
-    println("right");
+    //println("right");
     break;
   }
 }  

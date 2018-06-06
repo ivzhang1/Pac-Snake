@@ -7,17 +7,15 @@ public class PacThing {
   private int score;
   private int speed = 1;
   private Square[][] map;
-  private String title;
 
   public PacThing(Position start, Board b) {
     pos = start;
     map = b.getMap();
-    title = "1PMAN";
     direction = 1;
   }
 
-  public String getTitle() {
-    return title;
+  public int getDirection() {
+    return direction;
   }
 
   public Position getPos() {
@@ -49,7 +47,6 @@ public class PacThing {
 
   public void changeDirection(int dir) {
     direction = dir;
-    title = "" + dir + "PMAN";
   }
 
   public void detect() {
