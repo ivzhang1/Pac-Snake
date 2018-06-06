@@ -2,8 +2,9 @@
 Pac-Man But Snake-like
 
 Key:
+
 0. wall
-1. blocks without pellets
+1. empty block
 2. blocks with pellets
 
 5. ghost entrance
