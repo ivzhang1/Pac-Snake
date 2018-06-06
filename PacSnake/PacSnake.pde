@@ -20,13 +20,26 @@ public void setup() {
   ghosts[1] = (Ghost) new Clyde(board.getRandomGhostSpawn(), "CLYDE"); 
   ghosts[2] = (Ghost) new Inky(board.getRandomGhostSpawn(), "INKY"); 
   ghosts[3] = (Ghost) new Pinky(board.getRandomGhostSpawn(), "PINKY");
-}
-
-public void draw() {
-  background(color(0, 0, 0));
   drawPMan();
   drawGhosts();
   drawBoard();
+}
+
+public void draw() {
+  findOccupied();
+}
+
+public void findOccupied(){
+  String gath = "";
+  Square[][] mapy = board.getMap();
+  for (int r = 0; r < mapy.length; r++) {
+    for (int c = 0; c < mapy[0].length; c++) {
+      if (mapy[r][c].occupied()){
+        gath += r + " " + c + "    ";
+      }
+    }
+  }
+  println(gath);
 }
 
 public void insertImage(String end, float yLoc, float xLoc, int ySize, int xSize) {

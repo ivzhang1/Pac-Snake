@@ -12,7 +12,7 @@ public class Square{
       contents = material;
       isBlock = false; 
     }
-    isOccupied = !(material == 1);
+    isOccupied = false;//!(material == 1);
   }
   
   public Boolean occupied(){
