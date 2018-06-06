@@ -39,7 +39,6 @@ public class Board {
         }else if (value == 6){
           start = new Position(column, row);
         }
-        println(column + " " + row);
         map[column][row] = new Square(value);
         row += 1;
       }       

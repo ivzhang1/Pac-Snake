@@ -8,10 +8,10 @@ private Ghost[] ghosts;
 private PacThing main;
 
 public void setup() {
-  size(224, 288);
+  size(560, 720);
   background(color(0, 0, 0));
   board = new Board("default.txt");
-  main = new PacThing(board.getStart());
+  main = new PacThing(board.getStart(), board);
   livesLeft = 5;
   pointsEarned = 0;
   scoreboard = new Scores();
@@ -36,11 +36,8 @@ public void insertImage(String end, float yLoc, float xLoc, int ySize, int xSize
 
 public void drawPMan() {
   Position p = main.getPos();
-  float x_ratio = (float)p.getXcor()/board.getXSize();
-  float y_ratio = (float)p.getYcor()/board.getYSize();
-  float x = x_ratio * height;
-  float y = y_ratio * width;
-  insertImage("PMAN.png", y, x, width/40, height/40);
+  
+  insertImage("PMAN.png", p.getXcor()*20, p.getYcor()*20, 20, 20);
 }
 
 public void drawGhosts() {
@@ -75,7 +72,7 @@ public void drawBoard() {
 
 
 public void drawWall(int xc, int yc) {
-  insertImage("WALL.png", yc * 8, xc * 8, 8, 8);
+  insertImage("WALL.png", yc * 20, xc * 20, 20, 20);
 }
 
 public void drawPelletS(int x_c, int y_c) {
