@@ -54,11 +54,11 @@ public void drawBoard() {
         drawWall(r, c);
       } else if (content == 2) {
         drawPelletS(r, c);
-      } else if (content == 5) {
+      } else if (content == 3) {
         drawGWall(r, c);
-      }// else if (content == 6) {
-      //  drawFruit(r, c);
-      //} else if (content == 7) {
+      } else if (content == 5) {
+        drawPelletB(r, c);
+      } //else if (content == 7) {
       //  drawPelletB(r, c);
       //}
     }
@@ -79,7 +79,7 @@ public void drawPelletS(int xc, int yc) {
 }
 
 public void drawPelletB(int xc, int yc) {
-  insertImage("PELLET.png", yc, xc, 15, 15);
+  insertImage("PELLET.png", yc* 20 + 2, xc* 20 + 2, 15, 15);
 }
 
 public void drawFruit(int x_c, int y_c) {
