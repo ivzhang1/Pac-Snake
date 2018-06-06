@@ -5,7 +5,6 @@ public class PacThing {
   private int streakTimeLeft;
   private int direction; // 1 is North, -1 is South, 2 is East, -2 is West
   private int score;
-  private int speed = 1;
   private Square[][] map;
 
   public PacThing(Position start, Board b) {
@@ -23,23 +22,23 @@ public class PacThing {
   }
 
   public void move() {
-
+    
     if (direction == 2) {
-      if (map[pos.getXcor()][pos.getYcor()+speed].movable()) {
-        pos.setYcor(pos.getYcor()+speed);
+      if (map[pos.getXcor()][pos.getYcor()+1].movable()) {
+        pos.setYcor(pos.getYcor()+1);
       }
     } else if (direction == -2) {
-      if (map[pos.getXcor()][pos.getYcor()-speed].movable()) {
-        pos.setYcor(pos.getYcor()-speed);
+      if (map[pos.getXcor()][pos.getYcor()-1].movable()) {
+        pos.setYcor(pos.getYcor()-1);
       }
     } else if (direction == 1) {
-      if (map[pos.getXcor()-speed][pos.getYcor()].movable()) {
+      if (map[pos.getXcor()-1][pos.getYcor()].movable()) {
 
-        pos.setXcor(pos.getXcor()-speed);
+        pos.setXcor(pos.getXcor()-1);
       }
     } else if (direction == -1) {
-      if (map[pos.getXcor()+speed][pos.getYcor()].movable()) {
-        pos.setXcor(pos.getXcor()+speed);
+      if (map[pos.getXcor()+1][pos.getYcor()].movable()) {
+        pos.setXcor(pos.getXcor()+1);
       }
     }
     detect();

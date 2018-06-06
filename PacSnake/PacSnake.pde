@@ -7,6 +7,24 @@ private Scores scoreboard;
 private Ghost[] ghosts;
 private PacThing main;
 private boolean optimized = true;
+private int speed = 1000;
+
+private PImage pman;
+private PImage blinky;
+private PImage clyde;
+private PImage inky;
+private PImage pinky;
+private PImage fruit;
+private PImage sPellet;
+private PImage bPellet;
+private PImage black;
+private PImage wall;
+
+
+
+
+
+
 
 public void setup() {
   size(560, 720);
@@ -23,7 +41,7 @@ public void setup() {
   ghosts[3] = (Ghost) new Pinky(board.getRandomGhostSpawn(), "PINKY", board.getMap());
   drawPMan();
   drawGhosts();
-  drawBoard();
+  drawBoard(true);
   //findOccupied();
   //for (Ghost g : ghosts) {
   //  //println(g.getPos());
@@ -36,9 +54,12 @@ public void draw() {
   for(int i = 0; i < 4; i++){
     ghosts[i].nextMove(ghosts[i].getPos());
   }
-  main.move();
+  if(frameCount % 10 == 0){
+    println(frameCount);
+      main.move();
+  }
   drawEverything();
-  println("fin");
+  //println("fin");
 }
 
 public void findOccupied() {
@@ -63,10 +84,11 @@ public void insertImage(String end, float yLoc, float xLoc, int ySize, int xSize
 }
 
 public void drawEverything() {
-  background(color(0,0,0));
-  drawBoard();
+  //background(color(0,0,0));
   drawPMan();
   drawGhosts();
+  drawBoard(false);
+
   //findOccupied();
 }
 
@@ -83,12 +105,12 @@ public void drawGhosts() {
   }
 }
 
-public void drawBoard() {
+public void drawBoard(boolean isWall) {
   Square[][] mapy = board.getMap();
   for (int r = 0; r < mapy.length; r++) {
     for (int c = 0; c < mapy[0].length; c++) {
       int content = mapy[r][c].getContent();
-      if (content == 0) {
+      if (content == 0 && isWall) {
         drawWall(r, c);
       } else if (content == 2) {
         drawPelletS(r, c);
