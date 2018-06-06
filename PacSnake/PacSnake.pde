@@ -75,7 +75,7 @@ public void drawBoard() {
 
 
 public void drawWall(int xc, int yc) {
-  insertImage("WALL.png", xc * 8, yc * 8, 8, 8);
+  insertImage("WALL.png", yc * 8, xc * 8, 8, 8);
 }
 
 public void drawPelletS(int x_c, int y_c) {

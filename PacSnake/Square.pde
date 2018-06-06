@@ -28,4 +28,7 @@ public class Square{
     contents = 1;
   }
   
+  public String toString(){
+    return "" + contents;
+  }
 }
