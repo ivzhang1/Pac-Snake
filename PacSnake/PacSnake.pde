@@ -23,7 +23,7 @@ public void setup() {
   ghosts[3] = (Ghost) new Pinky(board.getRandomGhostSpawn(), "PINKY", board.getMap());
   drawPMan();
   drawGhosts();
-  drawBoard(true);
+  drawBoard();
   //findOccupied();
   //for (Ghost g : ghosts) {
   //  //println(g.getPos());
@@ -64,7 +64,7 @@ public void insertImage(String end, float yLoc, float xLoc, int ySize, int xSize
 
 public void drawEverything() {
   background(color(0,0,0));
-  drawBoard(true);
+  drawBoard();
   drawPMan();
   drawGhosts();
   //findOccupied();
@@ -83,12 +83,12 @@ public void drawGhosts() {
   }
 }
 
-public void drawBoard(boolean drawWalls) {
+public void drawBoard() {
   Square[][] mapy = board.getMap();
   for (int r = 0; r < mapy.length; r++) {
     for (int c = 0; c < mapy[0].length; c++) {
       int content = mapy[r][c].getContent();
-      if (content == 0 && drawWalls) {
+      if (content == 0) {
         drawWall(r, c);
       } else if (content == 2) {
         drawPelletS(r, c);

@@ -6,6 +6,7 @@ public class Clyde extends Ghost {
   private boolean isVulnerable;
   private int secondsLeft;
   private Square[][] map;
+  private int speed;
 
   public Clyde(Position pos, String type, Square[][] m) {
     _pos = pos;
@@ -14,6 +15,7 @@ public class Clyde extends Ghost {
     secondsLeft = 0;
     this.type = type;
     map = m;
+    speed = 1;
   }
 
   public void nextMove(Position pacPos) {
@@ -27,7 +29,7 @@ public class Clyde extends Ghost {
       {pacPos.getXcor(), pacPos.getYcor()-1}};
     int index = (int)(Math.random() * 4);
     int[] nextPos = delta[index];
-    if (map[nextPos[0]][nextPos[1]].movable()) {
+    if (map[nextPos[0]][nextPos[1]].movable() && map[nextPos[0]][nextPos[1]].getContent() != 3) {
       pacPos.setXcor(nextPos[0]);
       pacPos.setYcor(nextPos[1]);
     }
@@ -39,6 +41,14 @@ public class Clyde extends Ghost {
 
   public String getType() {
     return type;
+  }
+
+  public int getSpeed() {
+    return speed;
+  }
+
+  public void setSpeed(int s) {
+    speed = s;
   }
 
   public String toString() {
