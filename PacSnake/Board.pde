@@ -65,6 +65,7 @@ public class Board {
   public Position getRandomGhostSpawn() {
     Random ran = new Random();
     int x = ran.nextInt(ghostSpawns.size());
+    setOccupied(ghostSpawns.get(x));
     return ghostSpawns.remove(x);
   }
 
@@ -73,6 +74,6 @@ public class Board {
   }
   
   public void setOccupied(Position pos){
-  
+    (map[pos.getYcor()][pos.getXcor()]).setOccupied();
   }
 }
