@@ -2,6 +2,7 @@ public class Square{
   
   private int contents;
   private final Boolean isBlock;
+  public Boolean isOccupied; 
   
   public Square(int material){
     if (material == 0){
@@ -11,6 +12,19 @@ public class Square{
       contents = material;
       isBlock = false; 
     }
+    isOccupied = !(material == 1);
+  }
+  
+  public Boolean occupied(){
+    return isOccupied;
+  }
+  
+  public void setOccupied(){
+     isOccupied = true;
+  }
+  
+  public void setUnoccupied(){
+     isOccupied = false;
   }
   
   public Boolean movable(){

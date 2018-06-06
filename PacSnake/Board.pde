@@ -71,4 +71,8 @@ public class Board {
   public int getValue(int x, int y) {
     return map[x][y].getContent();
   }
+  
+  public void setOccupied(Position pos){
+  
+  }
 }
