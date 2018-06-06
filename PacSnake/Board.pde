@@ -65,7 +65,7 @@ public class Board {
   public Position getRandomGhostSpawn() {
     Random ran = new Random();
     int x = ran.nextInt(ghostSpawns.size());
-    return ghostSpawns.get(x);
+    return ghostSpawns.remove(x);
   }
 
   public int getValue(int x, int y) {

@@ -95,15 +95,19 @@ public void keyPressed() {
   switch(keyCode) {
   case UP:
     main.changeDirection(1);
+    println("up");
     break;
   case DOWN:
     main.changeDirection(-1);
+    println("down");
     break;
   case LEFT:
-    main.changeDirection(-2);    
+    main.changeDirection(-2); 
+    println("left");
     break;
   case RIGHT:
     main.changeDirection(2);
+    println("right");
     break;
   }
 }  
