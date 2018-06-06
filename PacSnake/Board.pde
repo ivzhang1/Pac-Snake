@@ -9,16 +9,16 @@ public class Board {
   private int xSize;
   private int ySize;  
   private Position start;
-  private Position[] ghostSpawns;
+  private ArrayList<Position> ghostSpawns;
   private int size;
 
   public Board(String fileName) {    
     Scanner mazeF = null;     
-    xSize = 17;     
-    ySize = 58;     
+    xSize = 36;     
+    ySize = 28;     
     map = new Square[xSize][ySize];
-    ghostSpawns = new Position[24];
-    int gsCount = 0;
+    ArrayList<Position> ghostLocs = new ArrayList<Position>();
+    ghostSpawns = ghostLocs;
     try {       
       File f = new File(sketchPath(), fileName);       
       mazeF = new Scanner(f);
@@ -27,33 +27,23 @@ public class Board {
       print("enter a valid file | " + fileName);       
       exit();
     }      
-    int count = 0;     
-    while (mazeF.hasNext()) {       
-      String line = mazeF.next();       
-      char[] mazeL = line.toCharArray();     
-      //print(Arrays.toString(mazeL));       
-      int oCount = 0;        
-      for (char x : mazeL) {         
-        //println(count + "" +  oCount);
-        if (x == 56) {
-          if (start == null) {
-            start = new Position(count, oCount);
-          } else {
-            print("More than one start");
-            throw new IllegalArgumentException();
-          }
+    int column = 0;
+    while (mazeF.hasNext()) { 
+      int row = 0;
+      String line = mazeF.next(); 
+      String[] mazeL = line.split("");   
+      for (String x : mazeL) {   
+        int value = Integer.parseInt(x);
+        if (value == 7){
+          ghostSpawns.add(new Position(column, row));
+        }else if (value == 6){
+          start = new Position(column, row);
         }
-        if (x == 57) {
-          if (gsCount < 24) {
-            ghostSpawns[gsCount] = new Position(count, oCount);
-            gsCount++;
-          }
-        }
-
-        map[count][oCount] = new Square(x-48);         
-        oCount++;
+        println(column + " " + row);
+        map[column][row] = new Square(value);
+        row += 1;
       }       
-      count++;
+      column += 1;
     }
   }
 
@@ -75,8 +65,8 @@ public class Board {
 
   public Position getRandomGhostSpawn() {
     Random ran = new Random();
-    int x = ran.nextInt(ghostSpawns.length);
-    return ghostSpawns[x];
+    int x = ran.nextInt(ghostSpawns.size());
+    return ghostSpawns.get(x);
   }
 
   public int getValue(int x, int y) {
