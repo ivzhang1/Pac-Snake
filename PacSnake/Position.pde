@@ -30,6 +30,6 @@ public class Position{
   }
   
   public String toString(){
-    return (xcor + "," + ycor);
+    return (ycor + "," + xcor);
   }
 }

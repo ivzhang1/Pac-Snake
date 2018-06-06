@@ -23,10 +23,16 @@ public void setup() {
   drawPMan();
   drawGhosts();
   drawBoard();
+  findOccupied();
+  for (Ghost g : ghosts){
+    println(g.getPos());
+    Position p = g.getPos();
+    println(board.isOccupied(p));
+  }
 }
 
 public void draw() {
-  findOccupied();
+  
 }
 
 public void findOccupied(){

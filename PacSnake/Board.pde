@@ -76,4 +76,8 @@ public class Board {
   public void setOccupied(Position pos){
     (map[pos.getYcor()][pos.getXcor()]).setOccupied();
   }
+  
+  public Boolean isOccupied(Position pos){
+    return (map[pos.getYcor()][pos.getXcor()]).occupied();
+  }
 }
