@@ -23,6 +23,14 @@ public class PacThing {
     return pos;
   }
 
+  public int getSpeed() {
+    return speed;
+  }
+
+  public void setSpeed(int s) {
+    speed = s;
+  }
+
   public void move() {
     if (speed < 0 || speed > 10) {
       println("enter a speed from 0 to 10");
