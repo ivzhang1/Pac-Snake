@@ -1,5 +1,10 @@
-public class Blinky extends Ghost {
+import java.util.PriorityQueue;
 
+
+public class Blinky extends Ghost {
+  private PriorityQueue<Position> frontier = new PriorityQueue<Position>();
+  private Board board;
+  
   private Position _pos;
   private String type;
   private boolean alive;
@@ -8,13 +13,14 @@ public class Blinky extends Ghost {
   private Square[][] map;
   private int speed;
 
-  public Blinky(Position pos, String type, Square[][] m) {
+  public Blinky(Position pos, String type, Board b) {
     _pos = pos;
     this.alive = false;
     isVulnerable = false;
     secondsLeft = 0;
     this.type = type;
-    map = m;
+    board = b;
+    map = board.getMap();
     speed = 1;
   }
   public boolean isAlive() {
@@ -24,10 +30,10 @@ public class Blinky extends Ghost {
     return _pos;
   }
 
-  public void alive(){
+  public void alive() {
     alive = true;
   }
-  
+
   public String getType() {
     return type;
   }
@@ -35,14 +41,14 @@ public class Blinky extends Ghost {
     return speed;
   }
 
-  public int getTime(){
+  public int getTime() {
     return secondsLeft;
   }
-  public void reduceTime(){
+  public void reduceTime() {
     secondsLeft-=1;
   }
   public void setPos(Position pos) {
-      _pos = pos;
+    _pos = pos;
   }
 
   public void setSpeed(int s) {
@@ -50,6 +56,7 @@ public class Blinky extends Ghost {
   }
 
   public void nextMove(Position pacPos) {
+    //getAStar(pacPos);
     meander(pacPos);
   }
 
@@ -57,20 +64,88 @@ public class Blinky extends Ghost {
     if (speed < 0 || speed > 10) {
       println("enter a speed from 0 to 10");
     } else if (frameCount % (21 + -1*speed) == 0) {
-      int[][] delta = {{pacPos.getXcor()+1, pacPos.getYcor()}, 
-        {pacPos.getXcor()-1, pacPos.getYcor()}, 
-        {pacPos.getXcor(), pacPos.getYcor()+1}, 
-        {pacPos.getXcor(), pacPos.getYcor()-1}};
+      int[][] delta = {{_pos.getXcor()+1, _pos.getYcor()}, 
+        {_pos.getXcor()-1, _pos.getYcor()}, 
+        {_pos.getXcor(), _pos.getYcor()+1}, 
+        {_pos.getXcor(), _pos.getYcor()-1}};
       int index = (int)(Math.random() * 4);
       int[] nextPos = delta[index];
       if (map[nextPos[0]][nextPos[1]].movable() && map[nextPos[0]][nextPos[1]].getContent() != 3) {
-        pacPos.setXcor(nextPos[0]);
-        pacPos.setYcor(nextPos[1]);
+        _pos.setXcor(nextPos[0]);
+        _pos.setYcor(nextPos[1]);
       }
     }
   }
 
   public String toString() {
     return type;
+  }
+
+
+
+  public Position[] getNeighbors(Position L, Position pman) {
+    Position[] loci = new Position[4];
+    int count = 0;
+    if (L.getXcor() >= map.length || L.getYcor() >= map[0].length) {
+      return null;
+    }
+
+    int px = pman.getXcor();  
+    int py = pman.getYcor();  
+
+    int[][] coors = {{L.getXcor() + 1, L.getYcor()}, 
+      {L.getXcor() - 1, L.getYcor()}, 
+      {L.getXcor(), L.getYcor() + 1}, 
+      {L.getXcor(), L.getYcor() - 1}};
+    for (int coor[] : coors) {
+      if (coor[0] >= 0 && coor[0] < map.length &&
+        coor[1] >= 0 && coor[1] < map[0].length) {
+
+        if (map[coor[0]][coor[1]].getContent() != 0) {
+          double dist = Math.abs((px-coor[0]-1)) + Math.abs((py-coor[1]+1));
+          loci[count] = new Position(coor[0], coor[1], dist);
+        }
+        count++;
+      }
+    }
+    return loci;
+  }
+
+  public boolean solve(Position pman) {
+
+    frontier.clear();
+
+
+    frontier.add(board.getStart());
+    Position end = pman;
+
+    while (frontier.size() != 0) {
+
+      Position prev = frontier.remove();
+      Position[] nextL = getNeighbors(prev, pman);
+
+      for (Position l : nextL) {
+
+        if (l != null) {
+
+          int inty = map[l.getXcor()][l.getYcor()].getContent();
+          if (l.getXcor() == pman.getXcor() && l.getYcor() == pman.getYcor()) {
+            return true;
+          }
+
+          if (inty == 0) {
+            frontier.add(l);
+          }
+        }
+      }
+    }
+
+    return false;
+  }
+
+
+  public void getAStar(Position pman) {
+    solve(pman);
+    //print(frontier.size());
   }
 }

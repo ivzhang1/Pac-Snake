@@ -1,0 +1,80 @@
+import java.util.PriorityQueue;
+
+public class MazeSolver{
+    private PriorityQueue<Position> frontier = new PriorityQueue<>();
+
+
+    public Position[] getNeighbors(Position L, Position pman){
+	Position[] loci = new Position[4];
+	int count = 0;
+	if(L.getXcor() >= map.length || L.getYcor() >= map[0].length){
+	    return null;
+	}
+
+	int px = pman.getXcor();	
+	int py = pman.getYcor();	
+	
+	int[][] coors = {{L.getXcor() + 1, L.getYcor()},
+			 {L.getXcor() - 1, L.getYcor()},
+			 {L.getXcor(), L.getYcor() + 1},
+			 {L.getXcor(), L.getYcor() - 1}};
+	for(int coor[]: coors){
+	    if(coor[0] >= 0 && coor[0] < map.length &&
+	       coor[1] >= 0 && coor[1] < map[0].length){
+
+		if(map[coor[0]][coor[1]] != 0){
+		    double dist = Math.abs((px-coor[0]-1)) + Math.abs((py-coor[1]+1));
+			loci[count] = new Location(coor[0], coor[1], L, dist);	
+		}
+		count++;
+	    }
+	}
+	return loci;
+    }
+
+
+
+
+    public boolean solve(Position pman){
+
+	frontier = new FrontierPriorityQueue();
+
+
+	frontier.add(b.getStart());
+	Position end = pman;
+
+	while(frontier.size() != 0){
+	    
+	    Position prev = frontier.remove();
+	    Position[] nextL = getNeighbors(prev, pman);
+
+	    for(Position l: nextL){
+
+		if(l != null){
+
+		    int inty = s.getContent(l.getXcor(), l.getYcor());
+		    if(l.getXcor() == pman.getXcor() && l.getYcor() == pman.getYcor()){
+			return true;
+		    }
+
+		    if(inty == 0){
+			frontier.add(l);
+		    }
+		}
+	    }
+
+	}
+      
+	return false;
+    }
+
+    public String toString(){
+	return maze.toString();
+    }
+
+    public Position getAStar(Position pman){
+    	solve(pman);
+    	return frontier.remove();
+    }
+}
+

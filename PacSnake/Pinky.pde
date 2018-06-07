@@ -19,6 +19,7 @@ public class Pinky extends Ghost {
   }
 
   public void nextMove(Position pacPos) {
+    //getAStar(pacPos);
     meander(pacPos);
   }
 
@@ -26,15 +27,15 @@ public class Pinky extends Ghost {
     if (speed < 0 || speed > 10) {
       println("enter a speed from 0 to 10");
     } else if (frameCount % (21 + -1*speed) == 0) {
-      int[][] delta = {{pacPos.getXcor()+1, pacPos.getYcor()}, 
-        {pacPos.getXcor()-1, pacPos.getYcor()}, 
-        {pacPos.getXcor(), pacPos.getYcor()+1}, 
-        {pacPos.getXcor(), pacPos.getYcor()-1}};
+      int[][] delta = {{_pos.getXcor()+1, _pos.getYcor()}, 
+        {_pos.getXcor()-1, _pos.getYcor()}, 
+        {_pos.getXcor(), _pos.getYcor()+1}, 
+        {_pos.getXcor(), _pos.getYcor()-1}};
       int index = (int)(Math.random() * 4);
       int[] nextPos = delta[index];
       if (map[nextPos[0]][nextPos[1]].movable() && map[nextPos[0]][nextPos[1]].getContent() != 3) {
-        pacPos.setXcor(nextPos[0]);
-        pacPos.setYcor(nextPos[1]);
+        _pos.setXcor(nextPos[0]);
+        _pos.setYcor(nextPos[1]);
       }
     }
   }

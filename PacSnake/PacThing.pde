@@ -76,4 +76,5 @@ public class PacThing {
     score += addend;
     s.setEmpty();
   }
+ 
 }
