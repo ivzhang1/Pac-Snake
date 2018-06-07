@@ -10,23 +10,36 @@ public class Blinky extends Ghost {
 
   public Blinky(Position pos, String type, Square[][] m) {
     _pos = pos;
-    alive = true;
+    this.alive = false;
     isVulnerable = false;
     secondsLeft = 0;
     this.type = type;
     map = m;
     speed = 1;
   }
-
+  public boolean isAlive() {
+    return alive;
+  }
   public Position getPos() {
     return _pos;
   }
 
+  public void alive(){
+    alive = true;
+  }
+  
   public String getType() {
     return type;
   }
   public int getSpeed() {
     return speed;
+  }
+
+  public int getTime(){
+    return secondsLeft;
+  }
+  public void setPos(Position pos) {
+      _pos = pos;
   }
 
   public void setSpeed(int s) {

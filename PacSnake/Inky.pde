@@ -10,7 +10,7 @@ public class Inky extends Ghost {
 
   public Inky(Position pos, String type, Square[][] m) {
     _pos = pos;
-    this.alive = true;
+    this.alive = false;
     isVulnerable = false;
     secondsLeft = 0;
     this.type = type;
@@ -38,7 +38,9 @@ public class Inky extends Ghost {
       }
     }
   }
-
+  public boolean isAlive() {
+    return alive;
+  }
   public Position getPos() {
     return _pos;
   }
@@ -49,6 +51,15 @@ public class Inky extends Ghost {
 
   public int getSpeed() {
     return speed;
+  }
+  public int getTime(){
+    return secondsLeft;
+  }
+  public void alive(){
+    alive = true;
+  }  
+  public void setPos(Position pos) {
+    _pos = pos;
   }
 
   public void setSpeed(int s) {

@@ -9,13 +9,25 @@ public abstract class Ghost{
   public boolean isAlive() {
     return alive;
   }
-
+  public void alive(){
+    alive = true;
+  }
   public Position getPos() {
     return _pos;
   }
 
   public String getType(){
     return type;
+  }
+  
+  public int getTime(){
+    return secondsLeft;
+  }
+  public void setPos(Position pos) {
+      _pos = pos;
+  }
+  public void reduceTime(){
+    secondsLeft-=1;
   }
   
   public void kill() {

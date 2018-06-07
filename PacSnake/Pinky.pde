@@ -10,7 +10,7 @@ public class Pinky extends Ghost {
 
   public Pinky(Position pos, String type, Square[][] m) {
     _pos = pos;
-    this.alive = true;
+    this.alive = false;
     isVulnerable = false;
     secondsLeft = 0;
     this.type = type;
@@ -38,7 +38,12 @@ public class Pinky extends Ghost {
       }
     }
   }
-
+  public boolean isAlive() {
+    return alive;
+  }
+  public void alive(){
+    alive = true;
+  }
   public Position getPos() {
     return _pos;
   }
@@ -50,7 +55,12 @@ public class Pinky extends Ghost {
   public int getSpeed() {
     return speed;
   }
-
+  public int getTime(){
+    return secondsLeft;
+  }
+  public void setPos(Position pos) {
+    _pos = pos;
+  }
   public void setSpeed(int s) {
     speed = s;
   }

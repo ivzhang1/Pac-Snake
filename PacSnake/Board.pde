@@ -19,7 +19,7 @@ public class Board {
     ySize = 28;     
     map = new Square[xSize][ySize];
     ghostSpawns = new ArrayList<Position>();
-    ArrayList<Position> ghostExit = new ArrayList<Position>();
+    ghostExit = new ArrayList<Position>();
     try {       
       File f = new File(sketchPath(), fileName);       
       mazeF = new Scanner(f);
@@ -35,12 +35,14 @@ public class Board {
       String[] mazeL = line.split("");   
       for (String x : mazeL) {   
         int value = Integer.parseInt(x);
-        if (value == 7){
+        if (value == 7) {
           ghostSpawns.add(new Position(column, row));
-        }else if (value == 6){
+          println("ghostspawn: " + ghostSpawns.size());
+        } else if (value == 6) {
           start = new Position(column, row);
-        }else if (value == 3){
+        } else if (value == 3) {
           ghostExit.add(new Position(column, row));
+          println("ghostexit: " + ghostExit.size());
         }
         map[column][row] = new Square(value);
         row += 1;
@@ -52,44 +54,46 @@ public class Board {
   public Position getStart() {
     return start;
   }
-  
-  public int getXSize(){
+
+  public int getXSize() {
     return xSize;
   }
- 
-  public int getYSize(){
+
+  public int getYSize() {
     return ySize;
   }
-  
-  public Square[][] getMap(){
+
+  public Square[][] getMap() {
     return map;
   }
 
   public Position getRandomGhostSpawn() {
     Random ran = new Random();
     int x = ran.nextInt(ghostSpawns.size());
-    while(isOccupied(ghostSpawns.get(x))){
+    while (isOccupied(ghostSpawns.get(x))) {
       x = ran.nextInt(ghostSpawns.size());
     }
     setOccupied(ghostSpawns.get(x));
     return ghostSpawns.get(x);
   }
-  
+
   public Position getRandomGhostExit() {
     Random ran = new Random();
     int x = ran.nextInt(ghostExit.size());
-    return ghostExit.get(x);
+    Position p = new Position(ghostExit.get(x).getXcor()-1, ghostExit.get(x).getYcor()-1);
+    print(p.getXcor() + " , " + p.getYcor());
+    return p;
   }  
 
   public int getValue(int x, int y) {
     return map[x][y].getContent();
   }
-  
-  public void setOccupied(Position pos){
+
+  public void setOccupied(Position pos) {
     (map[pos.getYcor()][pos.getXcor()]).setOccupied();
   }
-  
-  public Boolean isOccupied(Position pos){
+
+  public Boolean isOccupied(Position pos) {
     return (map[pos.getYcor()][pos.getXcor()]).occupied();
   }
 }

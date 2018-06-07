@@ -61,7 +61,15 @@ public void setupPImages() {
 
 public void draw() {
   for (int i = 0; i < 4; i++) {
-    ghosts[i].nextMove(ghosts[i].getPos());
+
+    if (ghosts[i].isAlive()) {
+      ghosts[i].nextMove(ghosts[i].getPos());
+    } else {
+      if (ghosts[i].getTime() == 0) {
+        ghosts[i].setPos(board.getRandomGhostExit());
+        ghosts[i].alive();
+      }
+    }
   }
   main.move();
   drawEverything();
