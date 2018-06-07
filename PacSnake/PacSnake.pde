@@ -6,7 +6,6 @@ private Board board;
 private Scores scoreboard;
 private Ghost[] ghosts;
 private PacThing main;
-private boolean optimized = true;
 private int speed = 1000;
 
 private PImage pman;
@@ -15,15 +14,10 @@ private PImage clyde;
 private PImage inky;
 private PImage pinky;
 private PImage fruit;
-private PImage sPellet;
-private PImage bPellet;
+private PImage pellet;
 private PImage black;
 private PImage wall;
-
-
-
-
-
+private PImage pwall;
 
 
 public void setup() {
@@ -39,6 +33,7 @@ public void setup() {
   ghosts[1] = (Ghost) new Clyde(board.getRandomGhostSpawn(), "CLYDE", board.getMap()); 
   ghosts[2] = (Ghost) new Inky(board.getRandomGhostSpawn(), "INKY", board.getMap()); 
   ghosts[3] = (Ghost) new Pinky(board.getRandomGhostSpawn(), "PINKY", board.getMap());
+  setupPImages();
   drawPMan();
   drawGhosts();
   drawBoard(true);
@@ -50,13 +45,28 @@ public void setup() {
   //}
 }
 
+public void setupPImages() {
+  String addend = sketchPath() + "/sprites/";
+  pman = loadImage(addend + main.getDirection() + "PMAN.png");
+  blinky = loadImage(addend + "BLINKY.png");
+  clyde = loadImage(addend + "CLYDE.png");
+  inky = loadImage(addend + "INKY.png");
+  pinky = loadImage(addend + "PINKY.png");
+  fruit = loadImage(addend + "FRUIT.png");
+  pellet = loadImage(addend + "PELLET.png");
+  black = loadImage(addend + "black.png");
+  wall = loadImage(addend + "BWALL.png");
+  pwall = loadImage(addend + "PWALL.png");
+}
+
+
 public void draw() {
-  for(int i = 0; i < 4; i++){
+  for (int i = 0; i < 4; i++) {
     ghosts[i].nextMove(ghosts[i].getPos());
   }
-  if(frameCount % 10 == 0){
+  if (frameCount % 10 == 0) {
     println(frameCount);
-      main.move();
+    main.move();
   }
   drawEverything();
   //println("fin");
@@ -75,19 +85,15 @@ public void findOccupied() {
   println(gath);
 }
 
-public void insertImage(String end, float yLoc, float xLoc, int ySize, int xSize) {
-  String x = "";
-  if(optimized){
-    x = "optimized/";
-  }
-  image(loadImage(sketchPath() + "/sprites/" + x + end), yLoc, xLoc, ySize, xSize);
+public void insertImage(PImage img, float yLoc, float xLoc, int ySize, int xSize) {
+  image(img, yLoc, xLoc, ySize, xSize);
 }
 
 public void drawEverything() {
-  //background(color(0,0,0));
+  background(color(0,0,0));
   drawPMan();
   drawGhosts();
-  drawBoard(false);
+  drawBoard(true);
 
   //findOccupied();
 }
@@ -95,14 +101,18 @@ public void drawEverything() {
 
 public void drawPMan() {
   Position p = main.getPos();
-  insertImage(main.getDirection() + "PMAN.png", p.getYcor()*20, p.getXcor()*20, 20, 20);
+  insertImage(pman, p.getYcor()*20, p.getXcor()*20, 20, 20);
 }
 
 public void drawGhosts() {
-  for (Ghost g : ghosts) {
-    Position p = g.getPos();
-    insertImage(g.getType() + ".png", p.getYcor()*20, p.getXcor()*20, 20, 20);
-  }
+  Position p = ghosts[0].getPos();
+  insertImage(blinky, p.getYcor()*20, p.getXcor()*20, 20, 20);
+  p = ghosts[1].getPos();
+  insertImage(clyde, p.getYcor()*20, p.getXcor()*20, 20, 20);
+  p = ghosts[2].getPos();
+  insertImage(inky, p.getYcor()*20, p.getXcor()*20, 20, 20);
+  p = ghosts[3].getPos();
+  insertImage(pinky, p.getYcor()*20, p.getXcor()*20, 20, 20);
 }
 
 public void drawBoard(boolean isWall) {
@@ -127,19 +137,19 @@ public void drawBoard(boolean isWall) {
 
 
 public void drawWall(int xc, int yc) {
-  insertImage("BWALL.png", yc * 20, xc * 20, 20, 20);
+  insertImage(wall, yc * 20, xc * 20, 20, 20);
 }
 
 public void drawGWall(int xc, int yc) {
-  insertImage("PWALL.png", yc * 20, xc * 20, 19, 19);
+  insertImage(pwall, yc * 20, xc * 20, 19, 19);
 }
 
 public void drawPelletS(int xc, int yc) {
-  insertImage("PELLET.png", yc * 20 + 8, xc * 20 + 8, 5, 5);
+  insertImage(pellet, yc * 20 + 8, xc * 20 + 8, 5, 5);
 }
 
 public void drawPelletB(int xc, int yc) {
-  insertImage("PELLET.png", yc* 20 + 2, xc* 20 + 2, 15, 15);
+  insertImage(pellet, yc* 20 + 2, xc* 20 + 2, 15, 15);
 }
 
 public void drawFruit(int x_c, int y_c) {
@@ -147,7 +157,7 @@ public void drawFruit(int x_c, int y_c) {
   float y_ratio = (float)y_c/board.getYSize();
   float x = x_ratio * height;
   float y = y_ratio * width;
-  insertImage("FRUIT.png", y, x, width/50, height/50);
+  insertImage(fruit, y, x, width/50, height/50);
 }
 
 
@@ -170,4 +180,6 @@ public void keyPressed() {
     //println("right");
     break;
   }
+  String addend = sketchPath() + "/sprites/";
+  pman = loadImage(addend + main.getDirection() + "PMAN.png");
 }  
