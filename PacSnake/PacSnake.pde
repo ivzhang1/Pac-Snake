@@ -6,7 +6,6 @@ private Board board;
 private Scores scoreboard;
 private Ghost[] ghosts;
 private PacThing main;
-private int speed = 1;//speed goes from a scale of 0 to 10
 
 private PImage pman;
 private PImage blinky;
@@ -24,7 +23,7 @@ public void setup() {
   size(560, 720);
   background(color(0, 0, 0));
   board = new Board("default.txt");
-  main = new PacThing(board.getStart(), board);
+  main = new PacThing(board.getStart(), board, 1);
   livesLeft = 5;
   pointsEarned = 0;
   scoreboard = new Scores();
@@ -64,13 +63,7 @@ public void draw() {
   for (int i = 0; i < 4; i++) {
     ghosts[i].nextMove(ghosts[i].getPos());
   }
-  if(speed < 0 || speed > 10){
-    println("enter a speed from 0 to 10");
-  }
-  else if (frameCount % (21 + -1*speed) == 0) {
-    //println(frameCount);
-    main.move();
-  }
+  main.move();
   drawEverything();
   //println("fin");
 }
@@ -93,7 +86,7 @@ public void insertImage(PImage img, float yLoc, float xLoc, int ySize, int xSize
 }
 
 public void drawEverything() {
-  background(color(0,0,0));
+  background(color(0, 0, 0));
   drawPMan();
   drawGhosts();
   drawBoard(true);
