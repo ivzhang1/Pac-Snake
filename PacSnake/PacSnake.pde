@@ -6,7 +6,7 @@ private Board board;
 private Scores scoreboard;
 private Ghost[] ghosts;
 private PacThing main;
-private int speed = 11;//speed goes from a scale of 0 to 10
+private int speed = 1;//speed goes from a scale of 0 to 10
 
 private PImage pman;
 private PImage blinky;
@@ -67,7 +67,7 @@ public void draw() {
   if(speed < 0 || speed > 10){
     println("enter a speed from 0 to 10");
   }
-  else if (frameCount % (11 + -1*speed) == 0) {
+  else if (frameCount % (21 + -1*speed) == 0) {
     //println(frameCount);
     main.move();
   }

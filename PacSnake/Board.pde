@@ -11,14 +11,15 @@ public class Board {
   private Position start;
   private ArrayList<Position> ghostSpawns;
   private int size;
+  private ArrayList<Position> ghostExit;
 
   public Board(String fileName) {    
     Scanner mazeF = null;     
     xSize = 36;     
     ySize = 28;     
     map = new Square[xSize][ySize];
-    ArrayList<Position> ghostLocs = new ArrayList<Position>();
-    ghostSpawns = ghostLocs;
+    ghostSpawns = new ArrayList<Position>();
+    ArrayList<Position> ghostExit = new ArrayList<Position>();
     try {       
       File f = new File(sketchPath(), fileName);       
       mazeF = new Scanner(f);
@@ -38,6 +39,8 @@ public class Board {
           ghostSpawns.add(new Position(column, row));
         }else if (value == 6){
           start = new Position(column, row);
+        }else if (value == 3){
+          ghostExit.add(new Position(column, row));
         }
         map[column][row] = new Square(value);
         row += 1;
@@ -65,9 +68,18 @@ public class Board {
   public Position getRandomGhostSpawn() {
     Random ran = new Random();
     int x = ran.nextInt(ghostSpawns.size());
+    while(isOccupied(ghostSpawns.get(x))){
+      x = ran.nextInt(ghostSpawns.size());
+    }
     setOccupied(ghostSpawns.get(x));
-    return ghostSpawns.remove(x);
+    return ghostSpawns.get(x);
   }
+  
+  public Position getRandomGhostExit() {
+    Random ran = new Random();
+    int x = ran.nextInt(ghostExit.size());
+    return ghostExit.get(x);
+  }  
 
   public int getValue(int x, int y) {
     return map[x][y].getContent();
