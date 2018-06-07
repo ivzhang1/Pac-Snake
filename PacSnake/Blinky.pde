@@ -2,9 +2,9 @@ import java.util.PriorityQueue;
 
 
 public class Blinky extends Ghost {
-  private PriorityQueue<Position> frontier = new PriorityQueue<Position>();
+  private MyHeap<Position> frontier = new MyHeap<Position>(false);
   private Board board;
-  
+
   private Position _pos;
   private String type;
   private boolean alive;
@@ -56,8 +56,9 @@ public class Blinky extends Ghost {
   }
 
   public void nextMove(Position pacPos) {
-    //getAStar(pacPos);
     meander(pacPos);
+    print(solve(pacPos));
+
   }
 
   public void meander(Position pacPos) {
@@ -103,7 +104,7 @@ public class Blinky extends Ghost {
 
         if (map[coor[0]][coor[1]].getContent() != 0) {
           double dist = Math.abs((px-coor[0]-1)) + Math.abs((py-coor[1]+1));
-          loci[count] = new Position(coor[0], coor[1], dist);
+          loci[count] = new Position(coor[0], coor[1], L, dist, 1+L.dSoFar());
         }
         count++;
       }
@@ -111,36 +112,35 @@ public class Blinky extends Ghost {
     return loci;
   }
 
-  public boolean solve(Position pman) {
+  public Position solve(Position pman) {
 
-    frontier.clear();
-
-
+    frontier = new MyHeap<Position>(false);
     frontier.add(board.getStart());
     Position end = pman;
-
+    
     while (frontier.size() != 0) {
-
       Position prev = frontier.remove();
       Position[] nextL = getNeighbors(prev, pman);
-
       for (Position l : nextL) {
 
         if (l != null) {
-
           int inty = map[l.getXcor()][l.getYcor()].getContent();
+          //println(inty);
           if (l.getXcor() == pman.getXcor() && l.getYcor() == pman.getYcor()) {
-            return true;
+            while (end.get_prev() != null && !end.get_prev().equals(pman)) {
+              end = end.get_prev();
+            }
+            return end;
           }
 
-          if (inty == 0) {
+          if (inty != 0) {
             frontier.add(l);
           }
         }
       }
     }
 
-    return false;
+    return null;
   }
 
 
