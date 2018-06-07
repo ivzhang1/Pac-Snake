@@ -37,12 +37,12 @@ public class Board {
         int value = Integer.parseInt(x);
         if (value == 7) {
           ghostSpawns.add(new Position(column, row));
-          println("ghostspawn: " + ghostSpawns.size());
+          //println("ghostspawn: " + ghostSpawns.size());
         } else if (value == 6) {
           start = new Position(column, row);
         } else if (value == 3) {
           ghostExit.add(new Position(column, row));
-          println("ghostexit: " + ghostExit.size());
+          //println("ghostexit: " + ghostExit.size());
         }
         map[column][row] = new Square(value);
         row += 1;
@@ -80,8 +80,7 @@ public class Board {
   public Position getRandomGhostExit() {
     Random ran = new Random();
     int x = ran.nextInt(ghostExit.size());
-    Position p = new Position(ghostExit.get(x).getXcor()-1, ghostExit.get(x).getYcor()-1);
-    print(p.getXcor() + " , " + p.getYcor());
+    Position p = new Position(ghostExit.get(x).getXcor()-1, ghostExit.get(x).getYcor());
     return p;
   }  
 

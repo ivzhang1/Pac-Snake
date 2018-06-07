@@ -12,7 +12,7 @@ public class Clyde extends Ghost {
     _pos = pos;
     this.alive = false;
     isVulnerable = false;
-    secondsLeft = 0;
+    secondsLeft = 5;
     this.type = type;
     map = m;
     speed = 1;
@@ -65,7 +65,9 @@ public class Clyde extends Ghost {
   public void setSpeed(int s) {
     speed = s;
   }
-
+  public void reduceTime(){
+    secondsLeft-=1;
+  }
   public String toString() {
     return type;
   }

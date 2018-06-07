@@ -38,6 +38,9 @@ public class Blinky extends Ghost {
   public int getTime(){
     return secondsLeft;
   }
+  public void reduceTime(){
+    secondsLeft-=1;
+  }
   public void setPos(Position pos) {
       _pos = pos;
   }
