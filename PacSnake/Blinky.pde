@@ -1,6 +1,5 @@
 import java.util.PriorityQueue;
 
-
 public class Blinky extends Ghost {
   private MyHeap<Position> frontier = new MyHeap<Position>(false);
   private Board board;
@@ -71,7 +70,7 @@ public class Blinky extends Ghost {
       {_pos.getXcor(), _pos.getYcor()-1}};
     int index = (int)(Math.random() * 4);
     int[] nextPos = delta[index];
-    if (nextPos[0] > 0 && nextPos[0] < map[0].length &&map[nextPos[0]][nextPos[1]].movable() && map[nextPos[0]][nextPos[1]].getContent() != 3) {
+    if (map[nextPos[0]][nextPos[1]].movable() && map[nextPos[0]][nextPos[1]].getContent() != 3) {
       _pos.setXcor(nextPos[0]);
       _pos.setYcor(nextPos[1]);
     }

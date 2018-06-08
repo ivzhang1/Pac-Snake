@@ -127,9 +127,9 @@ public void drawBoard(boolean isWall) {
         drawGWall(r, c);
       } else if (content == 5) {
         drawPelletB(r, c);
-      } //else if (content == 7) {
-      //  drawPelletB(r, c);
-      //}
+      } else if (content == 4) {
+        drawFruit(r, c);
+      }
     }
   }
 }
@@ -151,12 +151,8 @@ public void drawPelletB(int xc, int yc) {
   insertImage(pellet, yc* 20 + 2, xc* 20 + 2, 15, 15);
 }
 
-public void drawFruit(int x_c, int y_c) {
-  float x_ratio = (float)x_c/board.getXSize();
-  float y_ratio = (float)y_c/board.getYSize();
-  float x = x_ratio * height;
-  float y = y_ratio * width;
-  insertImage(fruit, y, x, width/50, height/50);
+public void drawFruit(int xc, int yc) {
+  insertImage(fruit, yc* 20 + 2, xc* 20 + 2, 15, 15);
 }
 
 
