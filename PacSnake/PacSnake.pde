@@ -7,40 +7,77 @@ private Scores scoreboard;
 private Ghost[] ghosts;
 private PacThing main;
 
+private PImage pman;
+private PImage blinky;
+private PImage clyde;
+private PImage inky;
+private PImage pinky;
+private PImage fruit;
+private PImage pellet;
+private PImage black;
+private PImage wall;
+private PImage pwall;
+
+
 public void setup() {
   size(560, 720);
   background(color(0, 0, 0));
   board = new Board("default.txt");
-  main = new PacThing(board.getStart(), board);
+  main = new PacThing(board.getStart(), board, 1);
   livesLeft = 5;
   pointsEarned = 0;
   scoreboard = new Scores();
   ghosts = new Ghost[4];
-  ghosts[0] = (Ghost) new Blinky(board.getRandomGhostSpawn(), "BLINKY");
-  ghosts[1] = (Ghost) new Clyde(board.getRandomGhostSpawn(), "CLYDE"); 
-  ghosts[2] = (Ghost) new Inky(board.getRandomGhostSpawn(), "INKY"); 
-  ghosts[3] = (Ghost) new Pinky(board.getRandomGhostSpawn(), "PINKY");
+  ghosts[0] = (Ghost) new Blinky(board.getRandomGhostSpawn(), "BLINKY", board);
+  ghosts[1] = (Ghost) new Clyde(board.getRandomGhostSpawn(), "CLYDE", board.getMap()); 
+  ghosts[2] = (Ghost) new Inky(board.getRandomGhostSpawn(), "INKY", board.getMap()); 
+  ghosts[3] = (Ghost) new Pinky(board.getRandomGhostSpawn(), "PINKY", board.getMap());
+  setupPImages();
   drawPMan();
   drawGhosts();
-  drawBoard();
-  findOccupied();
-  for (Ghost g : ghosts){
-    println(g.getPos());
-    Position p = g.getPos();
-    println(board.isOccupied(p));
-  }
+  drawBoard(true);
+  //findOccupied();
+  //for (Ghost g : ghosts) {
+  //  //println(g.getPos());
+  //  Position p = g.getPos();
+  //  //println(board.isOccupied(p));
+  //}
 }
+
+public void setupPImages() {
+  String addend = sketchPath() + "/sprites/";
+  pman = loadImage(addend + main.getDirection() + "PMAN.png");
+  blinky = loadImage(addend + "BLINKY.png");
+  clyde = loadImage(addend + "CLYDE.png");
+  inky = loadImage(addend + "INKY.png");
+  pinky = loadImage(addend + "PINKY.png");
+  fruit = loadImage(addend + "FRUIT.png");
+  pellet = loadImage(addend + "PELLET.png");
+  black = loadImage(addend + "black.png");
+  wall = loadImage(addend + "BWALL.png");
+  pwall = loadImage(addend + "PWALL.png");
+}
+
 
 public void draw() {
-  
+  for (int i = 0; i < 4; i++) {
+    if (ghosts[i].getTime() == 0 && !ghosts[i].isAlive()) {
+      ghosts[i].setPos(board.getRandomGhostExit());
+      ghosts[i].alive();
+    }
+    ghosts[i].move(main.getPos());
+  }
+  main.move();
+  drawEverything();
+  //println("fin");
 }
 
-public void findOccupied(){
+public void findOccupied() {
   String gath = "";
   Square[][] mapy = board.getMap();
   for (int r = 0; r < mapy.length; r++) {
     for (int c = 0; c < mapy[0].length; c++) {
-      if (mapy[r][c].occupied()){
+      if (mapy[r][c].occupied()) {
         gath += r + " " + c + "    ";
       }
     }
@@ -48,28 +85,41 @@ public void findOccupied(){
   println(gath);
 }
 
-public void insertImage(String end, float yLoc, float xLoc, int ySize, int xSize) {
-  image(loadImage(sketchPath() + "/sprites/" + end), yLoc, xLoc, ySize, xSize);
+public void insertImage(PImage img, float yLoc, float xLoc, int ySize, int xSize) {
+  image(img, yLoc, xLoc, ySize, xSize);
 }
+
+public void drawEverything() {
+  background(color(0, 0, 0));
+  drawPMan();
+  drawGhosts();
+  drawBoard(true);
+  //findOccupied();
+}
+
 
 public void drawPMan() {
   Position p = main.getPos();
-  insertImage("2PMAN.png", p.getYcor()*20, p.getXcor()*20, 20, 20);
+  insertImage(pman, p.getYcor()*20, p.getXcor()*20, 20, 20);
 }
 
 public void drawGhosts() {
-  for (Ghost g : ghosts) {
-    Position p = g.getPos();
-    insertImage(g.getType() + ".png", p.getYcor()*20, p.getXcor()*20, 20, 20);
-  }
+  Position p = ghosts[0].getPos();
+  insertImage(blinky, p.getYcor()*20, p.getXcor()*20, 20, 20);
+  p = ghosts[1].getPos();
+  insertImage(clyde, p.getYcor()*20, p.getXcor()*20, 20, 20);
+  p = ghosts[2].getPos();
+  insertImage(inky, p.getYcor()*20, p.getXcor()*20, 20, 20);
+  p = ghosts[3].getPos();
+  insertImage(pinky, p.getYcor()*20, p.getXcor()*20, 20, 20);
 }
 
-public void drawBoard() {
+public void drawBoard(boolean isWall) {
   Square[][] mapy = board.getMap();
   for (int r = 0; r < mapy.length; r++) {
     for (int c = 0; c < mapy[0].length; c++) {
       int content = mapy[r][c].getContent();
-      if (content == 0) {
+      if (content == 0 && isWall) {
         drawWall(r, c);
       } else if (content == 2) {
         drawPelletS(r, c);
@@ -77,36 +127,32 @@ public void drawBoard() {
         drawGWall(r, c);
       } else if (content == 5) {
         drawPelletB(r, c);
-      } //else if (content == 7) {
-      //  drawPelletB(r, c);
-      //}
+      } else if (content == 4) {
+        drawFruit(r, c);
+      }
     }
   }
 }
 
 
 public void drawWall(int xc, int yc) {
-  insertImage("BWALL.png", yc * 20, xc * 20, 20, 20);
+  insertImage(wall, yc * 20, xc * 20, 20, 20);
 }
 
 public void drawGWall(int xc, int yc) {
-  insertImage("PWALL.png", yc * 20, xc * 20, 19, 19);
+  insertImage(pwall, yc * 20, xc * 20, 19, 19);
 }
 
 public void drawPelletS(int xc, int yc) {
-  insertImage("PELLET.png", yc * 20 + 8, xc * 20 + 8, 5, 5);
+  insertImage(pellet, yc * 20 + 8, xc * 20 + 8, 5, 5);
 }
 
 public void drawPelletB(int xc, int yc) {
-  insertImage("PELLET.png", yc* 20 + 2, xc* 20 + 2, 15, 15);
+  insertImage(pellet, yc* 20 + 2, xc* 20 + 2, 15, 15);
 }
 
-public void drawFruit(int x_c, int y_c) {
-  float x_ratio = (float)x_c/board.getXSize();
-  float y_ratio = (float)y_c/board.getYSize();
-  float x = x_ratio * height;
-  float y = y_ratio * width;
-  insertImage("FRUIT.png", y, x, width/50, height/50);
+public void drawFruit(int xc, int yc) {
+  insertImage(fruit, yc* 20 + 2, xc* 20 + 2, 15, 15);
 }
 
 
@@ -114,19 +160,21 @@ public void keyPressed() {
   switch(keyCode) {
   case UP:
     main.changeDirection(1);
-    println("up");
+    //println("up");
     break;
   case DOWN:
     main.changeDirection(-1);
-    println("down");
+    //println("down");
     break;
   case LEFT:
     main.changeDirection(-2); 
-    println("left");
+    //println("left");
     break;
   case RIGHT:
     main.changeDirection(2);
-    println("right");
+    //println("right");
     break;
   }
+  String addend = sketchPath() + "/sprites/";
+  pman = loadImage(addend + main.getDirection() + "PMAN.png");
 }  

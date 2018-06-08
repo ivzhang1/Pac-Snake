@@ -9,7 +9,9 @@ public abstract class Ghost{
   public boolean isAlive() {
     return alive;
   }
-
+  public void alive(){
+    alive = true;
+  } 
   public Position getPos() {
     return _pos;
   }
@@ -18,14 +20,25 @@ public abstract class Ghost{
     return type;
   }
   
+  public int getTime(){
+    return secondsLeft;
+  }
+  public void reduceTime(){
+    secondsLeft-=1;
+  }
+  public void setPos(Position pos) {
+      _pos = pos;
+  }
+
+  
   public void kill() {
     alive = false;
     secondsLeft = 1000;
   }
   
   public void move(Position pacPos){
-    if (!alive){
-      secondsLeft = secondsLeft - 1;
+    if (!isAlive()){
+      reduceTime();
       return;
     }
     nextMove(pacPos);

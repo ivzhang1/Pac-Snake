@@ -28,7 +28,7 @@ public class Square{
   }
   
   public Boolean movable(){
-    return !isBlock; 
+    return !isBlock && !occupied(); 
   }
   
   public int getContent(){
