@@ -115,12 +115,10 @@ public class Blinky extends Ghost {
     frontier = new MyHeap<Position>(false);
     frontier.add(_pos);
     Position end = pman;
-
     while (frontier.size() != 0) {
       Position prev = frontier.remove();
       Position[] nextL = getNeighbors(prev, pman);
       for (Position l : nextL) {
-
         if (l != null) {
           int inty = map[l.getXcor()][l.getYcor()].getContent();
           //println(inty);

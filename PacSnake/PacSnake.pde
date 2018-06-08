@@ -31,7 +31,7 @@ public void setup() {
   ghosts[0] = (Ghost) new Blinky(board.getRandomGhostSpawn(), "BLINKY", board);
   ghosts[1] = (Ghost) new Clyde(board.getRandomGhostSpawn(), "CLYDE", board.getMap()); 
   ghosts[2] = (Ghost) new Inky(board.getRandomGhostSpawn(), "INKY", board.getMap()); 
-  ghosts[3] = (Ghost) new Pinky(board.getRandomGhostSpawn(), "PINKY", board.getMap());
+  ghosts[3] = (Ghost) new Pinky(board.getRandomGhostSpawn(), "PINKY", board);
   setupPImages();
   drawPMan();
   drawGhosts();
@@ -66,6 +66,7 @@ public void draw() {
       ghosts[i].alive();
     }
     ghosts[i].move(main.getPos());
+    println(ghosts[i]);
   }
   main.move();
   drawEverything();
