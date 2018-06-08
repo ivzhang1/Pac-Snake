@@ -11,7 +11,7 @@ public class Blinky extends Ghost {
   private boolean isVulnerable;
   private int secondsLeft;
   private Square[][] map;
-  private int speed;
+  private int speed = -100;
 
   public Blinky(Position pos, String type, Board b) {
     _pos = pos;
@@ -56,9 +56,8 @@ public class Blinky extends Ghost {
   }
 
   public void nextMove(Position pacPos) {
-    meander(pacPos);
-    print(solve(pacPos));
-
+    //meander(pacPos);
+    _pos = solve(pacPos);
   }
 
   public void meander(Position pacPos) {
@@ -71,7 +70,7 @@ public class Blinky extends Ghost {
         {_pos.getXcor(), _pos.getYcor()-1}};
       int index = (int)(Math.random() * 4);
       int[] nextPos = delta[index];
-      if (map[nextPos[0]][nextPos[1]].movable() && map[nextPos[0]][nextPos[1]].getContent() != 3) {
+      if (nextPos[0] > 0 && nextPos[0] < map[0].length &&map[nextPos[0]][nextPos[1]].movable() && map[nextPos[0]][nextPos[1]].getContent() != 3) {
         _pos.setXcor(nextPos[0]);
         _pos.setYcor(nextPos[1]);
       }
@@ -115,9 +114,9 @@ public class Blinky extends Ghost {
   public Position solve(Position pman) {
 
     frontier = new MyHeap<Position>(false);
-    frontier.add(board.getStart());
+    frontier.add(_pos);
     Position end = pman;
-    
+
     while (frontier.size() != 0) {
       Position prev = frontier.remove();
       Position[] nextL = getNeighbors(prev, pman);
@@ -126,8 +125,10 @@ public class Blinky extends Ghost {
         if (l != null) {
           int inty = map[l.getXcor()][l.getYcor()].getContent();
           //println(inty);
-          if (l.getXcor() == pman.getXcor() && l.getYcor() == pman.getYcor()) {
-            while (end.get_prev() != null && !end.get_prev().equals(pman)) {
+          end = new Position(l.getXcor(), l.getYcor(), prev, 0, 0);;
+          if (l.equals(pman)) {
+
+            while (end.get_prev() != null && !end.get_prev().equals(_pos)) {
               end = end.get_prev();
             }
             return end;

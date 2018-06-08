@@ -56,6 +56,10 @@ public class Position implements Comparable<Position>{
     return prev;
   }
 
+  public boolean equals(Position lod){
+    return getXcor() == lod.getXcor() && getYcor() == lod.getYcor(); 
+  }
+
   public int compareTo(Position lod) {
     int res = 0;
     double totalD = get_dist()+dSoFar();
