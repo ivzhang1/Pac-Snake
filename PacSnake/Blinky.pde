@@ -10,7 +10,7 @@ public class Blinky extends Ghost {
   private boolean isVulnerable;
   private int secondsLeft;
   private Square[][] map;
-  private int speed = 1;
+  private int speed;
 
   public Blinky(Position pos, String type, Board b) {
     _pos = pos;
