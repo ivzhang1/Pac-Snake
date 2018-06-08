@@ -18,7 +18,8 @@ public class Clyde extends Ghost {
     speed = 1;
   }
 
-  public void nextMove(Position pacPos) {
+  public void nextMove(PacThing pac) {
+    Position pacPos = pac.getPos();
     //getAStar(pacPos);
     meander(pacPos);
   }

@@ -65,7 +65,7 @@ public void draw() {
       ghosts[i].setPos(board.getRandomGhostExit());
       ghosts[i].alive();
     }
-    ghosts[i].move(main.getPos());
+    ghosts[i].move(main);
     println(ghosts[i]);
   }
   main.move();

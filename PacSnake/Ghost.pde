@@ -36,12 +36,12 @@ public abstract class Ghost{
     secondsLeft = 1000;
   }
   
-  public void move(Position pacPos){
+  public void move(PacThing pac){
     if (!isAlive()){
       reduceTime();
       return;
     }
-    nextMove(pacPos);
+    nextMove(pac);
   }
 
   public boolean isVul() {
@@ -57,7 +57,7 @@ public abstract class Ghost{
     isVulnerable = false;
   }
   
-  public abstract void nextMove(Position pacPos);
+  public abstract void nextMove(PacThing pac);
   
   public String toString(){
     return type;

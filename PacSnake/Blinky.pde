@@ -54,7 +54,8 @@ public class Blinky extends Ghost {
     speed = s;
   }
 
-  public void nextMove(Position pacPos) {
+  public void nextMove(PacThing pac) {
+    Position pacPos = pac.getPos();
     if (speed < 0 || speed > 10) {
       println("enter a speed from 0 to 10");
     } else if (frameCount % (21 + -1*speed) == 0) {
