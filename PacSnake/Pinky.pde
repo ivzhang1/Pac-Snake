@@ -59,9 +59,9 @@ public class Pinky extends Ghost {
     Position aheadTarget = new Position(pacPos.getXcor(), pacPos.getYcor());
     int direction = pac.getDirection();
     if (direction == 1){
-      aheadTarget.setXcor(aheadTarget.getXcor()+4);
-    }else if(direction == -1){
       aheadTarget.setXcor(aheadTarget.getXcor()-4);
+    }else if(direction == -1){
+      aheadTarget.setXcor(aheadTarget.getXcor()+4);
     }else if(direction == 2){
       aheadTarget.setYcor(aheadTarget.getYcor()+4);
     }else{
@@ -73,7 +73,7 @@ public class Pinky extends Ghost {
       //meander(pacPos);
     }
     try{
-      if (map[aheadTarget.getYcor()][aheadTarget.getXcor()].movable()){
+      if (map[aheadTarget.getXcor()][aheadTarget.getYcor()].movable()){
       _pos = solve(aheadTarget);
      }else{
       _pos = solve(pacPos);
