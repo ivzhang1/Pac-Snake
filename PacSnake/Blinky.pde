@@ -11,7 +11,7 @@ public class Blinky extends Ghost {
   private boolean isVulnerable;
   private int secondsLeft;
   private Square[][] map;
-  private int speed = -100;
+  private int speed = 1;
 
   public Blinky(Position pos, String type, Board b) {
     _pos = pos;
@@ -56,24 +56,24 @@ public class Blinky extends Ghost {
   }
 
   public void nextMove(Position pacPos) {
-    //meander(pacPos);
-    _pos = solve(pacPos);
-  }
-
-  public void meander(Position pacPos) {
     if (speed < 0 || speed > 10) {
       println("enter a speed from 0 to 10");
     } else if (frameCount % (21 + -1*speed) == 0) {
-      int[][] delta = {{_pos.getXcor()+1, _pos.getYcor()}, 
-        {_pos.getXcor()-1, _pos.getYcor()}, 
-        {_pos.getXcor(), _pos.getYcor()+1}, 
-        {_pos.getXcor(), _pos.getYcor()-1}};
-      int index = (int)(Math.random() * 4);
-      int[] nextPos = delta[index];
-      if (nextPos[0] > 0 && nextPos[0] < map[0].length &&map[nextPos[0]][nextPos[1]].movable() && map[nextPos[0]][nextPos[1]].getContent() != 3) {
-        _pos.setXcor(nextPos[0]);
-        _pos.setYcor(nextPos[1]);
-      }
+      //meander(pacPos);
+      _pos = solve(pacPos);
+    }
+  }
+
+  public void meander(Position pacPos) {
+    int[][] delta = {{_pos.getXcor()+1, _pos.getYcor()}, 
+      {_pos.getXcor()-1, _pos.getYcor()}, 
+      {_pos.getXcor(), _pos.getYcor()+1}, 
+      {_pos.getXcor(), _pos.getYcor()-1}};
+    int index = (int)(Math.random() * 4);
+    int[] nextPos = delta[index];
+    if (nextPos[0] > 0 && nextPos[0] < map[0].length &&map[nextPos[0]][nextPos[1]].movable() && map[nextPos[0]][nextPos[1]].getContent() != 3) {
+      _pos.setXcor(nextPos[0]);
+      _pos.setYcor(nextPos[1]);
     }
   }
 
@@ -125,7 +125,8 @@ public class Blinky extends Ghost {
         if (l != null) {
           int inty = map[l.getXcor()][l.getYcor()].getContent();
           //println(inty);
-          end = new Position(l.getXcor(), l.getYcor(), prev, 0, 0);;
+          end = new Position(l.getXcor(), l.getYcor(), prev, 0, 0);
+          ;
           if (l.equals(pman)) {
 
             while (end.get_prev() != null && !end.get_prev().equals(_pos)) {
