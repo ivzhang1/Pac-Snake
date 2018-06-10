@@ -11,6 +11,7 @@ public class Inky extends Ghost {
   private int secondsLeft;
   private Square[][] map;
   private int speed;
+  private boolean scatterMode; 
   private Ghost b;
 
   public Inky(Position pos, String type, Square[][] m, Ghost _b) {
@@ -20,7 +21,7 @@ public class Inky extends Ghost {
     secondsLeft = 2;
     this.type = type;
     map = m;
-    speed = 10;
+    speed = 9;
     b = _b;
   }
   public boolean isAlive() {
@@ -79,6 +80,15 @@ public class Inky extends Ghost {
   }
 
   public void nextMove(PacThing pac) {
+    if (scatterMode){
+      if (speed < 0 || speed > 10) {
+      println("enter a speed from 0 to 10");
+    } else if (frameCount % (21 + -1*speed) == 0) {
+      Position next = solve(new Position(5, 26));
+      _pos = next;
+      return;
+    }
+    }
     Position pacPos = pac.getPos();
 
     Position blinkPos = b.getPos();
