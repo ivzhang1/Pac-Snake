@@ -7,6 +7,8 @@ private Scores scoreboard;
 private Ghost[] ghosts;
 private PacThing main;
 
+private boolean isGameStarted;
+
 private PImage pman;
 private PImage blinky;
 private PImage clyde;
@@ -36,6 +38,10 @@ public void setup() {
   drawPMan();
   drawGhosts();
   drawBoard(true);
+
+  textSize(50);
+  textAlign(CENTER);
+  text("Click to Start", 280, 360);
   //findOccupied();
   //for (Ghost g : ghosts) {
   //  //println(g.getPos());
@@ -60,15 +66,17 @@ public void setupPImages() {
 
 
 public void draw() {
-  for (int i = 0; i < 4; i++) {
-    if (ghosts[i].getTime() == 0 && !ghosts[i].isAlive()) {
-      ghosts[i].setPos(board.getRandomGhostExit());
-      ghosts[i].alive();
+  if (isGameStarted) {
+    for (int i = 0; i < 4; i++) {
+      if (ghosts[i].getTime() == 0 && !ghosts[i].isAlive()) {
+        ghosts[i].setPos(board.getRandomGhostExit());
+        ghosts[i].alive();
+      }
+      ghosts[i].move(main);
     }
-    ghosts[i].move(main);
+    main.move();
+    drawEverything();
   }
-  main.move();
-  drawEverything();
 }
 
 public void findOccupied() {
@@ -152,6 +160,12 @@ public void drawPelletB(int xc, int yc) {
 
 public void drawFruit(int xc, int yc) {
   insertImage(fruit, yc* 20 + 2, xc* 20 + 2, 15, 15);
+}
+
+public void mouseClicked() {
+  if (!isGameStarted) {
+    isGameStarted = true;
+  }
 }
 
 public void keyPressed() {
