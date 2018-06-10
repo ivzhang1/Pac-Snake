@@ -29,11 +29,11 @@ public void setup() {
   livesLeft = 5;
   pointsEarned = 0;
   scoreboard = new Scores();
-  ghosts = new Ghost[4];
+  ghosts = new Ghost[1];
   ghosts[0] = (Ghost) new Blinky(board.getRandomGhostSpawn(), "BLINKY", board);
-  ghosts[1] = (Ghost) new Clyde(board.getRandomGhostSpawn(), "CLYDE", board); 
-  ghosts[2] = (Ghost) new Inky(board.getRandomGhostSpawn(), "INKY", board.getMap()); 
-  ghosts[3] = (Ghost) new Pinky(board.getRandomGhostSpawn(), "PINKY", board);
+  //ghosts[1] = (Ghost) new Clyde(board.getRandomGhostSpawn(), "CLYDE", board); 
+  //ghosts[2] = (Ghost) new Inky(board.getRandomGhostSpawn(), "INKY", board.getMap()); 
+  //ghosts[3] = (Ghost) new Pinky(board.getRandomGhostSpawn(), "PINKY", board);
   setupPImages();
   drawPMan();
   drawGhosts();
@@ -67,15 +67,21 @@ public void setupPImages() {
 
 public void draw() {
   if (isGameStarted) {
-    for (int i = 0; i < 4; i++) {
+    for (int i = 0; i < 1; i++) {
       if (ghosts[i].getTime() == 0 && !ghosts[i].isAlive()) {
         ghosts[i].setPos(board.getRandomGhostExit());
         ghosts[i].alive();
       }
-      ghosts[i].move(main);
+      if(i == 2){
+        ghosts[i].move(main, ghosts[0]);
+      }
+      else{
+        ghosts[i].move(main, null);
+      }
     }
     main.move();
     drawEverything();
+    
   }
 }
 
@@ -113,12 +119,12 @@ public void drawPMan() {
 public void drawGhosts() {
   Position p = ghosts[0].getPos();
   insertImage(blinky, p.getYcor()*20, p.getXcor()*20, 20, 20);
-  p = ghosts[1].getPos();
-  insertImage(clyde, p.getYcor()*20, p.getXcor()*20, 20, 20);
-  p = ghosts[2].getPos();
-  insertImage(inky, p.getYcor()*20, p.getXcor()*20, 20, 20);
-  p = ghosts[3].getPos();
-  insertImage(pinky, p.getYcor()*20, p.getXcor()*20, 20, 20);
+  //p = ghosts[1].getPos();
+  //insertImage(clyde, p.getYcor()*20, p.getXcor()*20, 20, 20);
+  //p = ghosts[2].getPos();
+  //insertImage(inky, p.getYcor()*20, p.getXcor()*20, 20, 20);
+  //p = ghosts[3].getPos();
+  //insertImage(pinky, p.getYcor()*20, p.getXcor()*20, 20, 20);
 }
 
 public void drawBoard(boolean isWall) {

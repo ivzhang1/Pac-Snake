@@ -36,7 +36,7 @@ public abstract class Ghost{
     secondsLeft = 1000;
   }
   
-  public void move(PacThing pac){
+  public void move(PacThing pac, Ghost g){
     if (!isAlive()){
       reduceTime();
       return;
@@ -58,7 +58,10 @@ public abstract class Ghost{
   }
   
   public abstract void nextMove(PacThing pac);
-  
+  public void nextMove(PacThing pac, Blinky b){
+    return;
+  };
+
   public String toString(){
     return type;
   }

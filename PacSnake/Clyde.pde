@@ -1,4 +1,5 @@
 import java.util.PriorityQueue;
+import java.util.*;
 
 public class Clyde extends Ghost {
   private MyHeap<Position> frontier = new MyHeap<Position>(false);
@@ -82,7 +83,7 @@ public class Clyde extends Ghost {
   int dx = Math.abs(a.getXcor() - b.getXcor());
   int dy = Math.abs(a.getYcor() - b.getYcor());
   return Math.sqrt(dx*dx + dy*dy);
-}
+  }  
 
   public void meander(Position pacPos) {
     int[][] delta = {{_pos.getXcor()+1, _pos.getYcor()}, 
