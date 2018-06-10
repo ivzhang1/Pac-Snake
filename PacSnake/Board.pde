@@ -93,6 +93,7 @@ public class Board {
   }
 
   public Boolean isOccupied(Position pos) {
+    println(pos);
     return (map[pos.getYcor()][pos.getXcor()]).occupied();
   }
   

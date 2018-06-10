@@ -1,5 +1,4 @@
 import java.util.PriorityQueue;
-import java.util.ArrrayIndexOutOfBoundsException;
 
 public class Clyde extends Ghost {
   private MyHeap<Position> frontier = new MyHeap<Position>(false);
@@ -67,11 +66,12 @@ public class Clyde extends Ghost {
       Position next = solve(pacPos);
       println(next + " " + pacPos);
       try{
+        println("clyde");
         if (board.isOccupied(next)){
           return;
         }
         _pos = next;
-      } catch(ArrrayIndexOutOfBoundsException e){
+      } catch(IndexOutOfBoundsException e){
         print("FUC");
       }
     }
