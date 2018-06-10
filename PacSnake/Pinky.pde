@@ -11,6 +11,7 @@ public class Pinky extends Ghost {
   private int secondsLeft;
   private Square[][] map;
   private int speed = 1;
+  private boolean scatterMode; 
 
   public Pinky(Position pos, String type, Board b) {
     _pos = pos;
@@ -20,7 +21,7 @@ public class Pinky extends Ghost {
     this.type = type;
     board = b;
     map = board.getMap();
-    speed = 10;
+    speed = 9;
   }
   public boolean isAlive() {
     return alive;

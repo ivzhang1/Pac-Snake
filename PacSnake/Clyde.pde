@@ -12,6 +12,7 @@ public class Clyde extends Ghost {
   private int secondsLeft;
   private Square[][] map;
   private int speed;
+  private boolean scatterMode; 
 
   public Clyde(Position pos, String type, Board b) {
     _pos = pos;
@@ -21,7 +22,7 @@ public class Clyde extends Ghost {
     this.type = type;
     board = b;
     map = board.getMap();
-    speed = 10;
+    speed = 9;
   }
   public boolean isAlive() {
     return alive;
@@ -57,6 +58,15 @@ public class Clyde extends Ghost {
 
   public void nextMove(PacThing pac) {
     Position pacPos = pac.getPos();
+    if (scatterMode){
+      if (speed < 0 || speed > 10) {
+      println("enter a speed from 0 to 10");
+    } else if (frameCount % (21 + -1*speed) == 0) {
+      Position next = solve(new Position(5, 26));
+      _pos = next;
+      return;
+    }
+    }
     if (speed < 0 || speed > 10) {
       println("enter a speed from 0 to 10");
     } else if (frameCount % (21 + -1*speed) == 0) {

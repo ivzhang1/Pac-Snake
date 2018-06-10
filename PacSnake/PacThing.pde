@@ -6,13 +6,14 @@ public class PacThing {
   private int direction; // 1 is North, -1 is South, 2 is East, -2 is West
   private int score;
   private int speed;
+  
   private Square[][] map;
 
   public PacThing(Position start, Board b, int s) {
     pos = start;
     map = b.getMap();
     direction = 1;
-    speed = 10;
+    speed = 9;
   }
 
   public int getDirection() {
