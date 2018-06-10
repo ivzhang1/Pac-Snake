@@ -60,6 +60,7 @@ public class Blinky extends Ghost {
       println("enter a speed from 0 to 10");
     } else if (frameCount % (21 + -1*speed) == 0) {
       Position next = solve(pacPos);
+      println(next + " " + pacPos);
       if (board.isOccupied(next)){
         return;
       }
