@@ -44,7 +44,7 @@ public class Pinky extends Ghost {
     return secondsLeft;
   }
   public void reduceTime() {
-    secondsLeft-=1;
+    secondsLeft -= 1;
   }
   public void setPos(Position pos) {
     _pos = pos;
