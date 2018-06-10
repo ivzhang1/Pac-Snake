@@ -1,5 +1,5 @@
 import java.util.PriorityQueue;
-import java.util.ArrrayIndexOutOfBoundsException;
+//import java.util.ArrrayIndexOutOfBoundsException;
 
 public class Clyde extends Ghost {
   private MyHeap<Position> frontier = new MyHeap<Position>(false);
@@ -66,14 +66,14 @@ public class Clyde extends Ghost {
       }
       Position next = solve(pacPos);
       println(next + " " + pacPos);
-      try{
-        if (board.isOccupied(next)){
-          return;
-        }
-        _pos = next;
-      } catch(ArrrayIndexOutOfBoundsException e){
-        print("FUC");
-      }
+      //try{
+      //  if (board.isOccupied(next)){
+      //    return;
+      //  }
+      //  _pos = next;
+      //} catch(ArrrayIndexOutOfBoundsException e){
+      //  print("FUC");
+      //}
     }
   }
   
@@ -82,7 +82,7 @@ public class Clyde extends Ghost {
   int dx = Math.abs(a.getXcor() - b.getXcor());
   int dy = Math.abs(a.getYcor() - b.getYcor());
   return Math.sqrt(dx*dx + dy*dy);
-}
+  }  
 
   public void meander(Position pacPos) {
     int[][] delta = {{_pos.getXcor()+1, _pos.getYcor()}, 

@@ -72,10 +72,16 @@ public void draw() {
         ghosts[i].setPos(board.getRandomGhostExit());
         ghosts[i].alive();
       }
-      ghosts[i].move(main);
+      if(i == 2){
+        ghosts[i].move(main, ghosts[0]);
+      }
+      else{
+        ghosts[i].move(main, null);
+      }
     }
     main.move();
     drawEverything();
+    
   }
 }
 
