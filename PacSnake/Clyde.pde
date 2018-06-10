@@ -78,7 +78,6 @@ public class Clyde extends Ghost {
       }
       Position next = solve(sTarget);
       _pos = next;
-      println(_pos);
       return;
     }
     }
@@ -100,7 +99,7 @@ public class Clyde extends Ghost {
       //} catch(ArrrayIndexOutOfBoundsException e){
       //  print("FUC");
       //}
-      println("clyde is at :" + next);
+      //println("clyde is at :" + next);
       //try{
       //  if (board.isOccupied(next)){
       //    return;

@@ -77,7 +77,6 @@ public class Pinky extends Ghost {
       }
       Position next = solve(sTarget);
       _pos = next;
-      println(_pos);
       return;
     }
     }

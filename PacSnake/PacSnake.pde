@@ -96,7 +96,6 @@ public void findOccupied() {
       }
     }
   }
-  println(gath);
 }
 
 public void insertImage(PImage img, float yLoc, float xLoc, int ySize, int xSize) {

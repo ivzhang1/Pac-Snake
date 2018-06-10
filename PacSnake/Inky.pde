@@ -102,7 +102,6 @@ public class Inky extends Ghost {
       }
       Position next = solve(sTarget);
       _pos = next;
-      println(_pos);
       return;
     }
     }
