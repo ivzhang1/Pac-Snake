@@ -59,31 +59,35 @@ public class Inky extends Ghost {
     Position pacPos = pac.getPos();
 
     Position blinkPos = b.getPos();
-    int xDiff = (blinkPos.getXcor() - pacPos.getXcor()) * 2;
-    int yDiff = (blinkPos.getYcor() - pacPos.getYcor()) * 2;
+    int xDiff = (pacPos.getXcor()-blinkPos.getXcor()) * 2;
+    int yDiff = (pacPos.getYcor()-blinkPos.getYcor()) * 2;
     int x = _pos.getXcor() + xDiff;
     int y = _pos.getYcor() + yDiff;
-    int xD = -1;
-    int yD = -1;
+      //println(" " + xDiff + ", " + yDiff);
+
+    int xD = 1;
+    int yD = 1;
 
     if (x < 0) {
-      xD = 1;
+      xD = -1;
     }
     if (y < 0) {
-      yD = 1;
+      yD = -1;
     }
 
     if (speed < 0 || speed > 10) {
       println("enter a speed from 0 to 10");
     } else if (frameCount % (21 + -1*speed) == 0) {
-      while (!(map[x][y].getContent() == 1)) {
-        if (x < 2 || x > map.length-2) {
-          x += xD;
-        }
-        if (y < 0 || y > map[0].length) {
-          y += yD;
-        }
-      }
+      //println(" " + map[x][y].getContent() + ", " + x + ", " + y);
+
+      //while ((x < 2 || x > map.length-2) || (y < 0 || y > map[0].length) || !(map[x][y].getContent() == 1 || map[x][y].getContent() == 2)) {
+      //  if (x < 2 || x > map.length-2) {
+      //    x += xD;
+      //  }
+      //  if (y < 0 || y > map[0].length) {
+      //    y += yD;
+      //  }
+      //}
 
       Position p = new Position(x, y); 
 
