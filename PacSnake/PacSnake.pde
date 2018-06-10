@@ -32,7 +32,7 @@ public void setup() {
   ghosts = new Ghost[4];
   ghosts[0] = (Ghost) new Blinky(board.getRandomGhostSpawn(), "BLINKY", board);
   ghosts[1] = (Ghost) new Clyde(board.getRandomGhostSpawn(), "CLYDE", board); 
-  ghosts[2] = (Ghost) new Inky(board.getRandomGhostSpawn(), "INKY", board.getMap()); 
+  ghosts[2] = (Ghost) new Inky(board.getRandomGhostSpawn(), "INKY", board.getMap(), ghosts[0]); 
   ghosts[3] = (Ghost) new Pinky(board.getRandomGhostSpawn(), "PINKY", board);
   setupPImages();
   drawPMan();

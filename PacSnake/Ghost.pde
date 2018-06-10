@@ -58,9 +58,6 @@ public abstract class Ghost{
   }
   
   public abstract void nextMove(PacThing pac);
-  public void nextMove(PacThing pac, Blinky b){
-    return;
-  };
 
   public String toString(){
     return type;

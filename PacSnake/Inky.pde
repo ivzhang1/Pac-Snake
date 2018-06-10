@@ -8,8 +8,9 @@ public class Inky extends Ghost {
   private int secondsLeft;
   private Square[][] map;
   private int speed;
+  private Ghost b;
 
-  public Inky(Position pos, String type, Square[][] m) {
+  public Inky(Position pos, String type, Square[][] m, Ghost _b) {
     _pos = pos;
     this.alive = false;
     isVulnerable = false;
@@ -17,19 +18,35 @@ public class Inky extends Ghost {
     this.type = type;
     map = m;
     speed = 1;
+    b = _b;
   }
 
   public void nextMove(PacThing pac) {
     Position pacPos = pac.getPos();
+    Position blinkPos = b.getPos();
+    int xDiff = (blinkPos.getXcor() - pacPos.getXcor()) * 2;
+    int yDiff = (blinkPos.getYcor() - pacPos.getYcor()) * 2;
+    int x = _pos.getXcor() + xDiff;
+    int y = _pos.getYcor() + yDiff;
+    int xD = -1;
+    int yD = -1;
+    
+    if(x < 0){
+      xD = 1;
+    }
+    
+    Position p = new Position(x, y); 
     if (speed < 0 || speed > 10) {
       println("enter a speed from 0 to 10");
     } else if (frameCount % (21 + -1*speed) == 0) {
-      Position next = solve(pacPos);
-      println(next + " " + pacPos);
-      if (board.isOccupied(next)){
-        return;
+      while (!(map[x][y].getContent() == 1) && (x < 2 || x > map.length-2 || y < 0 || y > map[0].length)) {
+        x -= 
+
+        Position next = solve(pacPos);
+        //meander(pacPos);
+        _pos = next;
+        //println(next + " " + pacPos);
       }
-      _pos = next;
     }
   }
 
@@ -61,7 +78,7 @@ public class Inky extends Ghost {
       {L.getXcor(), L.getYcor() + 1}, 
       {L.getXcor(), L.getYcor() - 1}};
     for (int coor[] : coors) {
-      if (coor[0] >= 0 && coor[0] < map.length &&
+      if (coor[0] >= 3 && coor[0] < map.length-2 &&
         coor[1] >= 0 && coor[1] < map[0].length) {
 
         if (map[coor[0]][coor[1]].getContent() != 0) {
@@ -73,7 +90,7 @@ public class Inky extends Ghost {
     }
     return loci;
   }
-  
+
   public Position solve(Position pman) {
 
     frontier = new MyHeap<Position>(false);

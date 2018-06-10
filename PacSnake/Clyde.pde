@@ -65,12 +65,12 @@ public class Clyde extends Ghost {
         return;
       }
       Position next = solve(pacPos);
-      println(next + " " + pacPos);
+      //println(next + " " + pacPos);
       //try{
       //  if (board.isOccupied(next)){
       //    return;
       //  }
-      //  _pos = next;
+        _pos = next;
       //} catch(ArrrayIndexOutOfBoundsException e){
       //  print("FUC");
       //}
@@ -118,9 +118,8 @@ public class Clyde extends Ghost {
       {L.getXcor(), L.getYcor() + 1}, 
       {L.getXcor(), L.getYcor() - 1}};
     for (int coor[] : coors) {
-      if (coor[0] >= 0 && coor[0] < map.length &&
+      if (coor[0] >= 3 && coor[0] < map.length-2 &&
         coor[1] >= 0 && coor[1] < map[0].length) {
-
         if (map[coor[0]][coor[1]].getContent() != 0) {
           double dist = Math.abs((px-coor[0]-1)) + Math.abs((py-coor[1]+1));
           loci[count] = new Position(coor[0], coor[1], L, dist, 1+L.dSoFar());

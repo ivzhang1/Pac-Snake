@@ -60,10 +60,6 @@ public class Blinky extends Ghost {
       println("enter a speed from 0 to 10");
     } else if (frameCount % (21 + -1*speed) == 0) {
       Position next = solve(pacPos);
-      println(next + " " + pacPos);
-      if (board.isOccupied(next)){
-        return;
-      }
       _pos = next;
     }
   }
@@ -102,7 +98,7 @@ public class Blinky extends Ghost {
       {L.getXcor(), L.getYcor() + 1}, 
       {L.getXcor(), L.getYcor() - 1}};
     for (int coor[] : coors) {
-      if (coor[0] >= 0 && coor[0] < map.length &&
+      if (coor[0] >= 3 && coor[0] < map.length-2 &&
         coor[1] >= 0 && coor[1] < map[0].length) {
 
         if (map[coor[0]][coor[1]].getContent() != 0) {
@@ -128,7 +124,6 @@ public class Blinky extends Ghost {
           int inty = map[l.getXcor()][l.getYcor()].getContent();
           //println(inty);
           end = new Position(l.getXcor(), l.getYcor(), prev, 0, 0);
-          ;
           if (l.equals(pman)) {
 
             while (end.get_prev() != null && !end.get_prev().equals(_pos)) {

@@ -117,7 +117,7 @@ public class Pinky extends Ghost {
       {L.getXcor(), L.getYcor() + 1}, 
       {L.getXcor(), L.getYcor() - 1}};
     for (int coor[] : coors) {
-      if (coor[0] >= 0 && coor[0] < map.length &&
+      if (coor[0] >= 3 && coor[0] < map.length-2 &&
         coor[1] >= 0 && coor[1] < map[0].length) {
 
         if (map[coor[0]][coor[1]].getContent() != 0) {
