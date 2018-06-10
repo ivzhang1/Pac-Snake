@@ -20,7 +20,7 @@ public class Pinky extends Ghost {
     this.type = type;
     board = b;
     map = board.getMap();
-    speed = 1;
+    speed = 10;
   }
   public boolean isAlive() {
     return alive;

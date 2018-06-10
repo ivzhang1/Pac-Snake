@@ -20,7 +20,7 @@ public class Inky extends Ghost {
     secondsLeft = 2;
     this.type = type;
     map = m;
-    speed = 1;
+    speed = 10;
     b = _b;
   }
   public boolean isAlive() {
@@ -59,20 +59,30 @@ public class Inky extends Ghost {
     Position pacPos = pac.getPos();
 
     Position blinkPos = b.getPos();
-    int xDiff = (pacPos.getXcor()-blinkPos.getXcor()) * 2;
-    int yDiff = (pacPos.getYcor()-blinkPos.getYcor()) * 2;
-    int x = _pos.getXcor() + xDiff;
-    int y = _pos.getYcor() + yDiff;
+    
+    int xDiff = (pacPos.getXcor()-blinkPos.getXcor()) * 2; //if + then blink is below PacMan
+    int yDiff = (pacPos.getYcor()-blinkPos.getYcor()) * 2; //if + then blink is left PacMan
+    
+    int x = _pos.getXcor() + Math.abs(xDiff);
+    int y = _pos.getYcor() + Math.abs(yDiff);
       //println(" " + xDiff + ", " + yDiff);
-
-    int xD = 1;
-    int yD = 1;
-
-    if (x < 0) {
-      xD = -1;
+   
+    while(x < 2 || x > map.length-2){
+      if(x < 2){
+        x++;
+      }
+      if(x > map.length-2){
+        x-=1;
+      }
     }
-    if (y < 0) {
-      yD = -1;
+
+    while(y < 0 || y > map[0].length){
+      if(y < 0){
+        y++;
+      }
+      if(y > map[0].length){
+        y-=1;
+      }
     }
 
     if (speed < 0 || speed > 10) {

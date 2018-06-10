@@ -12,7 +12,7 @@ public class PacThing {
     pos = start;
     map = b.getMap();
     direction = 1;
-    speed = s;
+    speed = 10;
   }
 
   public int getDirection() {
