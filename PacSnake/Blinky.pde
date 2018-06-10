@@ -24,7 +24,7 @@ public class Blinky extends Ghost {
     board = b;
     map = board.getMap();
     speed = 9;
-    scatterMode = true;
+    scatterMode = false;
     sTarget = new Position(5, 23);
     scatterTimer = 0;
   }
@@ -50,7 +50,7 @@ public class Blinky extends Ghost {
     return secondsLeft;
   }
   public void reduceTime() {
-    println("asdasd");
+    //println("asdasd");
     secondsLeft-=1;
   }
   public void setPos(Position pos) {
@@ -88,7 +88,7 @@ public class Blinky extends Ghost {
       }
       Position next = solve(sTarget);
       _pos = next;
-      println(_pos);
+      //println(_pos);
       return;
     }
     }
@@ -98,7 +98,7 @@ public class Blinky extends Ghost {
     } else if (frameCount % (21 + -1*speed) == 0) {
       Position next = solve(pacPos);
       _pos = next;
-      println(next);
+      //println(next);
     }
   }
 
@@ -139,7 +139,7 @@ public class Blinky extends Ghost {
       if (coor[0] >= 0 && coor[0] < map.length &&
         coor[1] >= 0 && coor[1] < map[0].length) {
 
-        if (map[coor[0]][coor[1]].getContent() != 0 || map[coor[0]][coor[1]].getContent() != 8) {
+        if (map[coor[0]][coor[1]].getContent() != 0 || map[coor[0]][coor[1]].getContent() != 8 || map[coor[0]][coor[1]].getContent() != 3) {
           double dist = Math.abs((px-coor[0]-1)) + Math.abs((py-coor[1]+1));
           loci[count] = new Position(coor[0], coor[1], L, dist, 1+L.dSoFar());
         }

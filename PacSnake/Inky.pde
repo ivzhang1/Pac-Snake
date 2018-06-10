@@ -25,7 +25,7 @@ public class Inky extends Ghost {
     map = m;
     speed = 9;
     b = _b;
-    scatterMode = true;
+    scatterMode = false;
     sTarget = new Position(26, 20);
   }
   public boolean isAlive() {
@@ -64,11 +64,12 @@ public class Inky extends Ghost {
     if (x < 2 || x > map.length - 2 || y < 0 || y > map[0].length) {
       return false;
     }
-    try{
+    try {
       if (map[x][y].getContent() == 1 || map[x][y].getContent() == 2) {
         return true;
       }
-    }catch(ArrayIndexOutOfBoundsException a){
+    }
+    catch(ArrayIndexOutOfBoundsException a) {
       return false;
     }
     return false;
@@ -84,80 +85,64 @@ public class Inky extends Ghost {
   }
 
   public void nextMove(PacThing pac) {
-    if (scatterMode){
+    if (scatterMode) {
       if (speed < 0 || speed > 10) {
-      println("enter a speed from 0 to 10");
-    } else if (frameCount % (21 + -1*speed) == 0) {
-      if (sTarget.equals(_pos)){
-        Position one = new Position(26, 20);
-        Position two = new Position(31, 14);
-        Position three = new Position(31, 25);
-        if (sTarget.equals(one)){
-          sTarget = two;
-        }else if(sTarget.equals(two)){
-          sTarget = three;
-        }else if(sTarget.equals(three)){
-          sTarget = one;
+        println("enter a speed from 0 to 10");
+      } else if (frameCount % (21 + -1*speed) == 0) {
+        if (sTarget.equals(_pos)) {
+          Position one = new Position(5, 3);
+          Position two = new Position(9, 3);
+          Position three = new Position(7, 6);
+          if (sTarget.equals(one)) {
+            sTarget = two;
+          } else if (sTarget.equals(two)) {
+            sTarget = three;
+          } else if (sTarget.equals(three)) {
+            sTarget = one;
+          }
         }
+        Position next = solve(sTarget);
+        _pos = next;
+        //println(_pos);
+        return;
       }
-      Position next = solve(sTarget);
-      _pos = next;
-      println(_pos);
-      return;
-    }
     }
     Position pacPos = pac.getPos();
-
-    Position blinkPos = b.getPos();
-
-    int xDiff = (pacPos.getXcor()-blinkPos.getXcor()) * 2; //if + then blink is below PacMan
-    int yDiff = (pacPos.getYcor()-blinkPos.getYcor()) * 2; //if + then blink is left PacMan
-
-    int x = _pos.getXcor() + Math.abs(xDiff);
-    int y = _pos.getYcor() + Math.abs(yDiff);
-    //println(" " + xDiff + ", " + yDiff);
-    int[] cpos = null; 
+    Position aheadTarget = new Position(pacPos.getXcor(), pacPos.getYcor());
+    int direction = pac.getDirection();
+    if (direction == 1) {
+      aheadTarget.setXcor(aheadTarget.getXcor()-6);
+    } else if (direction == -1) {
+      aheadTarget.setXcor(aheadTarget.getXcor()+6);
+    } else if (direction == 2) {
+      aheadTarget.setYcor(aheadTarget.getYcor()+6);
+    } else {
+      aheadTarget.setYcor(aheadTarget.getYcor()-6);
+    }
     if (speed < 0 || speed > 10) {
       println("enter a speed from 0 to 10");
     } else if (frameCount % (21 + -1*speed) == 0) {
-      while (!checkCases(x, y)) {
-        //println(x + " " + y);
-        int[][] ppos = {{x+1, y}, {x-1, y}, {x, y+1}, {x, y -1}, 
-          {x+1, y+1}, {x+1, y-1}, {x-1, y+1}, {x-1, y-1}};
-        cpos = correctPos(ppos);
-        //println(x + " " + y);
-        if (cpos == null) {
-          x-=1;
-          y-=1;
+      try {
+        if (map[aheadTarget.getXcor()][aheadTarget.getYcor()].movable()) {
+          _pos = solve(aheadTarget);
         } else {
-          break;
+          _pos = solve(pacPos);
         }
-        if (x < 2) {
-          x++;
-        } else if (x > map.length - 2) {
-          x--;
-        }
-        if (y < 0) {
-          y++;
-        } else if (y > map[0].length) {
-          y--;
-        }
+      } 
+      catch(IndexOutOfBoundsException e) {
+        _pos = solve(pacPos);
       }
-
-      //print("fd");
-      Position p = new Position(pacPos.getXcor(), pacPos.getYcor());
-      if (cpos != null) {
-        p = new Position(cpos[0], cpos[1]);
-      }
-      //println(p.getXcor() + ", " + p.getYcor()); 
-      Position next = solve(p);
-      //meander(pacPos);
-      _pos = next;
     }
   }
+  public double distance(Position a, Position b) {
+    double dist = 0.0;
+    int dx = Math.abs(a.getXcor() - b.getXcor());
+    int dy = Math.abs(a.getYcor() - b.getYcor());
+    return Math.sqrt(dx*dx + dy*dy);
+  }  
 
 
-  public void meander() {
+  public void meander(Position pacPos) {
     int[][] delta = {{_pos.getXcor()+1, _pos.getYcor()}, 
       {_pos.getXcor()-1, _pos.getYcor()}, 
       {_pos.getXcor(), _pos.getYcor()+1}, 
@@ -194,7 +179,7 @@ public class Inky extends Ghost {
       if (coor[0] >= 0 && coor[0] < map.length &&
         coor[1] >= 0 && coor[1] < map[0].length) {
 
-        if (map[coor[0]][coor[1]].getContent() != 0 || map[coor[0]][coor[1]].getContent() != 8) {
+        if (map[coor[0]][coor[1]].getContent() != 0 || map[coor[0]][coor[1]].getContent() != 8 || map[coor[0]][coor[1]].getContent() != 3) {
           double dist = Math.abs((px-coor[0]-1)) + Math.abs((py-coor[1]+1));
           loci[count] = new Position(coor[0], coor[1], L, dist, 1+L.dSoFar());
         }
