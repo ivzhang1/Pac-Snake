@@ -65,8 +65,8 @@ public class Pinky extends Ghost {
     } else if (frameCount % (21 + -1*speed) == 0) {
       if (sTarget.equals(_pos)){
         Position one = new Position(5, 3);
-        Position two = new Position(9, 23);
-        Position three = new Position(7, 26);
+        Position two = new Position(9, 3);
+        Position three = new Position(7, 6);
         if (sTarget.equals(one)){
           sTarget = two;
         }else if(sTarget.equals(two)){

@@ -13,6 +13,8 @@ public class Inky extends Ghost {
   private int speed;
   private boolean scatterMode; 
   private Ghost b;
+  private Position sTarget;
+
 
   public Inky(Position pos, String type, Square[][] m, Ghost _b) {
     _pos = pos;
@@ -24,6 +26,7 @@ public class Inky extends Ghost {
     speed = 9;
     b = _b;
     scatterMode = true;
+    sTarget = new Position(26, 20);
   }
   public boolean isAlive() {
     return alive;
