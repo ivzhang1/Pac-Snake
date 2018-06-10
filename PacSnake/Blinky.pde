@@ -13,6 +13,7 @@ public class Blinky extends Ghost {
   private Square[][] map;
   private int speed;
   private Position sTarget;
+  private int scatterTimer;
 
   public Blinky(Position pos, String type, Board b) {
     _pos = pos;
@@ -25,6 +26,7 @@ public class Blinky extends Ghost {
     speed = 9;
     scatterMode = true;
     sTarget = new Position(5, 23);
+    scatterTimer = 0;
   }
   public boolean isAlive() {
     return alive;
@@ -48,6 +50,7 @@ public class Blinky extends Ghost {
     return secondsLeft;
   }
   public void reduceTime() {
+    println("asdasd");
     secondsLeft-=1;
   }
   public void setPos(Position pos) {
@@ -59,6 +62,7 @@ public class Blinky extends Ghost {
   }
 
   public void nextMove(PacThing pac) {
+    checkScatter();
     if (scatterMode){
       if (speed < 0 || speed > 10) {
       println("enter a speed from 0 to 10");
