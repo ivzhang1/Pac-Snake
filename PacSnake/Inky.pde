@@ -14,6 +14,8 @@ public class Inky extends Ghost {
   private boolean scatterMode; 
   private Ghost b;
   private Position sTarget;
+  private int scatterTimer;
+
 
 
   public Inky(Position pos, String type, Square[][] m, Ghost _b) {
@@ -59,6 +61,20 @@ public class Inky extends Ghost {
   public void setSpeed(int s) {
     speed = s;
   }
+  
+  public void checkScatter(){
+    if (scatterTimer == 0){
+      scatterTimer++;
+      return;
+    }
+    if (scatterTimer % 503 == 0){
+       scatterMode = false;
+    }else if (scatterTimer % 701 == 0){
+      scatterMode = true;
+    }
+    scatterTimer++;
+    
+  }
 
   public boolean checkCases(int x, int y) {
     if (x < 2 || x > map.length - 2 || y < 0 || y > map[0].length) {
@@ -85,6 +101,7 @@ public class Inky extends Ghost {
   }
 
   public void nextMove(PacThing pac) {
+    checkScatter();
     if (scatterMode) {
       if (speed < 0 || speed > 10) {
         println("enter a speed from 0 to 10");

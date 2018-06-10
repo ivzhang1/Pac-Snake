@@ -13,6 +13,8 @@ public class Pinky extends Ghost {
   private int speed = 1;
   private boolean scatterMode; 
   private Position sTarget;
+  private int scatterTimer;
+
 
   public Pinky(Position pos, String type, Board b) {
     _pos = pos;
@@ -57,8 +59,23 @@ public class Pinky extends Ghost {
   public void setSpeed(int s) {
     speed = s;
   }
-
+  
+  public void checkScatter(){
+    if (scatterTimer == 0){
+      scatterTimer++;
+      return;
+    }
+    if (scatterTimer % 503 == 0){
+       scatterMode = false;
+    }else if (scatterTimer % 701 == 0){
+      scatterMode = true;
+    }
+    scatterTimer++;
+    
+  }
+  
   public void nextMove(PacThing pac) {
+    checkScatter();
     if (scatterMode){
       if (speed < 0 || speed > 10) {
       println("enter a speed from 0 to 10");
