@@ -66,7 +66,6 @@ public void draw() {
       ghosts[i].alive();
     }
     ghosts[i].move(main);
-    println(ghosts[i]);
   }
   main.move();
   drawEverything();
@@ -156,6 +155,12 @@ public void drawFruit(int xc, int yc) {
   insertImage(fruit, yc* 20 + 2, xc* 20 + 2, 15, 15);
 }
 
+public static double distance(Position a, Position b){
+  double dist = 0.0;
+  int dx = Math.abs(a.getXcor() - b.getXcor());
+  int dy = Math.abs(a.getYcor() - b.getYcor());
+  return Math.sqrt(dx*dx + dy*dy);
+}
 
 public void keyPressed() {
   switch(keyCode) {
