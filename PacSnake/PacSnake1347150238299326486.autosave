@@ -32,7 +32,7 @@ public void setup() {
   ghosts = new Ghost[4];
   ghosts[0] = (Ghost) new Blinky(board.getRandomGhostSpawn(), "BLINKY", board);
   ghosts[1] = (Ghost) new Clyde(board.getRandomGhostSpawn(), "CLYDE", board); 
-  ghosts[2] = (Ghost) new Inky(board.getRandomGhostSpawn(), "INKY", board.getMap(), ghosts[0]); 
+  ghosts[2] = (Ghost) new Inky(board.getRandomGhostSpawn(), "INKY", board.getMap()); 
   ghosts[3] = (Ghost) new Pinky(board.getRandomGhostSpawn(), "PINKY", board);
   setupPImages();
   drawPMan();
@@ -68,7 +68,9 @@ public void setupPImages() {
 public void draw() {
   if (isGameStarted) {
     for (int i = 0; i < 4; i++) {
-      
+      if (i == 2 || i == 1){
+        continue;
+      }
       if (ghosts[i].getTime() == 0 && !ghosts[i].isAlive()) {
         ghosts[i].setPos(board.getRandomGhostExit());
         ghosts[i].alive();
