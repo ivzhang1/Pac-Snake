@@ -1,5 +1,5 @@
 import java.util.PriorityQueue;
-//import java.util.ArrrayIndexOutOfBoundsException;
+import java.util.*;
 
 public class Clyde extends Ghost {
   private MyHeap<Position> frontier = new MyHeap<Position>(false);
@@ -71,6 +71,15 @@ public class Clyde extends Ghost {
       //    return;
       //  }
         _pos = next;
+      //} catch(ArrrayIndexOutOfBoundsException e){
+      //  print("FUC");
+      //}
+      println(next + " " + pacPos);
+      //try{
+      //  if (board.isOccupied(next)){
+      //    return;
+      //  }
+      //  _pos = next;
       //} catch(ArrrayIndexOutOfBoundsException e){
       //  print("FUC");
       //}
