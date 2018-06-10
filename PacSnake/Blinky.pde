@@ -60,6 +60,12 @@ public class Blinky extends Ghost {
   public void setSpeed(int s) {
     speed = s;
   }
+  
+  public void checkScatter(){
+    if (scatterTimer % 53 == 0){
+      scatterTimer = !scatterTimer;
+    }
+  }
 
   public void nextMove(PacThing pac) {
     checkScatter();
