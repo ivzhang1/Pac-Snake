@@ -1,5 +1,8 @@
-public class Inky extends Ghost {
+import java.util.PriorityQueue;
+
+public class Blinky extends Ghost {
   private MyHeap<Position> frontier = new MyHeap<Position>(false);
+  private Board board;
 
   private Position _pos;
   private String type;
@@ -8,9 +11,8 @@ public class Inky extends Ghost {
   private int secondsLeft;
   private Square[][] map;
   private int speed;
-  private Ghost b;
 
-  public Inky(Position pos, String type, Square[][] m, Ghost _b) {
+    public Inky(Position pos, String type, Square[][] m, Ghost _b) {
     _pos = pos;
     this.alive = false;
     isVulnerable = false;
@@ -20,33 +22,45 @@ public class Inky extends Ghost {
     speed = 1;
     b = _b;
   }
+  public boolean isAlive() {
+    return alive;
+  }
+  public Position getPos() {
+    return _pos;
+  }
+
+  public void alive() {
+    alive = true;
+  }
+
+  public String getType() {
+    return type;
+  }
+  public int getSpeed() {
+    return speed;
+  }
+
+  public int getTime() {
+    return secondsLeft;
+  }
+  public void reduceTime() {
+    secondsLeft-=1;
+  }
+  public void setPos(Position pos) {
+    _pos = pos;
+  }
+
+  public void setSpeed(int s) {
+    speed = s;
+  }
 
   public void nextMove(PacThing pac) {
     Position pacPos = pac.getPos();
-    Position blinkPos = b.getPos();
-    int xDiff = (blinkPos.getXcor() - pacPos.getXcor()) * 2;
-    int yDiff = (blinkPos.getYcor() - pacPos.getYcor()) * 2;
-    int x = _pos.getXcor() + xDiff;
-    int y = _pos.getYcor() + yDiff;
-    int xD = -1;
-    int yD = -1;
-    
-    if(x < 0){
-      xD = 1;
-    }
-    
-    Position p = new Position(x, y); 
     if (speed < 0 || speed > 10) {
       println("enter a speed from 0 to 10");
     } else if (frameCount % (21 + -1*speed) == 0) {
-      while (!(map[x][y].getContent() == 1) && (x < 2 || x > map.length-2 || y < 0 || y > map[0].length)) {
-        x -= 
-
-        Position next = solve(pacPos);
-        //meander(pacPos);
-        _pos = next;
-        //println(next + " " + pacPos);
-      }
+      Position next = solve(pacPos);
+      _pos = next;
     }
   }
 
@@ -62,6 +76,12 @@ public class Inky extends Ghost {
       _pos.setYcor(nextPos[1]);
     }
   }
+
+  public String toString() {
+    return type;
+  }
+
+
 
   public Position[] getNeighbors(Position L, Position pman) {
     Position[] loci = new Position[4];
@@ -104,7 +124,6 @@ public class Inky extends Ghost {
           int inty = map[l.getXcor()][l.getYcor()].getContent();
           //println(inty);
           end = new Position(l.getXcor(), l.getYcor(), prev, 0, 0);
-          ;
           if (l.equals(pman)) {
 
             while (end.get_prev() != null && !end.get_prev().equals(_pos)) {
@@ -123,37 +142,9 @@ public class Inky extends Ghost {
     return null;
   }
 
-  public boolean isAlive() {
-    return alive;
-  }
-  public Position getPos() {
-    return _pos;
-  }
 
-  public String getType() {
-    return type;
-  }
-
-  public int getSpeed() {
-    return speed;
-  }
-  public int getTime() {
-    return secondsLeft;
-  }
-  public void alive() {
-    alive = true;
-  }  
-  public void setPos(Position pos) {
-    _pos = pos;
-  }
-
-  public void setSpeed(int s) {
-    speed = s;
-  }
-  public void reduceTime() {
-    secondsLeft-=1;
-  }
-  public String toString() {
-    return type;
+  public void getAStar(Position pman) {
+    solve(pman);
+    //print(frontier.size());
   }
 }
