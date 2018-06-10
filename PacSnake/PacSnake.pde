@@ -29,7 +29,7 @@ public void setup() {
   scoreboard = new Scores();
   ghosts = new Ghost[4];
   ghosts[0] = (Ghost) new Blinky(board.getRandomGhostSpawn(), "BLINKY", board);
-  ghosts[1] = (Ghost) new Clyde(board.getRandomGhostSpawn(), "CLYDE", board.getMap()); 
+  ghosts[1] = (Ghost) new Clyde(board.getRandomGhostSpawn(), "CLYDE", board); 
   ghosts[2] = (Ghost) new Inky(board.getRandomGhostSpawn(), "INKY", board.getMap()); 
   ghosts[3] = (Ghost) new Pinky(board.getRandomGhostSpawn(), "PINKY", board);
   setupPImages();
@@ -152,13 +152,6 @@ public void drawPelletB(int xc, int yc) {
 
 public void drawFruit(int xc, int yc) {
   insertImage(fruit, yc* 20 + 2, xc* 20 + 2, 15, 15);
-}
-
-public static double distance(Position a, Position b){
-  double dist = 0.0;
-  int dx = Math.abs(a.getXcor() - b.getXcor());
-  int dy = Math.abs(a.getYcor() - b.getYcor());
-  return Math.sqrt(dx*dx + dy*dy);
 }
 
 public void keyPressed() {
