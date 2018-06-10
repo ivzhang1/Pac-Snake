@@ -12,6 +12,7 @@ public class Blinky extends Ghost {
   private boolean scatterMode; 
   private Square[][] map;
   private int speed;
+  private Position sTarget;
 
   public Blinky(Position pos, String type, Board b) {
     _pos = pos;
@@ -23,6 +24,7 @@ public class Blinky extends Ghost {
     map = board.getMap();
     speed = 9;
     scatterMode = true;
+    sTarget = new Position(5, 23);
   }
   public boolean isAlive() {
     return alive;
@@ -61,7 +63,7 @@ public class Blinky extends Ghost {
       if (speed < 0 || speed > 10) {
       println("enter a speed from 0 to 10");
     } else if (frameCount % (21 + -1*speed) == 0) {
-      Position next = solve(new Position(5, 23));
+      Position next = solve(sTarget);
       _pos = next;
       return;
     }
@@ -72,6 +74,7 @@ public class Blinky extends Ghost {
     } else if (frameCount % (21 + -1*speed) == 0) {
       Position next = solve(pacPos);
       _pos = next;
+      if 
       println(next);
     }
   }
