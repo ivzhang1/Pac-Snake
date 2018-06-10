@@ -88,8 +88,21 @@ public class Inky extends Ghost {
       if (speed < 0 || speed > 10) {
       println("enter a speed from 0 to 10");
     } else if (frameCount % (21 + -1*speed) == 0) {
-      Position next = solve(new Position(26, 20));
+      if (sTarget.equals(_pos)){
+        Position one = new Position(26, 20);
+        Position two = new Position(31, 1);
+        Position three = new Position(31, 12);
+        if (sTarget.equals(one)){
+          sTarget = two;
+        }else if(sTarget.equals(two)){
+          sTarget = three;
+        }else if(sTarget.equals(three)){
+          sTarget = one;
+        }
+      }
+      Position next = solve(sTarget);
       _pos = next;
+      println(_pos);
       return;
     }
     }
