@@ -57,6 +57,29 @@ public class Inky extends Ghost {
     speed = s;
   }
 
+  public boolean checkCases(int x, int y) {
+    if (x < 2 || x > map.length - 2 || y < 0 || y > map[0].length) {
+      return false;
+    }
+    try{
+      if (map[x][y].getContent() == 1 || map[x][y].getContent() == 2) {
+        return true;
+      }
+    }catch(ArrayIndexOutOfBoundsException a){
+      return false;
+    }
+    return false;
+  }
+
+  public int[] correctPos(int[][] pos) {
+    for (int[] p : pos) {
+      if (checkCases(p[0], p[1])) {
+        return p;
+      }
+    }
+    return null;
+  }
+
   public void nextMove(PacThing pac) {
     if (scatterMode){
       if (speed < 0 || speed > 10) {
@@ -70,48 +93,47 @@ public class Inky extends Ghost {
     Position pacPos = pac.getPos();
 
     Position blinkPos = b.getPos();
-    
+
     int xDiff = (pacPos.getXcor()-blinkPos.getXcor()) * 2; //if + then blink is below PacMan
     int yDiff = (pacPos.getYcor()-blinkPos.getYcor()) * 2; //if + then blink is left PacMan
-    
+
     int x = _pos.getXcor() + Math.abs(xDiff);
     int y = _pos.getYcor() + Math.abs(yDiff);
-      //println(" " + xDiff + ", " + yDiff);
-   
-    while(x < 2 || x > map.length-2){
-      if(x < 2){
-        x++;
-      }
-      if(x > map.length-2){
-        x-=1;
-      }
-    }
-
-    while(y < 0 || y > map[0].length){
-      if(y < 0){
-        y++;
-      }
-      if(y > map[0].length){
-        y-=1;
-      }
-    }
-
+    //println(" " + xDiff + ", " + yDiff);
+    int[] cpos = null; 
     if (speed < 0 || speed > 10) {
       println("enter a speed from 0 to 10");
     } else if (frameCount % (21 + -1*speed) == 0) {
-      //println(" " + map[x][y].getContent() + ", " + x + ", " + y);
+      while (!checkCases(x, y)) {
+        //println(x + " " + y);
+        int[][] ppos = {{x+1, y}, {x-1, y}, {x, y+1}, {x, y -1}, 
+          {x+1, y+1}, {x+1, y-1}, {x-1, y+1}, {x-1, y-1}};
+        cpos = correctPos(ppos);
+        //println(x + " " + y);
+        if (cpos == null) {
+          x-=1;
+          y-=1;
+        } else {
+          break;
+        }
+        if (x < 2) {
+          x++;
+        } else if (x > map.length - 2) {
+          x--;
+        }
+        if (y < 0) {
+          y++;
+        } else if (y > map[0].length) {
+          y--;
+        }
+      }
 
-      //while ((x < 2 || x > map.length-2) || (y < 0 || y > map[0].length) || !(map[x][y].getContent() == 1 || map[x][y].getContent() == 2)) {
-      //  if (x < 2 || x > map.length-2) {
-      //    x += xD;
-      //  }
-      //  if (y < 0 || y > map[0].length) {
-      //    y += yD;
-      //  }
-      //}
-
-      Position p = new Position(x, y); 
-
+      //print("fd");
+      Position p = new Position(pacPos.getXcor(), pacPos.getYcor());
+      if (cpos != null) {
+        p = new Position(cpos[0], cpos[1]);
+      }
+      //println(p.getXcor() + ", " + p.getYcor()); 
       Position next = solve(p);
       //meander(pacPos);
       _pos = next;
@@ -119,7 +141,7 @@ public class Inky extends Ghost {
   }
 
 
-  public void meander(Position pacPos) {
+  public void meander() {
     int[][] delta = {{_pos.getXcor()+1, _pos.getYcor()}, 
       {_pos.getXcor()-1, _pos.getYcor()}, 
       {_pos.getXcor(), _pos.getYcor()+1}, 
