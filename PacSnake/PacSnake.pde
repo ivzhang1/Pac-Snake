@@ -69,7 +69,6 @@ public void draw() {
   }
   main.move();
   drawEverything();
-  //println("fin");
 }
 
 public void findOccupied() {
