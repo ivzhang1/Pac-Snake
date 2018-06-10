@@ -1,6 +1,6 @@
 import java.util.PriorityQueue;
 
-public class Blinky extends Ghost {
+public class Inky extends Ghost {
   private MyHeap<Position> frontier = new MyHeap<Position>(false);
   private Board board;
 
@@ -11,6 +11,7 @@ public class Blinky extends Ghost {
   private int secondsLeft;
   private Square[][] map;
   private int speed;
+  private Ghost b;
 
     public Inky(Position pos, String type, Square[][] m, Ghost _b) {
     _pos = pos;
