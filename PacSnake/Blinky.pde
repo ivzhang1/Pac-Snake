@@ -16,7 +16,7 @@ public class Blinky extends Ghost {
     _pos = pos;
     this.alive = false;
     isVulnerable = false;
-    secondsLeft = 0;
+    secondsLeft = 20;
     this.type = type;
     board = b;
     map = board.getMap();

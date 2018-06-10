@@ -81,6 +81,14 @@ public void draw() {
   }
 }
 
+public void drawEverything() {
+  background(color(0, 0, 0));
+  drawPMan();
+  drawGhosts();
+  drawBoard(true);
+  //findOccupied();
+}
+
 public void findOccupied() {
   String gath = "";
   Square[][] mapy = board.getMap();
@@ -96,14 +104,6 @@ public void findOccupied() {
 
 public void insertImage(PImage img, float yLoc, float xLoc, int ySize, int xSize) {
   image(img, yLoc, xLoc, ySize, xSize);
-}
-
-public void drawEverything() {
-  background(color(0, 0, 0));
-  drawPMan();
-  drawGhosts();
-  drawBoard(true);
-  //findOccupied();
 }
 
 
