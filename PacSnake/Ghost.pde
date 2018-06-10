@@ -5,6 +5,10 @@ public abstract class Ghost{
   private boolean alive;
   private boolean isVulnerable;
   private int secondsLeft;
+  private boolean scatterMode; 
+  private Square[][] map;
+  private int speed;
+  private Position sTarget;
 
   public boolean isAlive() {
     return alive;

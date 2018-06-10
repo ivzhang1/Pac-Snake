@@ -90,8 +90,8 @@ public class Inky extends Ghost {
     } else if (frameCount % (21 + -1*speed) == 0) {
       if (sTarget.equals(_pos)){
         Position one = new Position(26, 20);
-        Position two = new Position(31, 1);
-        Position three = new Position(31, 12);
+        Position two = new Position(31, 14);
+        Position three = new Position(31, 25);
         if (sTarget.equals(one)){
           sTarget = two;
         }else if(sTarget.equals(two)){
