@@ -61,7 +61,7 @@ public void setupPImages() {
 public void draw() {
   if (isGameStarted) {
     for (int i = 0; i < 4; i++) {
-      if(i == 2){
+      if(i == 1 || i == 3){
         continue;
       }
       if (ghosts[i].getTime() == 0 && !ghosts[i].isAlive()) {
