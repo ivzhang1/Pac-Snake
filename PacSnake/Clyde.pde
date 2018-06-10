@@ -23,6 +23,7 @@ public class Clyde extends Ghost {
     board = b;
     map = board.getMap();
     speed = 9;
+    scatterMode = true;
   }
   public boolean isAlive() {
     return alive;
@@ -62,7 +63,7 @@ public class Clyde extends Ghost {
       if (speed < 0 || speed > 10) {
       println("enter a speed from 0 to 10");
     } else if (frameCount % (21 + -1*speed) == 0) {
-      Position next = solve(new Position(5, 26));
+      Position next = solve(new Position(26, 7));
       _pos = next;
       return;
     }
@@ -84,7 +85,7 @@ public class Clyde extends Ghost {
       //} catch(ArrrayIndexOutOfBoundsException e){
       //  print("FUC");
       //}
-      println(next + " " + pacPos);
+      println("clyde is at :" + next);
       //try{
       //  if (board.isOccupied(next)){
       //    return;

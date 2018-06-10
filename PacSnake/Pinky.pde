@@ -22,6 +22,7 @@ public class Pinky extends Ghost {
     board = b;
     map = board.getMap();
     speed = 9;
+    scatterMode = true;
   }
   public boolean isAlive() {
     return alive;
@@ -56,6 +57,15 @@ public class Pinky extends Ghost {
   }
 
   public void nextMove(PacThing pac) {
+    if (scatterMode){
+      if (speed < 0 || speed > 10) {
+      println("enter a speed from 0 to 10");
+    } else if (frameCount % (21 + -1*speed) == 0) {
+      Position next = solve(new Position(5, 3));
+      _pos = next;
+      return;
+    }
+    }
     Position pacPos = pac.getPos();
     Position aheadTarget = new Position(pacPos.getXcor(), pacPos.getYcor());
     int direction = pac.getDirection();
