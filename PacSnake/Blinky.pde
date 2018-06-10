@@ -2,6 +2,8 @@ import java.util.PriorityQueue;
 
 public class Blinky extends Ghost {
   private MyHeap<Position> frontier = new MyHeap<Position>(false);
+  private MyHeap<Position> farthest = new MyHeap<Position>(true);
+  
   private Board board;
 
   private Position _pos;

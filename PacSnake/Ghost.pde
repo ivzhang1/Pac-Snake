@@ -37,7 +37,7 @@ public abstract class Ghost{
   
   public void kill() {
     alive = false;
-    secondsLeft = 1000;
+    secondsLeft = 200;
   }
   
   public void move(PacThing pac, Ghost g){

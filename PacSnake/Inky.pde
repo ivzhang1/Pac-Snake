@@ -111,13 +111,13 @@ public class Inky extends Ghost {
     Position aheadTarget = new Position(pacPos.getXcor(), pacPos.getYcor());
     int direction = pac.getDirection();
     if (direction == 1) {
-      aheadTarget.setXcor(aheadTarget.getXcor()-6);
+      aheadTarget.setXcor(aheadTarget.getXcor()-2);
     } else if (direction == -1) {
-      aheadTarget.setXcor(aheadTarget.getXcor()+6);
+      aheadTarget.setXcor(aheadTarget.getXcor()+2);
     } else if (direction == 2) {
-      aheadTarget.setYcor(aheadTarget.getYcor()+6);
+      aheadTarget.setYcor(aheadTarget.getYcor()+2);
     } else {
-      aheadTarget.setYcor(aheadTarget.getYcor()-6);
+      aheadTarget.setYcor(aheadTarget.getYcor()-2);
     }
     if (speed < 0 || speed > 10) {
       println("enter a speed from 0 to 10");

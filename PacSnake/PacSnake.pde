@@ -57,7 +57,6 @@ public void setupPImages() {
   pwall = loadImage(addend + "PWALL.png");
 }
 
-
 public void draw() {
   if (isGameStarted) {
     for (int i = 0; i < 4; i++) {
@@ -65,6 +64,10 @@ public void draw() {
         ghosts[i].setPos(board.getRandomGhostExit());
         ghosts[i].alive();
       }
+      else if(!ghosts[i].isAlive() && ghosts[i].getTime() == 200){
+        ghosts[i].setPos(board.getRandomGhostSpawn());
+      }
+      
       if(i == 2){
         ghosts[i].move(main, ghosts[0]);
       }
@@ -72,9 +75,9 @@ public void draw() {
         ghosts[i].move(main, null);
       }
     }
+    
     main.move();
     drawEverything();
-    
   }
 }
 
