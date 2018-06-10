@@ -30,25 +30,35 @@ public class Inky extends Ghost {
     int y = _pos.getYcor() + yDiff;
     int xD = -1;
     int yD = -1;
-    
-    if(x < 0){
+
+    if (x < 0) {
       xD = 1;
     }
-    
-    Position p = new Position(x, y); 
+    if (y < 0) {
+      yD = 1;
+    }
+
     if (speed < 0 || speed > 10) {
       println("enter a speed from 0 to 10");
     } else if (frameCount % (21 + -1*speed) == 0) {
-      while (!(map[x][y].getContent() == 1) && (x < 2 || x > map.length-2 || y < 0 || y > map[0].length)) {
-        x -= 
-
-        Position next = solve(pacPos);
-        //meander(pacPos);
-        _pos = next;
-        //println(next + " " + pacPos);
+      while (!(map[x][y].getContent() == 1)) {
+        if (x < 2 || x > map.length-2) {
+          x += xD;
+        }
+        if (y < 0 || y > map[0].length) {
+          y += yD;
+        }
       }
+
+      Position p = new Position(x, y); 
+
+      Position next = solve(p);
+      //meander(pacPos);
+      _pos = next;
+      //println(next + " " + pacPos);
     }
   }
+
 
   public void meander(Position pacPos) {
     int[][] delta = {{_pos.getXcor()+1, _pos.getYcor()}, 
@@ -78,10 +88,10 @@ public class Inky extends Ghost {
       {L.getXcor(), L.getYcor() + 1}, 
       {L.getXcor(), L.getYcor() - 1}};
     for (int coor[] : coors) {
-      if (coor[0] >= 3 && coor[0] < map.length-2 &&
+      if (coor[0] >= 0 && coor[0] < map.length &&
         coor[1] >= 0 && coor[1] < map[0].length) {
 
-        if (map[coor[0]][coor[1]].getContent() != 0) {
+        if (map[coor[0]][coor[1]].getContent() != 0 || map[coor[0]][coor[1]].getContent() != 8) {
           double dist = Math.abs((px-coor[0]-1)) + Math.abs((py-coor[1]+1));
           loci[count] = new Position(coor[0], coor[1], L, dist, 1+L.dSoFar());
         }

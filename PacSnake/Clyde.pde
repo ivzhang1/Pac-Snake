@@ -60,7 +60,7 @@ public class Clyde extends Ghost {
     if (speed < 0 || speed > 10) {
       println("enter a speed from 0 to 10");
     } else if (frameCount % (21 + -1*speed) == 0) {
-      if (distance(pacPos, getPos()) < 4.0 ){
+      if (distance(pacPos, getPos()) < 4.0 ) {
         meander(pacPos);
         return;
       }
@@ -70,7 +70,7 @@ public class Clyde extends Ghost {
       //  if (board.isOccupied(next)){
       //    return;
       //  }
-        _pos = next;
+      _pos = next;
       //} catch(ArrrayIndexOutOfBoundsException e){
       //  print("FUC");
       //}
@@ -85,12 +85,12 @@ public class Clyde extends Ghost {
       //}
     }
   }
-  
-  public double distance(Position a, Position b){
-  double dist = 0.0;
-  int dx = Math.abs(a.getXcor() - b.getXcor());
-  int dy = Math.abs(a.getYcor() - b.getYcor());
-  return Math.sqrt(dx*dx + dy*dy);
+
+  public double distance(Position a, Position b) {
+    double dist = 0.0;
+    int dx = Math.abs(a.getXcor() - b.getXcor());
+    int dy = Math.abs(a.getYcor() - b.getYcor());
+    return Math.sqrt(dx*dx + dy*dy);
   }  
 
   public void meander(Position pacPos) {
@@ -127,9 +127,9 @@ public class Clyde extends Ghost {
       {L.getXcor(), L.getYcor() + 1}, 
       {L.getXcor(), L.getYcor() - 1}};
     for (int coor[] : coors) {
-      if (coor[0] >= 3 && coor[0] < map.length-2 &&
+      if (coor[0] >= 0 && coor[0] < map.length &&
         coor[1] >= 0 && coor[1] < map[0].length) {
-        if (map[coor[0]][coor[1]].getContent() != 0) {
+        if (map[coor[0]][coor[1]].getContent() != 0 || map[coor[0]][coor[1]].getContent() != 8) {
           double dist = Math.abs((px-coor[0]-1)) + Math.abs((py-coor[1]+1));
           loci[count] = new Position(coor[0], coor[1], L, dist, 1+L.dSoFar());
         }

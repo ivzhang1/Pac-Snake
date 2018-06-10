@@ -98,10 +98,10 @@ public class Blinky extends Ghost {
       {L.getXcor(), L.getYcor() + 1}, 
       {L.getXcor(), L.getYcor() - 1}};
     for (int coor[] : coors) {
-      if (coor[0] >= 3 && coor[0] < map.length-2 &&
+      if (coor[0] >= 0 && coor[0] < map.length &&
         coor[1] >= 0 && coor[1] < map[0].length) {
 
-        if (map[coor[0]][coor[1]].getContent() != 0) {
+        if (map[coor[0]][coor[1]].getContent() != 0 || map[coor[0]][coor[1]].getContent() != 8) {
           double dist = Math.abs((px-coor[0]-1)) + Math.abs((py-coor[1]+1));
           loci[count] = new Position(coor[0], coor[1], L, dist, 1+L.dSoFar());
         }
