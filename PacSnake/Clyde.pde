@@ -59,8 +59,8 @@ public class Clyde extends Ghost {
     if (speed < 0 || speed > 10) {
       println("enter a speed from 0 to 10");
     } else if (frameCount % (21 + -1*speed) == 0) {
-      if (board.distance(pacPos, getPos() > 4.0) ){
-        meander();
+      if (distance(pacPos, getPos()) < 4.0 ){
+        meander(pacPos);
         return;
       }
       Position next = solve(pacPos);
@@ -71,6 +71,13 @@ public class Clyde extends Ghost {
       _pos = next;
     }
   }
+  
+  public double distance(Position a, Position b){
+  double dist = 0.0;
+  int dx = Math.abs(a.getXcor() - b.getXcor());
+  int dy = Math.abs(a.getYcor() - b.getYcor());
+  return Math.sqrt(dx*dx + dy*dy);
+}
 
   public void meander(Position pacPos) {
     int[][] delta = {{_pos.getXcor()+1, _pos.getYcor()}, 
