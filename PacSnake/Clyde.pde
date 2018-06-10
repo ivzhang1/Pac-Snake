@@ -17,7 +17,7 @@ public class Clyde extends Ghost {
     _pos = pos;
     this.alive = false;
     isVulnerable = false;
-    secondsLeft = 0;
+    secondsLeft = 200;
     this.type = type;
     board = b;
     map = board.getMap();
