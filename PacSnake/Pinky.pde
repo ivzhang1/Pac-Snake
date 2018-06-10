@@ -70,9 +70,7 @@ public class Pinky extends Ghost {
     if (speed < 0 || speed > 10) {
       println("enter a speed from 0 to 10");
     } else if (frameCount % (21 + -1*speed) == 0) {
-      //meander(pacPos);
-    }
-    try{
+      try{
       if (map[aheadTarget.getXcor()][aheadTarget.getYcor()].movable()){
       _pos = solve(aheadTarget);
      }else{
@@ -81,6 +79,8 @@ public class Pinky extends Ghost {
    } catch(IndexOutOfBoundsException e){
       _pos = solve(pacPos);
     }
+    }
+    
   }
 
   public void meander(Position pacPos) {
