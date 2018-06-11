@@ -14,6 +14,8 @@ public class Clyde extends Ghost {
   private int speed;
   private boolean scatterMode; 
   private Position sTarget;
+  private int scatterTimer;
+
 
   public Clyde(Position pos, String type, Board b) {
     _pos = pos;
@@ -60,6 +62,7 @@ public class Clyde extends Ghost {
   }
 
   public void nextMove(PacThing pac) {
+    checkScatter();
     if (scatterMode){
       if (speed < 0 || speed > 10) {
       println("enter a speed from 0 to 10");
@@ -78,7 +81,6 @@ public class Clyde extends Ghost {
       }
       Position next = solve(sTarget);
       _pos = next;
-      //println(_pos);
       return;
     }
     }
@@ -92,7 +94,6 @@ public class Clyde extends Ghost {
       }
       Position next = solve(pacPos);
       _pos = next;
-
     }
   }
 
@@ -120,6 +121,19 @@ public class Clyde extends Ghost {
     return type;
   }
 
+  public void checkScatter(){
+    if (scatterTimer == 0){
+      scatterTimer++;
+      return;
+    }
+    if (scatterTimer % 503 == 0){
+       scatterMode = false;
+    }else if (scatterTimer % 701 == 0){
+      scatterMode = true;
+    }
+    scatterTimer++;
+    
+  }
 
 
   public Position[] getNeighbors(Position L, Position pman) {

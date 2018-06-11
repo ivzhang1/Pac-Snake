@@ -52,7 +52,6 @@ public class Blinky extends Ghost {
     return secondsLeft;
   }
   public void reduceTime() {
-    //println("asdasd");
     secondsLeft-=1;
   }
   public void setPos(Position pos) {
@@ -62,12 +61,19 @@ public class Blinky extends Ghost {
   public void setSpeed(int s) {
     speed = s;
   }
-
-  public void checkScatter() {
-    if (scatterTimer % 383 == 0) {
-      scatterMode = !scatterMode;
+  
+  public void checkScatter(){
+    if (scatterTimer == 0){
+      scatterTimer++;
+      return;
+    }
+    if (scatterTimer % 503 == 0){
+       scatterMode = false;
+    }else if (scatterTimer % 701 == 0){
+      scatterMode = true;
     }
     scatterTimer++;
+    
   }
   public double distance(int x, int y, Position b) {
     double dist = 0.0;
@@ -102,6 +108,11 @@ public class Blinky extends Ghost {
         _pos = next;           
         return;
       }
+      Position next = solve(sTarget);
+      _pos = next;
+      //println(_pos);
+      return;
+
     }
 
     checkScatter();
@@ -133,7 +144,6 @@ public class Blinky extends Ghost {
     } else if (frameCount % (21 + -1*speed) == 0) {
       Position next = solve(pacPos);
       _pos = next;
-      //println(next);
     }
   }
 

@@ -3,7 +3,7 @@ import java.util.*;
 private int livesLeft;
 private int pointsEarned;
 private Board board;
-private Scores scoreboard;
+private Score score;
 private Ghost[] ghosts;
 private PacThing main;
 
@@ -25,10 +25,10 @@ public void setup() {
   size(560, 720);
   background(color(0, 0, 0));
   board = new Board("default.txt");
-  main = new PacThing(board.getStart(), board, 1);
+  score = new Score();
+  main = new PacThing(board.getStart(), board, 1, score);
   livesLeft = 5;
   pointsEarned = 0;
-  scoreboard = new Scores();
   ghosts = new Ghost[4];
   ghosts[0] = (Ghost) new Blinky(board.getRandomGhostSpawn(), "BLINKY", board);
   ghosts[1] = (Ghost) new Clyde(board.getRandomGhostSpawn(), "CLYDE", board); 
@@ -99,7 +99,6 @@ public void findOccupied() {
       }
     }
   }
-  //println(gath);
 }
 
 public void insertImage(PImage img, float yLoc, float xLoc, int ySize, int xSize) {
