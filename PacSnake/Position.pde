@@ -15,7 +15,11 @@ public class Position implements Comparable<Position>{
     xcor = x;
     ycor = y;
   }
-
+  public Position(int x, int y, double d) {
+    xcor = x;
+    ycor = y;
+    dist = d;
+  }
   public Position(int x, int y, Position p, double d, double d_p) {
     xcor = x;
     ycor = y;

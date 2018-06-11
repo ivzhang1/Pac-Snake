@@ -3,7 +3,7 @@ import java.util.PriorityQueue;
 public class Blinky extends Ghost {
   private MyHeap<Position> frontier = new MyHeap<Position>(false);
   private MyHeap<Position> farthest = new MyHeap<Position>(true);
-  
+
   private Board board;
 
   private Position _pos;
@@ -20,7 +20,7 @@ public class Blinky extends Ghost {
   public Blinky(Position pos, String type, Board b) {
     _pos = pos;
     this.alive = false;
-    isVulnerable = false;
+    isVulnerable = true;
     secondsLeft = 20;
     this.type = type;
     board = b;
@@ -62,37 +62,70 @@ public class Blinky extends Ghost {
   public void setSpeed(int s) {
     speed = s;
   }
-  
-  public void checkScatter(){
-    if (scatterTimer % 383 == 0){
+
+  public void checkScatter() {
+    if (scatterTimer % 383 == 0) {
       scatterMode = !scatterMode;
     }
     scatterTimer++;
   }
-
+  public double distance(int x, int y, Position b) {
+    double dist = 0.0;
+    int dx = Math.abs(x - b.getXcor());
+    int dy = Math.abs(y - b.getYcor());
+    return Math.sqrt(dx*dx + dy*dy);
+  }  
   public void nextMove(PacThing pac) {
-    checkScatter();
-    if (scatterMode){
+    if (isVulnerable) {
+      farthest = new MyHeap<Position>(true);
       if (speed < 0 || speed > 10) {
-      println("enter a speed from 0 to 10");
-    } else if (frameCount % (21 + -1*speed) == 0) {
-      if (sTarget.equals(_pos)){
-        Position one = new Position(5, 23);
-        Position two = new Position(9, 23);
-        Position three = new Position(7, 26);
-        if (sTarget.equals(one)){
-          sTarget = two;
-        }else if(sTarget.equals(two)){
-          sTarget = three;
-        }else if(sTarget.equals(three)){
-          sTarget = one;
+        println("enter a speed from 0 to 10");
+      } else if (frameCount % (21 + -1*speed) == 0) {
+        int x = _pos.getXcor();
+        int y = _pos.getYcor();
+        
+        Position[] positions = {new Position(x+1, y, distance(x+1, y, pac.getPos()) ), 
+                                new Position(x-1, y, distance(x-1, y, pac.getPos())), 
+                                new Position(x, y+1, distance(x, y+1, pac.getPos())), 
+                                new Position(x, y-1, distance(x, y-1, pac.getPos()))};
+        for (Position p: positions){
+          if(map[p.getXcor()][p.getYcor()].movable()){
+            //println(p + " " + p.get_dist());
+            //println("STOP");            println("STOP");
+            //            println("STOP");
+            farthest.add(p);
+          }
         }
+        Position px = farthest.remove();
+        //println(px.get_dist());
+        Position next = solve(px);
+        _pos = next;           
+        return;
       }
-      Position next = solve(sTarget);
-      _pos = next;
-      //println(_pos);
-      return;
     }
+
+    checkScatter();
+    if (scatterMode) {
+      if (speed < 0 || speed > 10) {
+        println("enter a speed from 0 to 10");
+      } else if (frameCount % (21 + -1*speed) == 0) {
+        if (sTarget.equals(_pos)) {
+          Position one = new Position(5, 23);
+          Position two = new Position(9, 23);
+          Position three = new Position(7, 26);
+          if (sTarget.equals(one)) {
+            sTarget = two;
+          } else if (sTarget.equals(two)) {
+            sTarget = three;
+          } else if (sTarget.equals(three)) {
+            sTarget = one;
+          }
+        }
+        Position next = solve(sTarget);
+        _pos = next;
+        //println(_pos);
+        return;
+      }
     }
     Position pacPos = pac.getPos();
     if (speed < 0 || speed > 10) {
