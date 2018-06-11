@@ -27,7 +27,7 @@ public class Pinky extends Ghost {
     board = b;
     map = board.getMap();
     speed = 9;
-    scatterMode = false;
+    scatterMode = true;
     sTarget = new Position(5, 3);
   }
   public boolean isAlive() {
@@ -51,9 +51,11 @@ public class Pinky extends Ghost {
   public int getTime() {
     return secondsLeft;
   }
+  
   public void reduceTime() {
     secondsLeft -= 1;
   }
+  
   public void setPos(Position pos) {
     _pos = pos;
   }
@@ -81,7 +83,12 @@ public class Pinky extends Ghost {
     int dy = Math.abs(y - b.getYcor());
     return Math.sqrt(dx*dx + dy*dy);
   }  
+  
+  
+  
   public void nextMove(PacThing pac) {
+    
+    
     if (isVulnerable) {
       farthest = new MyHeap<Position>(true);
       if (speed < 0 || speed > 10) {
@@ -109,6 +116,8 @@ public class Pinky extends Ghost {
         return;
       }
     }
+    
+    
     checkScatter();
     if (scatterMode){
       if (speed < 0 || speed > 10) {
@@ -130,8 +139,18 @@ public class Pinky extends Ghost {
       _pos = next;
       return;
     }
+    
     }
+    
     Position pacPos = pac.getPos();
+    if (distance(pacPos.getXcor(), pacPos.getYcor(), getPos()) < 4.0){
+      if (speed < 0 || speed > 10) {
+      println("enter a speed from 0 to 10");
+    } else if (frameCount % (21 + -1*speed) == 0) {
+      _pos = solve(pacPos);
+      return;
+    }
+    }
     Position aheadTarget = new Position(pacPos.getXcor(), pacPos.getYcor());
     int direction = pac.getDirection();
     if (direction == 1){

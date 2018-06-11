@@ -78,6 +78,7 @@ public void draw() {
     
     main.move();
     drawEverything();
+    println(score);
   }
 }
 
@@ -86,6 +87,7 @@ public void drawEverything() {
   drawPMan();
   drawGhosts();
   drawBoard(true);
+  text("Current Score: " + score.getValue(), 300, 50);
   //findOccupied();
 }
 
