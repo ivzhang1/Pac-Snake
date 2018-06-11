@@ -3,7 +3,7 @@ import java.util.PriorityQueue;
 public class Inky extends Ghost {
   private MyHeap<Position> frontier = new MyHeap<Position>(false);
   private MyHeap<Position> farthest = new MyHeap<Position>(true);
-  
+
   private Board board;
 
   private Position _pos;
@@ -38,7 +38,10 @@ public class Inky extends Ghost {
   public Position getPos() {
     return _pos;
   }
-
+  public void kill() {
+    alive = false;
+    secondsLeft = 200;
+  }
   public void alive() {
     alive = true;
   }
@@ -63,19 +66,18 @@ public class Inky extends Ghost {
   public void setSpeed(int s) {
     speed = s;
   }
-  
-  public void checkScatter(){
-    if (scatterTimer == 0){
+
+  public void checkScatter() {
+    if (scatterTimer == 0) {
       scatterTimer++;
       return;
     }
-    if (scatterTimer % 503 == 0){
-       scatterMode = false;
-    }else if (scatterTimer % 701 == 0){
+    if (scatterTimer % 503 == 0) {
+      scatterMode = false;
+    } else if (scatterTimer % 701 == 0) {
       scatterMode = true;
     }
     scatterTimer++;
-    
   }
 
   public boolean checkCases(int x, int y) {
@@ -136,7 +138,7 @@ public class Inky extends Ghost {
       }
     }
     checkScatter();
-    if (scatterMode) {
+    if (scatterMode && !isVulnerable) {
       if (speed < 0 || speed > 10) {
         println("enter a speed from 0 to 10");
       } else if (frameCount % (21 + -1*speed) == 0) {
@@ -157,7 +159,6 @@ public class Inky extends Ghost {
         //println(_pos);
         return;
       }
-
     }
     Position pacPos = pac.getPos();
     Position aheadTarget = new Position(pacPos.getXcor(), pacPos.getYcor());
@@ -173,7 +174,7 @@ public class Inky extends Ghost {
     }
     if (speed < 0 || speed > 10) {
       println("enter a speed from 0 to 10");
-    } else if (frameCount % (21 + -1*speed) == 0) {
+    } else if (frameCount % (21 + -1*speed) == 0 && !isVulnerable) {
       try {
         if (map[aheadTarget.getXcor()][aheadTarget.getYcor()].movable()) {
           _pos = solve(aheadTarget);

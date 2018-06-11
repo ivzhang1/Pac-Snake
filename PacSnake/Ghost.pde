@@ -17,6 +17,7 @@ public abstract class Ghost{
   public void alive(){
     alive = true;
   } 
+  
   public Position getPos() {
     return _pos;
   }

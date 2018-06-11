@@ -35,6 +35,10 @@ public class Clyde extends Ghost {
   public boolean isAlive() {
     return alive;
   }
+  public void kill() {
+    alive = false;
+    secondsLeft = 200;
+  }
   public Position getPos() {
     return _pos;
   }
@@ -99,7 +103,7 @@ public class Clyde extends Ghost {
     }
 
     checkScatter();
-    if (scatterMode) {
+    if (scatterMode && !isVulnerable) {
       if (speed < 0 || speed > 10) {
         println("enter a speed from 0 to 10");
       } else if (frameCount % (21 + -1*speed) == 0) {
@@ -122,7 +126,7 @@ public class Clyde extends Ghost {
     }
     if (speed < 0 || speed > 10) {
       println("enter a speed from 0 to 10");
-    } else if (frameCount % (21 + -1*speed) == 0) {
+    } else if (frameCount % (21 + -1*speed) == 0 && !isVulnerable) {
       Position pacPos = pac.getPos();
       if (distance(pacPos, getPos()) < 4.0 ) {
         meander(pacPos);

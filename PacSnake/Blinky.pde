@@ -33,6 +33,10 @@ public class Blinky extends Ghost {
   public boolean isAlive() {
     return alive;
   }
+  public void kill() {
+    alive = false;
+    secondsLeft = 200;
+  }
   public Position getPos() {
     return _pos;
   }
@@ -61,19 +65,18 @@ public class Blinky extends Ghost {
   public void setSpeed(int s) {
     speed = s;
   }
-  
-  public void checkScatter(){
-    if (scatterTimer == 0){
+
+  public void checkScatter() {
+    if (scatterTimer == 0) {
       scatterTimer++;
       return;
     }
-    if (scatterTimer % 503 == 0){
-       scatterMode = false;
-    }else if (scatterTimer % 701 == 0){
+    if (scatterTimer % 503 == 0) {
+      scatterMode = false;
+    } else if (scatterTimer % 701 == 0) {
       scatterMode = true;
     }
     scatterTimer++;
-    
   }
   public double distance(int x, int y, Position b) {
     double dist = 0.0;
@@ -89,13 +92,13 @@ public class Blinky extends Ghost {
       } else if (frameCount % (21 + -1*speed) == 0) {
         int x = _pos.getXcor();
         int y = _pos.getYcor();
-        
+
         Position[] positions = {new Position(x+1, y, distance(x+1, y, pac.getPos()) ), 
-                                new Position(x-1, y, distance(x-1, y, pac.getPos())), 
-                                new Position(x, y+1, distance(x, y+1, pac.getPos())), 
-                                new Position(x, y-1, distance(x, y-1, pac.getPos()))};
-        for (Position p: positions){
-          if(map[p.getXcor()][p.getYcor()].movable()){
+          new Position(x-1, y, distance(x-1, y, pac.getPos())), 
+          new Position(x, y+1, distance(x, y+1, pac.getPos())), 
+          new Position(x, y-1, distance(x, y-1, pac.getPos()))};
+        for (Position p : positions) {
+          if (map[p.getXcor()][p.getYcor()].movable()) {
             //println(p + " " + p.get_dist());
             //println("STOP");            println("STOP");
             //            println("STOP");
@@ -108,11 +111,10 @@ public class Blinky extends Ghost {
         _pos = next;           
         return;
       }
-
     }
 
     checkScatter();
-    if (scatterMode) {
+    if (!isVulnerable && scatterMode) {
       if (speed < 0 || speed > 10) {
         println("enter a speed from 0 to 10");
       } else if (frameCount % (21 + -1*speed) == 0) {
@@ -137,7 +139,7 @@ public class Blinky extends Ghost {
     Position pacPos = pac.getPos();
     if (speed < 0 || speed > 10) {
       println("enter a speed from 0 to 10");
-    } else if (frameCount % (21 + -1*speed) == 0) {
+    } else if (frameCount % (21 + -1*speed) == 0 && !isVulnerable) {
       Position next = solve(pacPos);
       _pos = next;
     }

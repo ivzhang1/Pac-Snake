@@ -33,6 +33,10 @@ public class Pinky extends Ghost {
   public boolean isAlive() {
     return alive;
   }
+  public void kill() {
+    alive = false;
+    secondsLeft = 200;
+  }
   public Position getPos() {
     return _pos;
   }
@@ -51,11 +55,11 @@ public class Pinky extends Ghost {
   public int getTime() {
     return secondsLeft;
   }
-  
+
   public void reduceTime() {
     secondsLeft -= 1;
   }
-  
+
   public void setPos(Position pos) {
     _pos = pos;
   }
@@ -63,19 +67,18 @@ public class Pinky extends Ghost {
   public void setSpeed(int s) {
     speed = s;
   }
-  
-  public void checkScatter(){
-    if (scatterTimer == 0){
+
+  public void checkScatter() {
+    if (scatterTimer == 0) {
       scatterTimer++;
       return;
     }
-    if (scatterTimer % 503 == 0){
-       scatterMode = false;
-    }else if (scatterTimer % 701 == 0){
+    if (scatterTimer % 503 == 0) {
+      scatterMode = false;
+    } else if (scatterTimer % 701 == 0) {
       scatterMode = true;
     }
     scatterTimer++;
-    
   }
   public double distance(int x, int y, Position b) {
     double dist = 0.0;
@@ -83,12 +86,12 @@ public class Pinky extends Ghost {
     int dy = Math.abs(y - b.getYcor());
     return Math.sqrt(dx*dx + dy*dy);
   }  
-  
-  
-  
+
+
+
   public void nextMove(PacThing pac) {
-    
-    
+
+
     if (isVulnerable) {
       farthest = new MyHeap<Position>(true);
       if (speed < 0 || speed > 10) {
@@ -116,66 +119,65 @@ public class Pinky extends Ghost {
         return;
       }
     }
-    
-    
+
+
     checkScatter();
-    if (scatterMode){
+    if (scatterMode && !isVulnerable) {
       if (speed < 0 || speed > 10) {
-      println("enter a speed from 0 to 10");
-    } else if (frameCount % (21 + -1*speed) == 0) {
-      if (sTarget.equals(_pos)){
-        Position one = new Position(5, 3);
-        Position two = new Position(9, 3);
-        Position three = new Position(7, 6);
-        if (sTarget.equals(one)){
-          sTarget = two;
-        }else if(sTarget.equals(two)){
-          sTarget = three;
-        }else if(sTarget.equals(three)){
-          sTarget = one;
+        println("enter a speed from 0 to 10");
+      } else if (frameCount % (21 + -1*speed) == 0) {
+        if (sTarget.equals(_pos)) {
+          Position one = new Position(5, 3);
+          Position two = new Position(9, 3);
+          Position three = new Position(7, 6);
+          if (sTarget.equals(one)) {
+            sTarget = two;
+          } else if (sTarget.equals(two)) {
+            sTarget = three;
+          } else if (sTarget.equals(three)) {
+            sTarget = one;
+          }
         }
+        Position next = solve(sTarget);
+        _pos = next;
+        return;
       }
-      Position next = solve(sTarget);
-      _pos = next;
-      return;
     }
-    
-    }
-    
+
     Position pacPos = pac.getPos();
-    if (distance(pacPos.getXcor(), pacPos.getYcor(), getPos()) < 4.0){
+    if (distance(pacPos.getXcor(), pacPos.getYcor(), getPos()) < 4.0) {
       if (speed < 0 || speed > 10) {
-      println("enter a speed from 0 to 10");
-    } else if (frameCount % (21 + -1*speed) == 0) {
-      _pos = solve(pacPos);
-      return;
-    }
+        println("enter a speed from 0 to 10");
+      } else if (frameCount % (21 + -1*speed) == 0 && !isVulnerable) {
+        _pos = solve(pacPos);
+        return;
+      }
     }
     Position aheadTarget = new Position(pacPos.getXcor(), pacPos.getYcor());
     int direction = pac.getDirection();
-    if (direction == 1){
+    if (direction == 1) {
       aheadTarget.setXcor(aheadTarget.getXcor()-4);
-    }else if(direction == -1){
+    } else if (direction == -1) {
       aheadTarget.setXcor(aheadTarget.getXcor()+4);
-    }else if(direction == 2){
+    } else if (direction == 2) {
       aheadTarget.setYcor(aheadTarget.getYcor()+4);
-    }else{
+    } else {
       aheadTarget.setYcor(aheadTarget.getYcor()-4);
     }
     if (speed < 0 || speed > 10) {
       println("enter a speed from 0 to 10");
     } else if (frameCount % (21 + -1*speed) == 0) {
-      try{
-      if (map[aheadTarget.getXcor()][aheadTarget.getYcor()].movable()){
-      _pos = solve(aheadTarget);
-     }else{
-      _pos = solve(pacPos);
+      try {
+        if (map[aheadTarget.getXcor()][aheadTarget.getYcor()].movable()) {
+          _pos = solve(aheadTarget);
+        } else {
+          _pos = solve(pacPos);
+        }
+      } 
+      catch(IndexOutOfBoundsException e) {
+        _pos = solve(pacPos);
+      }
     }
-   } catch(IndexOutOfBoundsException e){
-      _pos = solve(pacPos);
-    }
-    }
-    
   }
 
   public void meander(Position pacPos) {

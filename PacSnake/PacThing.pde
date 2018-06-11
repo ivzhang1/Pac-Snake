@@ -7,7 +7,8 @@ public class PacThing {
   private Score score;
   private int speed;
   private Ghost[] ghosts;
-  
+  private int numGKilled;
+
   private Square[][] map;
 
   public PacThing(Position start, Board b, int s, Score score, Ghost[] gs) {
@@ -71,21 +72,34 @@ public class PacThing {
     int content = s.getContent();
     int addend = 0;
     if (content == 2) {
-      addend = 100; //Score for a small pellet
+      addend = 10; //Score for a small pellet
     } else if (content == 4) {
-      addend = 500; //Score for fruit
+      addend = 100; //Score for fruit
     } else if (content == 5) {
-      addend = 200; //Score for big pellet
-      makeGhostsVul();  
+      addend = 50; //Score for big pellet
+      makeGhostsVul();
     }
+
+    for (Ghost g : ghosts) {
+      if (g.isVul() && pos.equals(g.getPos())) {
+        //println(g.getTime() + ", " + g.isAlive());
+        g.kill();
+        numGKilled++; 
+        if (numGKilled < 4) {
+          addend += (200*(Math.pow(numGKilled, 2)));
+        } else {
+          addend += 1600;
+        }
+      }
+    }
+
     score.addToScore(addend);
     s.setEmpty();
   }
- 
-  public void makeGhostsVul(){
-    for(Ghost g: ghosts){
+
+  public void makeGhostsVul() {
+    for (Ghost g : ghosts) {
       g.setVul();
     }
-
   }
 }
