@@ -4,16 +4,16 @@ public class PacThing {
   private int streak;
   private int streakTimeLeft;
   private int direction; // 1 is North, -1 is South, 2 is East, -2 is West
-  private int score;
+  private Score score;
   private int speed;
   
   private Square[][] map;
 
-  public PacThing(Position start, Board b, int s) {
+  public PacThing(Position start, Board b, int s, Score score) {
     pos = start;
     map = b.getMap();
     direction = 1;
-    speed = 9;
+    speed = 10;
   }
 
   public int getDirection() {

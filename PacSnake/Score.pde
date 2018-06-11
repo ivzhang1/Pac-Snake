@@ -1,9 +1,9 @@
-import java.util.Collections; //<>// //<>//
+import java.util.Collections;  //<>//
 import java.util.*;
 
 public class Score implements Comparable<Score>{
   
-  private final int value;
+  private int value;
   private final String name;
   
   public Score(){
@@ -21,6 +21,10 @@ public class Score implements Comparable<Score>{
   
   public String getName(){
     return this.name;
+  }
+  
+  public void addToScore(int toAdd){
+    value += toAdd;
   }
   
   public int compareTo(Score other){
