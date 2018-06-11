@@ -200,7 +200,11 @@ public class Blinky extends Ghost {
     frontier = new MyHeap<Position>(false);
     frontier.add(_pos);
     Position end = pman;
+    int threshold = 0;
     while (frontier.size() != 0) {
+      if(threshold > 1000){
+        return _pos;
+      }
       Position prev = frontier.remove();
       Position[] nextL = getNeighbors(prev, pman);
       for (Position l : nextL) {
@@ -221,6 +225,7 @@ public class Blinky extends Ghost {
           }
         }
       }
+      threshold++;
     }
 
     return null;

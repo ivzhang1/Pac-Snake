@@ -8,6 +8,7 @@ public class PacThing {
   private int speed;
   private Ghost[] ghosts;
   private int numGKilled;
+  private boolean alive;
 
   private Square[][] map;
 
@@ -18,6 +19,7 @@ public class PacThing {
     this.score = score;
     speed = 10;
     ghosts = gs;
+    alive = true;
   }
 
   public int getDirection() {
@@ -67,6 +69,14 @@ public class PacThing {
     direction = dir;
   }
 
+  public void die(){
+    alive = false;
+  }
+  
+  public boolean isAlive(){
+    return alive;
+  }
+
   public void detect() {
     Square s = map[pos.getXcor()][pos.getYcor()];
     int content = s.getContent();
@@ -81,17 +91,22 @@ public class PacThing {
     }
 
     for (Ghost g : ghosts) {
-      if (g.isVul() && pos.equals(g.getPos())) {
+      if (pos.equals(g.getPos())) {
         //println(g.getTime() + ", " + g.isAlive());
-        g.kill();          
-        println(g.getType());
-
-        numGKilled++; 
-        if (numGKilled < 4) {
-          addend += (200*(Math.pow(numGKilled, 2)));
-        } else {
-          addend += 1600;
+        if(g.isVul()){
+          g.kill();          
+  
+          numGKilled++; 
+          if (numGKilled < 4) {
+            addend += (200*(Math.pow(numGKilled, 2)));
+          } else {
+            addend += 1600;
+          }
         }
+        else{
+          die();
+        }
+        
       }
     }
 
