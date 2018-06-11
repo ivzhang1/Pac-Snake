@@ -5,6 +5,7 @@ public abstract class Ghost{
   private boolean alive;
   private boolean isVulnerable;
   private int secondsLeft;
+  private int VsecondsLeft;
   private boolean scatterMode; 
   private Square[][] map;
   private int speed;
@@ -54,7 +55,7 @@ public abstract class Ghost{
 
   public void setVul() {
     isVulnerable = true;
-    secondsLeft = 100;
+    VsecondsLeft = 100;
   }
 
   public void notVul() {

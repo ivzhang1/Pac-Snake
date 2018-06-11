@@ -6,15 +6,17 @@ public class PacThing {
   private int direction; // 1 is North, -1 is South, 2 is East, -2 is West
   private Score score;
   private int speed;
+  private Ghost[] ghosts;
   
   private Square[][] map;
 
-  public PacThing(Position start, Board b, int s, Score score) {
+  public PacThing(Position start, Board b, int s, Score score, Ghost[] gs) {
     pos = start;
     map = b.getMap();
     direction = 1;
     this.score = score;
     speed = 10;
+    ghosts = gs;
   }
 
   public int getDirection() {
@@ -70,13 +72,20 @@ public class PacThing {
     int addend = 0;
     if (content == 2) {
       addend = 100; //Score for a small pellet
-    } else if (content == 6) {
+    } else if (content == 4) {
       addend = 500; //Score for fruit
-    } else if (content == 7) {
+    } else if (content == 5) {
       addend = 200; //Score for big pellet
+      makeGhostsVul();  
     }
     score.addToScore(addend);
     s.setEmpty();
   }
  
+  public void makeGhostsVul(){
+    for(Ghost g: ghosts){
+      g.setVul();
+    }
+
+  }
 }

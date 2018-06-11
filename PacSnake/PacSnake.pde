@@ -16,9 +16,9 @@ private PImage inky;
 private PImage pinky;
 private PImage fruit;
 private PImage pellet;
-private PImage black;
 private PImage wall;
 private PImage pwall;
+private PImage vulnerable;
 
 
 public void setup() {
@@ -26,7 +26,6 @@ public void setup() {
   background(color(0, 0, 0));
   board = new Board("default.txt");
   score = new Score();
-  main = new PacThing(board.getStart(), board, 1, score);
   livesLeft = 5;
   pointsEarned = 0;
   ghosts = new Ghost[4];
@@ -34,6 +33,7 @@ public void setup() {
   ghosts[1] = (Ghost) new Clyde(board.getRandomGhostSpawn(), "CLYDE", board); 
   ghosts[2] = (Ghost) new Inky(board.getRandomGhostSpawn(), "INKY", board.getMap(), ghosts[0]); 
   ghosts[3] = (Ghost) new Pinky(board.getRandomGhostSpawn(), "PINKY", board);
+  main = new PacThing(board.getStart(), board, 1, score, ghosts);
   setupPImages();
   drawPMan();
   drawGhosts();
@@ -52,10 +52,11 @@ public void setupPImages() {
   pinky = loadImage(addend + "PINKY.png");
   fruit = loadImage(addend + "FRUIT.png");
   pellet = loadImage(addend + "PELLET.png");
-  black = loadImage(addend + "black.png");
   wall = loadImage(addend + "BWALL.png");
   pwall = loadImage(addend + "PWALL.png");
+  vulnerable = loadImage(addend + "VBLUE.png");
 }
+
 
 public void draw() {
   if (isGameStarted) {
@@ -112,6 +113,13 @@ public void drawPMan() {
 }
 
 public void drawGhosts() {
+  if(ghosts[0].isVul()){
+    for(Ghost p: ghosts){
+      insertImage(vulnerable, p.getPos().getYcor()*20, p.getPos().getXcor()*20, 20, 20);
+    }
+    return;
+  }
+  
   Position p = ghosts[0].getPos();
   insertImage(blinky, p.getYcor()*20, p.getXcor()*20, 20, 20);
   p = ghosts[1].getPos();
