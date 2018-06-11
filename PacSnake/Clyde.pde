@@ -11,7 +11,7 @@ public class Clyde extends Ghost {
   private Position _pos;
   private String type;
   private boolean alive;
-  private boolean isVulnerable;
+  public boolean isVulnerable;
   private int secondsLeft;
   private Square[][] map;
   private int speed;
@@ -67,6 +67,11 @@ public class Clyde extends Ghost {
   public void setSpeed(int s) {
     speed = s;
   }
+
+  public void notVul() {
+    isVulnerable = false;
+  }
+
   public double distance(int x, int y, Position b) {
     double dist = 0.0;
     int dx = Math.abs(x - b.getXcor());
@@ -97,9 +102,9 @@ public class Clyde extends Ghost {
         Position px = farthest.remove();
         //println(px.get_dist());
         Position next = solve(px);
-        _pos = next;           
-        return;
+        _pos = next;
       }
+      return;
     }
 
     checkScatter();
@@ -121,8 +126,8 @@ public class Clyde extends Ghost {
         }
         Position next = solve(sTarget);
         _pos = next;
-        return;
       }
+      return;
     }
     if (speed < 0 || speed > 10) {
       println("enter a speed from 0 to 10");
@@ -130,11 +135,11 @@ public class Clyde extends Ghost {
       Position pacPos = pac.getPos();
       if (distance(pacPos, getPos()) < 4.0 ) {
         meander(pacPos);
-        return;
       }
       Position next = solve(pacPos);
       _pos = next;
     }
+    return;
   }
 
   public double distance(Position a, Position b) {

@@ -9,7 +9,7 @@ public class Pinky extends Ghost {
   private Position _pos;
   private String type;
   private boolean alive;
-  private boolean isVulnerable;
+  public boolean isVulnerable;
   private int secondsLeft;
   private Square[][] map;
   private int speed = 1;
@@ -55,7 +55,9 @@ public class Pinky extends Ghost {
   public int getTime() {
     return secondsLeft;
   }
-
+  public void notVul() {
+    isVulnerable = false;
+  }
   public void reduceTime() {
     secondsLeft -= 1;
   }
@@ -115,9 +117,9 @@ public class Pinky extends Ghost {
         Position px = farthest.remove();
         //println(px.get_dist());
         Position next = solve(px);
-        _pos = next;           
-        return;
+        _pos = next;
       }
+      return;
     }
 
 
@@ -140,8 +142,8 @@ public class Pinky extends Ghost {
         }
         Position next = solve(sTarget);
         _pos = next;
-        return;
       }
+      return;
     }
 
     Position pacPos = pac.getPos();
@@ -150,8 +152,8 @@ public class Pinky extends Ghost {
         println("enter a speed from 0 to 10");
       } else if (frameCount % (21 + -1*speed) == 0 && !isVulnerable) {
         _pos = solve(pacPos);
-        return;
       }
+      return;
     }
     Position aheadTarget = new Position(pacPos.getXcor(), pacPos.getYcor());
     int direction = pac.getDirection();

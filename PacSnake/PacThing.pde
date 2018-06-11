@@ -83,7 +83,9 @@ public class PacThing {
     for (Ghost g : ghosts) {
       if (g.isVul() && pos.equals(g.getPos())) {
         //println(g.getTime() + ", " + g.isAlive());
-        g.kill();
+        g.kill();          
+        println(g.getType());
+
         numGKilled++; 
         if (numGKilled < 4) {
           addend += (200*(Math.pow(numGKilled, 2)));

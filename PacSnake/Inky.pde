@@ -9,7 +9,7 @@ public class Inky extends Ghost {
   private Position _pos;
   private String type;
   private boolean alive;
-  private boolean isVulnerable;
+  public boolean isVulnerable;
   private int secondsLeft;
   private Square[][] map;
   private int speed;
@@ -62,7 +62,9 @@ public class Inky extends Ghost {
   public void setPos(Position pos) {
     _pos = pos;
   }
-
+  public void notVul() {
+    isVulnerable = false;
+  }
   public void setSpeed(int s) {
     speed = s;
   }
@@ -133,9 +135,9 @@ public class Inky extends Ghost {
         Position px = farthest.remove();
         //println(px.get_dist());
         Position next = solve(px);
-        _pos = next;           
-        return;
+        _pos = next;
       }
+      return;
     }
     checkScatter();
     if (scatterMode && !isVulnerable) {
@@ -157,8 +159,8 @@ public class Inky extends Ghost {
         Position next = solve(sTarget);
         _pos = next;
         //println(_pos);
-        return;
       }
+      return;
     }
     Position pacPos = pac.getPos();
     Position aheadTarget = new Position(pacPos.getXcor(), pacPos.getYcor());

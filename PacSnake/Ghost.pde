@@ -3,9 +3,8 @@ public abstract class Ghost{
   private Position _pos;
   private String type;
   private boolean alive;
-  private boolean isVulnerable;
+  public boolean isVulnerable;
   private int secondsLeft;
-  private int VsecondsLeft;
   private boolean scatterMode; 
   private Square[][] map;
   private int speed;
@@ -56,7 +55,6 @@ public abstract class Ghost{
 
   public void setVul() {
     isVulnerable = true;
-    VsecondsLeft = 100;
   }
 
   public void notVul() {

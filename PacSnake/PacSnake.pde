@@ -6,9 +6,10 @@ private Board board;
 private Score score;
 private Ghost[] ghosts;
 private PacThing main;
+private boolean vulTimer;
+
 
 private boolean isGameStarted;
-
 private PImage pman;
 private PImage blinky;
 private PImage clyde;
@@ -65,19 +66,23 @@ public void draw() {
       if (ghosts[i].getTime() == 0 && !ghosts[i].isAlive()) {
         ghosts[i].setPos(board.getRandomGhostExit());
         ghosts[i].alive();
-      }
-      else if(!ghosts[i].isAlive() && ghosts[i].getTime() == 200){
+      } else if (!ghosts[i].isAlive() && ghosts[i].getTime() == 200) {
         ghosts[i].setPos(board.getRandomGhostSpawn());
       }
-      
-      if(i == 2){
-        ghosts[i].move(main, ghosts[0]);
+      if (vulTimer && (frameCount % 1000 == 0)) { //CHANGE the number based on how long until switch
+        vulTimer = false;
+        for(Ghost gi: ghosts){
+          gi.isVulnerable = false;
+        }
       }
-      else{
+
+      if (i == 2) {
+        ghosts[i].move(main, ghosts[0]);
+      } else {
         ghosts[i].move(main, null);
       }
     }
-    
+
     main.move();
     drawEverything();
     //println(score);
@@ -116,13 +121,14 @@ public void drawPMan() {
 }
 
 public void drawGhosts() {
-  if(ghosts[0].isVul()){
-    for(Ghost p: ghosts){
+  if (ghosts[0].isVul()) {
+    vulTimer = true;
+    for (Ghost p : ghosts) {
       insertImage(vulnerable, p.getPos().getYcor()*20, p.getPos().getXcor()*20, 20, 20);
     }
     return;
   }
-  
+
   Position p = ghosts[0].getPos();
   insertImage(blinky, p.getYcor()*20, p.getXcor()*20, 20, 20);
   p = ghosts[1].getPos();

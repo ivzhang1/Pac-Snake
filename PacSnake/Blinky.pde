@@ -9,7 +9,7 @@ public class Blinky extends Ghost {
   private Position _pos;
   private String type;
   private boolean alive;
-  private boolean isVulnerable;
+  public boolean isVulnerable;
   private int secondsLeft;
   private boolean scatterMode; 
   private Square[][] map;
@@ -45,6 +45,9 @@ public class Blinky extends Ghost {
     alive = true;
   }
 
+  public void notVul() {
+    isVulnerable = !isVulnerable;
+  }
   public String getType() {
     return type;
   }
@@ -108,9 +111,9 @@ public class Blinky extends Ghost {
         Position px = farthest.remove();
         //println(px.get_dist());
         Position next = solve(px);
-        _pos = next;           
-        return;
+        _pos = next;
       }
+      return;
     }
 
     checkScatter();
@@ -133,8 +136,8 @@ public class Blinky extends Ghost {
         Position next = solve(sTarget);
         _pos = next;
         //println(_pos);
-        return;
       }
+      return;
     }
     Position pacPos = pac.getPos();
     if (speed < 0 || speed > 10) {
