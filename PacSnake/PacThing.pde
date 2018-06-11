@@ -74,7 +74,7 @@ public class PacThing {
     } else if (content == 7) {
       addend = 200; //Score for big pellet
     }
-    score += addend;
+    //score += addend;
     s.setEmpty();
   }
  

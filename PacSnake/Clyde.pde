@@ -2,6 +2,9 @@ import java.util.PriorityQueue;
 import java.util.*;
 
 public class Clyde extends Ghost {
+  private MyHeap<Position> farthest = new MyHeap<Position>(true);
+
+
   private MyHeap<Position> frontier = new MyHeap<Position>(false);
   private Board board;
 
@@ -60,29 +63,62 @@ public class Clyde extends Ghost {
   public void setSpeed(int s) {
     speed = s;
   }
-
+  public double distance(int x, int y, Position b) {
+    double dist = 0.0;
+    int dx = Math.abs(x - b.getXcor());
+    int dy = Math.abs(y - b.getYcor());
+    return Math.sqrt(dx*dx + dy*dy);
+  }  
   public void nextMove(PacThing pac) {
-    checkScatter();
-    if (scatterMode){
+    if (isVulnerable) {
+      farthest = new MyHeap<Position>(true);
       if (speed < 0 || speed > 10) {
-      println("enter a speed from 0 to 10");
-    } else if (frameCount % (21 + -1*speed) == 0) {
-      if (sTarget.equals(_pos)){
-        Position one = new Position(26, 7);
-        Position two = new Position(31, 1);
-        Position three = new Position(31, 12);
-        if (sTarget.equals(one)){
-          sTarget = two;
-        }else if(sTarget.equals(two)){
-          sTarget = three;
-        }else if(sTarget.equals(three)){
-          sTarget = one;
+        println("enter a speed from 0 to 10");
+      } else if (frameCount % (21 + -1*speed) == 0) {
+        int x = _pos.getXcor();
+        int y = _pos.getYcor();
+
+        Position[] positions = {new Position(x+1, y, distance(x+1, y, pac.getPos()) ), 
+          new Position(x-1, y, distance(x-1, y, pac.getPos())), 
+          new Position(x, y+1, distance(x, y+1, pac.getPos())), 
+          new Position(x, y-1, distance(x, y-1, pac.getPos()))};
+        for (Position p : positions) {
+          if (map[p.getXcor()][p.getYcor()].movable()) {
+            //println(p + " " + p.get_dist());
+            //println("STOP");            println("STOP");
+            //            println("STOP");
+            farthest.add(p);
+          }
         }
+        Position px = farthest.remove();
+        //println(px.get_dist());
+        Position next = solve(px);
+        _pos = next;           
+        return;
       }
-      Position next = solve(sTarget);
-      _pos = next;
-      return;
     }
+
+    checkScatter();
+    if (scatterMode) {
+      if (speed < 0 || speed > 10) {
+        println("enter a speed from 0 to 10");
+      } else if (frameCount % (21 + -1*speed) == 0) {
+        if (sTarget.equals(_pos)) {
+          Position one = new Position(26, 7);
+          Position two = new Position(31, 1);
+          Position three = new Position(31, 12);
+          if (sTarget.equals(one)) {
+            sTarget = two;
+          } else if (sTarget.equals(two)) {
+            sTarget = three;
+          } else if (sTarget.equals(three)) {
+            sTarget = one;
+          }
+        }
+        Position next = solve(sTarget);
+        _pos = next;
+        return;
+      }
     }
     if (speed < 0 || speed > 10) {
       println("enter a speed from 0 to 10");
@@ -121,18 +157,17 @@ public class Clyde extends Ghost {
     return type;
   }
 
-  public void checkScatter(){
-    if (scatterTimer == 0){
+  public void checkScatter() {
+    if (scatterTimer == 0) {
       scatterTimer++;
       return;
     }
-    if (scatterTimer % 503 == 0){
-       scatterMode = false;
-    }else if (scatterTimer % 701 == 0){
+    if (scatterTimer % 503 == 0) {
+      scatterMode = false;
+    } else if (scatterTimer % 701 == 0) {
       scatterMode = true;
     }
     scatterTimer++;
-    
   }
 
 

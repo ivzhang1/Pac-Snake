@@ -2,6 +2,8 @@ import java.util.PriorityQueue;
 
 public class Inky extends Ghost {
   private MyHeap<Position> frontier = new MyHeap<Position>(false);
+  private MyHeap<Position> farthest = new MyHeap<Position>(true);
+  
   private Board board;
 
   private Position _pos;
@@ -99,8 +101,40 @@ public class Inky extends Ghost {
     }
     return null;
   }
-
+  public double distance(int x, int y, Position b) {
+    double dist = 0.0;
+    int dx = Math.abs(x - b.getXcor());
+    int dy = Math.abs(y - b.getYcor());
+    return Math.sqrt(dx*dx + dy*dy);
+  }  
   public void nextMove(PacThing pac) {
+    if (isVulnerable) {
+      farthest = new MyHeap<Position>(true);
+      if (speed < 0 || speed > 10) {
+        println("enter a speed from 0 to 10");
+      } else if (frameCount % (21 + -1*speed) == 0) {
+        int x = _pos.getXcor();
+        int y = _pos.getYcor();
+
+        Position[] positions = {new Position(x+1, y, distance(x+1, y, pac.getPos()) ), 
+          new Position(x-1, y, distance(x-1, y, pac.getPos())), 
+          new Position(x, y+1, distance(x, y+1, pac.getPos())), 
+          new Position(x, y-1, distance(x, y-1, pac.getPos()))};
+        for (Position p : positions) {
+          if (map[p.getXcor()][p.getYcor()].movable()) {
+            //println(p + " " + p.get_dist());
+            //println("STOP");            println("STOP");
+            //            println("STOP");
+            farthest.add(p);
+          }
+        }
+        Position px = farthest.remove();
+        //println(px.get_dist());
+        Position next = solve(px);
+        _pos = next;           
+        return;
+      }
+    }
     checkScatter();
     if (scatterMode) {
       if (speed < 0 || speed > 10) {

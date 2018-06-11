@@ -20,7 +20,7 @@ public class Blinky extends Ghost {
   public Blinky(Position pos, String type, Board b) {
     _pos = pos;
     this.alive = false;
-    isVulnerable = true;
+    isVulnerable = false;
     secondsLeft = 20;
     this.type = type;
     board = b;
@@ -108,10 +108,6 @@ public class Blinky extends Ghost {
         _pos = next;           
         return;
       }
-      Position next = solve(sTarget);
-      _pos = next;
-      //println(_pos);
-      return;
 
     }
 
