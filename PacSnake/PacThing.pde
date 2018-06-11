@@ -13,6 +13,7 @@ public class PacThing {
     pos = start;
     map = b.getMap();
     direction = 1;
+    this.score = score;
     speed = 10;
   }
 
@@ -74,7 +75,7 @@ public class PacThing {
     } else if (content == 7) {
       addend = 200; //Score for big pellet
     }
-    score += addend;
+    score.addToScore(addend);
     s.setEmpty();
   }
  
