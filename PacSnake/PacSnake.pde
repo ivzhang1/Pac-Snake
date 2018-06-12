@@ -5,6 +5,7 @@ private int countFruits;
 
 private int pointsEarned;
 private Board board;
+private int p_score;
 private Score score;
 private Ghost[] ghosts;
 private PacThing main;
@@ -27,10 +28,11 @@ private PImage pLives;
 
 
 public void setup() {
+  println(p_score);
   size(560, 720);
   background(color(0, 0, 0));
   board = new Board("default.txt");
-  score = new Score();
+  score = new Score(p_score);
   pointsEarned = 0;
   ghosts = new Ghost[4];
   ghosts[0] = (Ghost) new Blinky(board.getRandomGhostSpawn(), "BLINKY", board);
@@ -91,6 +93,8 @@ public void draw() {
       main.move();
     } else {
       livesLeft-=1;
+      p_score = score.getValue();
+
       //println(livesLeft);
       setup();
     }
@@ -171,8 +175,8 @@ public void drawLives() {
 }
 
 public void drawFruits() {
-  for (int i = 0; i < countFruits; i++) {
-    insertImage(fruit, 720-i*20, 680, 20, 20);
+  for (int i = 1; i <= countFruits; i++) {
+    insertImage(fruit, 560-i*20, 680, 20, 20);
   }
 }
 
