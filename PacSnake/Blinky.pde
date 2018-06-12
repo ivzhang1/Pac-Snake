@@ -206,7 +206,7 @@ public class Blinky extends Ghost {
     Position end = pman;
     int threshold = 0;
     while (frontier.size() != 0) {
-      if (threshold > 1000) {
+      if (threshold > 5000) {
         return _pos;
       }
       Position prev = frontier.remove();

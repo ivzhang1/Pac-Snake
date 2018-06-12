@@ -151,9 +151,9 @@ public class Inky extends Ghost {
         println("enter a speed from 0 to 10");
       } else if (frameCount % (21 + -1*speed) == 0) {
         if (sTarget.equals(_pos)) {
-          Position one = new Position(5, 3);
-          Position two = new Position(9, 3);
-          Position three = new Position(7, 6);
+          Position one = new Position(26, 20);
+          Position two = new Position(31, 1);
+          Position three = new Position(31, 12);
           if (sTarget.equals(one)) {
             sTarget = two;
           } else if (sTarget.equals(two)) {
@@ -257,7 +257,7 @@ public class Inky extends Ghost {
     Position end = pman;
     int threshold = 0;
     while (frontier.size() != 0) {
-      if (threshold > 1000) {
+      if (threshold > 10000) {
         return _pos;
       }
       Position prev = frontier.remove();

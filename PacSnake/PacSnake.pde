@@ -78,7 +78,6 @@ public void draw() {
 
         for (Ghost gi : ghosts) {
           gi.notVul();
-          println(gi.isVul());
         }
       }
 

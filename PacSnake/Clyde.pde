@@ -30,7 +30,7 @@ public class Clyde extends Ghost {
     map = board.getMap();
     speed = 7;
     scatterMode = true;
-    sTarget = new Position(26, 7);
+    sTarget = new Position(27, 6);
   }
   public boolean isAlive() {
     return alive;
@@ -116,8 +116,9 @@ public class Clyde extends Ghost {
       if (speed < 0 || speed > 10) {
         println("enter a speed from 0 to 10");
       } else if (frameCount % (21 + -1*speed) == 0) {
+
         if (sTarget.equals(_pos)) {
-          Position one = new Position(26, 7);
+          Position one = new Position(27, 6);
           Position two = new Position(31, 1);
           Position three = new Position(31, 12);
           if (sTarget.equals(one)) {
@@ -218,7 +219,7 @@ public class Clyde extends Ghost {
     Position end = pman;
     int threshold = 0;
     while (frontier.size() != 0) {
-      if(threshold > 1000){
+      if(threshold > 5000){
         return _pos;
       }
       Position prev = frontier.remove();
