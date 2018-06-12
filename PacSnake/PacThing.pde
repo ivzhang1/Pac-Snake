@@ -10,6 +10,7 @@ public class PacThing {
   private int numGKilled;
   private boolean alive;
 
+
   private Square[][] map;
 
   public PacThing(Position start, Board b, int s, Score score, Ghost[] gs) {
@@ -38,7 +39,7 @@ public class PacThing {
     speed = s;
   }
 
-  public void move() {
+  public int move() {
     if (speed < 0 || speed > 10) {
       println("enter a speed from 0 to 10");
     } else if (frameCount % (21 + -1*speed) == 0) {
@@ -61,23 +62,24 @@ public class PacThing {
           pos.setXcor(pos.getXcor()+1);
         }
       }
-      detect();
+      return detect();
     }
+    return -1;
   }
 
   public void changeDirection(int dir) {
     direction = dir;
   }
 
-  public void die(){
+  public void die() {
     alive = false;
   }
-  
-  public boolean isAlive(){
+
+  public boolean isAlive() {
     return alive;
   }
 
-  public void detect() {
+  public int detect() {
     Square s = map[pos.getXcor()][pos.getYcor()];
     int content = s.getContent();
     int addend = 0;
@@ -93,25 +95,24 @@ public class PacThing {
     for (Ghost g : ghosts) {
       if (pos.equals(g.getPos())) {
         //println(g.getTime() + ", " + g.isAlive());
-        if(g.isVul()){
+        if (g.isVul()) {
           g.kill();          
-  
+
           numGKilled++; 
           if (numGKilled < 4) {
             addend += (200*(Math.pow(numGKilled, 2)));
           } else {
             addend += 1600;
           }
-        }
-        else{
+        } else {
           die();
         }
-        
       }
     }
 
     score.addToScore(addend);
     s.setEmpty();
+    return addend;
   }
 
   public void makeGhostsVul() {

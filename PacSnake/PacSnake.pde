@@ -1,4 +1,5 @@
 import java.util.*;
+import processing.sound.*;
 
 private int livesLeft = 3;
 private int countFruits;
@@ -26,10 +27,20 @@ private PImage pwall;
 private PImage vulnerable;
 private PImage pLives;
 
+private SoundFile playing;
+private SoundFile waka;
+private SoundFile siren;
+private int start = 0;
 
 public void setup() {
   size(560, 720);
   background(color(0, 0, 0));
+  if (start == 0) {
+    playing = new SoundFile(this, sketchPath() + "/sounds/" + "opening.mp3");
+    playing.loop(0.5);
+    start++;
+  }
+
   board = new Board("default.txt");
   score = new Score(p_score);
   pointsEarned = 0;
@@ -88,12 +99,21 @@ public void draw() {
         ghosts[i].move(main, null);
       }
     }
-    if (main.isAlive()) {  
-      main.move();
+    if (main.isAlive()) { 
+      int found = main.move();
+      if (found == 100) {
+        SoundFile fruit = new SoundFile(this, sketchPath() + "/sounds/" + "fruit.mp3");
+        fruit.play(0.5);
+      }
+      if (found > 100) {
+        SoundFile ghost = new SoundFile(this, sketchPath() + "/sounds/" + "ghost.mp3");
+        ghost.play(0.5);
+      }
     } else {
       livesLeft-=1;
       p_score = score.getValue();
-
+      SoundFile die = new SoundFile(this, sketchPath() + "/sounds/" + "die.mp3");
+      die.play(0.4);
       //println(livesLeft);
       setup();
     }
@@ -156,6 +176,8 @@ public void drawGhosts() {
 
 public void drawLives() {
   if (score.getValue() >= 10000 && !extraLife) {
+    SoundFile extra = new SoundFile(this, sketchPath() + "/sounds/" + "extra.mp3");
+    extra.play(0.3);
     livesLeft++;
     extraLife = true;
   }
@@ -229,6 +251,9 @@ public void mouseClicked() {
   }
   if (!isGameStarted) {
     isGameStarted = true;
+    playing.stop();
+    playing = new SoundFile(this, sketchPath() + "/sounds/" + "siren.mp3");
+    playing.loop(0.6, 1);
   }
 }
 
