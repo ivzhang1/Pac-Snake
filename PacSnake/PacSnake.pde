@@ -28,7 +28,6 @@ private PImage pLives;
 
 
 public void setup() {
-  println(p_score);
   size(560, 720);
   background(color(0, 0, 0));
   board = new Board("default.txt");
