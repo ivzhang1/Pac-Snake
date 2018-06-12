@@ -27,7 +27,7 @@ public class Inky extends Ghost {
     secondsLeft = 2;
     this.type = type;
     map = m;
-    speed = 9;
+    speed = 7;
     b = _b;
     scatterMode = true;
     sTarget = new Position(26, 20);

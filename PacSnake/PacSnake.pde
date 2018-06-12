@@ -1,13 +1,15 @@
 import java.util.*;
 
-private int livesLeft;
+private int livesLeft = 3;
+private int countFruits;
+
 private int pointsEarned;
 private Board board;
 private Score score;
 private Ghost[] ghosts;
 private PacThing main;
 private boolean vulTimer;
-
+private boolean extraLife;
 private boolean menuClicked;
 
 private boolean isGameStarted;
@@ -21,6 +23,7 @@ private PImage pellet;
 private PImage wall;
 private PImage pwall;
 private PImage vulnerable;
+private PImage pLives;
 
 
 public void setup() {
@@ -28,7 +31,6 @@ public void setup() {
   background(color(0, 0, 0));
   board = new Board("default.txt");
   score = new Score();
-  livesLeft = 5;
   pointsEarned = 0;
   ghosts = new Ghost[4];
   ghosts[0] = (Ghost) new Blinky(board.getRandomGhostSpawn(), "BLINKY", board);
@@ -57,6 +59,7 @@ public void setupPImages() {
   wall = loadImage(addend + "BWALL.png");
   pwall = loadImage(addend + "PWALL.png");
   vulnerable = loadImage(addend + "VBLUE.png");
+  pLives = loadImage(addend + "2PMAN.png");
 }
 
 
@@ -70,10 +73,12 @@ public void draw() {
       } else if (!ghosts[i].isAlive() && ghosts[i].getTime() == 200) {
         ghosts[i].setPos(board.getRandomGhostSpawn());
       }
-      if (vulTimer && (frameCount % 500 == 0)) { //CHANGE the number based on how long until switch
+      if (vulTimer && (frameCount % 800 == 0)) { //CHANGE the number based on how long until switch
         vulTimer = false;
+
         for (Ghost gi : ghosts) {
-          gi.isVulnerable = false;
+          gi.notVul();
+          println(gi.isVul());
         }
       }
 
@@ -86,7 +91,8 @@ public void draw() {
     if (main.isAlive()) {  
       main.move();
     } else {
-      isGameStarted = false;
+      livesLeft-=1;
+      //println(livesLeft);
       setup();
     }
     drawEverything();
@@ -100,6 +106,8 @@ public void drawEverything() {
   drawGhosts();
   drawBoard(true);
   text("Current Score: " + score.getValue(), 300, 50);
+  drawLives();
+  drawFruits();
   //findOccupied();
 }
 
@@ -144,8 +152,34 @@ public void drawGhosts() {
   insertImage(pinky, p.getYcor()*20, p.getXcor()*20, 20, 20);
 }
 
+public void drawLives() {
+  if (score.getValue() >= 10000 && !extraLife) {
+    livesLeft++;
+    extraLife = true;
+  }
+  for (int i = 0; i < livesLeft; i++) {
+    insertImage(pLives, i*20, 680, 20, 20);
+  }
+  if (livesLeft == 0) {
+    textSize(50);
+    textAlign(CENTER);
+    text("Game Over\n" + "Score: " + score.getValue(), 280, 360);
+    textSize(25);
+    textAlign(CENTER);
+    text("Click to Start A New Game", 280, 520);
+    isGameStarted = false;
+  }
+}
+
+public void drawFruits() {
+  for (int i = 0; i < countFruits; i++) {
+    insertImage(fruit, 720-i*20, 680, 20, 20);
+  }
+}
+
 public void drawBoard(boolean isWall) {
   Square[][] mapy = board.getMap();
+  countFruits = 0;
   for (int r = 0; r < mapy.length; r++) {
     for (int c = 0; c < mapy[0].length; c++) {
       int content = mapy[r][c].getContent();
@@ -158,6 +192,7 @@ public void drawBoard(boolean isWall) {
       } else if (content == 5) {
         drawPelletB(r, c);
       } else if (content == 4) {
+        countFruits++;
         drawFruit(r, c);
       }
     }
@@ -186,6 +221,10 @@ public void drawFruit(int xc, int yc) {
 }
 
 public void mouseClicked() {
+  if (!isGameStarted && livesLeft == 0) {
+    livesLeft = 3;
+    setup();
+  }
   if (!isGameStarted) {
     isGameStarted = true;
   }

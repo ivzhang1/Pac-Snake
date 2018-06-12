@@ -25,7 +25,7 @@ public class Blinky extends Ghost {
     this.type = type;
     board = b;
     map = board.getMap();
-    speed = 9;
+    speed = 7;
     scatterMode = true;
     sTarget = new Position(5, 23);
     scatterTimer = 0;
