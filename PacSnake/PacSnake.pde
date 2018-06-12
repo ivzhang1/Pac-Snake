@@ -253,7 +253,7 @@ public void mouseClicked() {
     isGameStarted = true;
     playing.stop();
     playing = new SoundFile(this, sketchPath() + "/sounds/" + "siren.mp3");
-    playing.loop(0.6, 1);
+    playing.loop(0.7);
   }
 }
 

@@ -39,16 +39,28 @@ public class PacThing {
     speed = s;
   }
 
+  public void changeCoors(Position p, int change) {
+    int newY = p.getYcor() + change;
+
+    if (newY < 0) {
+      p.setYcor(map[0].length + p.getYcor());
+    } else if (newY >= map[0].length) {
+      p.setYcor(newY % map[0].length);
+    }
+  }
+
   public int move() {
     if (speed < 0 || speed > 10) {
       println("enter a speed from 0 to 10");
     } else if (frameCount % (21 + -1*speed) == 0) {
       //println(frameCount);
       if (direction == 2) {
+        changeCoors(pos, 1);
         if (map[pos.getXcor()][pos.getYcor()+1].movable()) {
           pos.setYcor(pos.getYcor()+1);
         }
       } else if (direction == -2) {
+        changeCoors(pos, -1);
         if (map[pos.getXcor()][pos.getYcor()-1].movable()) {
           pos.setYcor(pos.getYcor()-1);
         }

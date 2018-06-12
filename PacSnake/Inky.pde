@@ -131,7 +131,12 @@ public class Inky extends Ghost {
           new Position(x, y+1, distance(x, y+1, pac.getPos())), 
           new Position(x, y-1, distance(x, y-1, pac.getPos()))};
         for (Position p : positions) {
-          if (p.getYcor() > -1 && p.getYcor() < map[0].length && map[p.getXcor()][p.getYcor()].movable()) {
+          if (p.getYcor() < 0) {
+            p.setYcor(map[0].length + p.getYcor());
+          } else if (p.getYcor() >= map[0].length) {
+            p.setYcor(p.getYcor()%map[0].length);
+          }
+          if (map[p.getXcor()][p.getYcor()].movable()) {
             //println(p + " " + p.get_dist());
             //println("STOP");            println("STOP");
             //            println("STOP");
