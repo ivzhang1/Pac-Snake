@@ -8,6 +8,7 @@ private Ghost[] ghosts;
 private PacThing main;
 private boolean vulTimer;
 
+private boolean menuClicked;
 
 private boolean isGameStarted;
 private PImage pman;
@@ -71,7 +72,7 @@ public void draw() {
       }
       if (vulTimer && (frameCount % 500 == 0)) { //CHANGE the number based on how long until switch
         vulTimer = false;
-        for(Ghost gi: ghosts){
+        for (Ghost gi : ghosts) {
           gi.isVulnerable = false;
         }
       }
@@ -82,11 +83,11 @@ public void draw() {
         ghosts[i].move(main, null);
       }
     }
-    if(main.isAlive()){  
+    if (main.isAlive()) {  
       main.move();
-    }
-    else{
-      stop();
+    } else {
+      isGameStarted = false;
+      setup();
     }
     drawEverything();
     //println(score);

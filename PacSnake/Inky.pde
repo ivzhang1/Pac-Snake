@@ -62,8 +62,14 @@ public class Inky extends Ghost {
   public void setPos(Position pos) {
     _pos = pos;
   }
+  public boolean isVul() {
+    return isVulnerable;
+  }
   public void notVul() {
     isVulnerable = false;
+  }
+  public void setVul() {
+    isVulnerable = true;
   }
   public void setSpeed(int s) {
     speed = s;
@@ -125,7 +131,7 @@ public class Inky extends Ghost {
           new Position(x, y+1, distance(x, y+1, pac.getPos())), 
           new Position(x, y-1, distance(x, y-1, pac.getPos()))};
         for (Position p : positions) {
-          if (map[p.getXcor()][p.getYcor()].movable()) {
+          if (p.getYcor() > -1 && p.getYcor() < map[0].length && map[p.getXcor()][p.getYcor()].movable()) {
             //println(p + " " + p.get_dist());
             //println("STOP");            println("STOP");
             //            println("STOP");

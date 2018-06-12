@@ -1,4 +1,4 @@
-import java.util.*; //<>// //<>//
+import java.util.*; //<>//
 import java.util.Collections;
  
 public class Score implements Comparable<Score>{

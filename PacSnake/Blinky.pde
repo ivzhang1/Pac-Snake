@@ -44,7 +44,9 @@ public class Blinky extends Ghost {
   public void alive() {
     alive = true;
   }
-
+  public boolean isVul() {
+    return isVulnerable;
+  }
   public void notVul() {
     isVulnerable = !isVulnerable;
   }
@@ -68,7 +70,9 @@ public class Blinky extends Ghost {
   public void setSpeed(int s) {
     speed = s;
   }
-
+  public void setVul() {
+    isVulnerable = true;
+  }
   public void checkScatter() {
     if (scatterTimer == 0) {
       scatterTimer++;
@@ -101,7 +105,7 @@ public class Blinky extends Ghost {
           new Position(x, y+1, distance(x, y+1, pac.getPos())), 
           new Position(x, y-1, distance(x, y-1, pac.getPos()))};
         for (Position p : positions) {
-          if (map[p.getXcor()][p.getYcor()].movable()) {
+          if (p.getYcor() > -1 && p.getYcor() < map[0].length && map[p.getXcor()][p.getYcor()].movable()) {
             //println(p + " " + p.get_dist());
             //println("STOP");            println("STOP");
             //            println("STOP");
@@ -202,7 +206,7 @@ public class Blinky extends Ghost {
     Position end = pman;
     int threshold = 0;
     while (frontier.size() != 0) {
-      if(threshold > 1000){
+      if (threshold > 1000) {
         return _pos;
       }
       Position prev = frontier.remove();

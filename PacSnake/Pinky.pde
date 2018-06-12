@@ -51,9 +51,14 @@ public class Pinky extends Ghost {
   public int getSpeed() {
     return speed;
   }
-
+  public void setVul() {
+    isVulnerable = true;
+  }
   public int getTime() {
     return secondsLeft;
+  }
+  public boolean isVul() {
+    return isVulnerable;
   }
   public void notVul() {
     isVulnerable = false;
@@ -107,7 +112,7 @@ public class Pinky extends Ghost {
           new Position(x, y+1, distance(x, y+1, pac.getPos())), 
           new Position(x, y-1, distance(x, y-1, pac.getPos()))};
         for (Position p : positions) {
-          if (map[p.getXcor()][p.getYcor()].movable()) {
+          if (p.getYcor() > -1 && p.getYcor() < map[0].length && map[p.getXcor()][p.getYcor()].movable()) {
             //println(p + " " + p.get_dist());
             //println("STOP");            println("STOP");
             //            println("STOP");
@@ -236,7 +241,7 @@ public class Pinky extends Ghost {
     Position end = pman;
     int threshold = 0;
     while (frontier.size() != 0) {
-      if(threshold > 1000){
+      if (threshold > 1000) {
         return _pos;
       }
       Position prev = frontier.remove();

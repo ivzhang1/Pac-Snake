@@ -37,7 +37,7 @@ public class Square{
   
   public void setEmpty(){
     if (isBlock){
-      throw new IllegalArgumentException(); //<>// //<>//
+      throw new IllegalArgumentException(); //<>//
     }
     contents = 1;
   }
