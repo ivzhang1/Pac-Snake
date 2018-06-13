@@ -1,5 +1,5 @@
 import java.util.*;
-import processing.sound.*;
+import ddf.minim.*;
 
 private boolean secretMode = true;
 
@@ -29,17 +29,17 @@ private PImage pwall;
 private PImage vulnerable;
 private PImage pLives;
 
-private SoundFile playing;
-private SoundFile waka;
-private SoundFile siren;
+private Minim playing;
+private AudioPlayer player;
 private int start = 0;
 
 public void setup() {
   size(560, 720);
   background(color(0, 0, 0));
   if (start == 0) {
-    playing = new SoundFile(this, sketchPath() + "/sounds/" + "opening.mp3");
-    playing.loop(0.5);
+    playing = new Minim(this);
+    player = playing.loadFile(sketchPath() + "/sounds/" + "opening.mp3");
+    player.loop();
     start++;
   }
 
@@ -107,19 +107,18 @@ public void draw() {
     if (main.isAlive()) { 
       int found = main.move();
       if (found == 100) {
-        SoundFile fruit = new SoundFile(this, sketchPath() + "/sounds/" + "fruit.mp3");
-        fruit.play(0.5);
+        AudioPlayer fruit = playing.loadFile(sketchPath() + "/sounds/" + "fruit.mp3");
+        fruit.play();
       }
       if (found > 100) {
-        SoundFile ghost = new SoundFile(this, sketchPath() + "/sounds/" + "ghost.mp3");
-        ghost.play(0.5);
+        AudioPlayer ghost = playing.loadFile(sketchPath() + "/sounds/" + "ghost.mp3");
+        ghost.play();
       }
     } else {
       livesLeft-=1;
       p_score = score.getValue();
-      SoundFile die = new SoundFile(this, sketchPath() + "/sounds/" + "die.mp3");
-      die.play(0.4);
-      //println(livesLeft);
+      AudioPlayer die = playing.loadFile(sketchPath() + "/sounds/" + "die.mp3");
+      die.play();
       setup();
     }
     drawEverything();
@@ -181,8 +180,8 @@ public void drawGhosts() {
 
 public void drawLives() {
   if (score.getValue() >= 10000 && !extraLife) {
-    SoundFile extra = new SoundFile(this, sketchPath() + "/sounds/" + "extra.mp3");
-    extra.play(0.3);
+    AudioPlayer extra = playing.loadFile(sketchPath() + "/sounds/" + "extra.mp3");
+    extra.play();
     livesLeft++;
     extraLife = true;
   }
@@ -256,9 +255,9 @@ public void mouseClicked() {
   }
   if (!isGameStarted) {
     isGameStarted = true;
-    playing.stop();
-    playing = new SoundFile(this, sketchPath() + "/sounds/" + "siren.mp3");
-    playing.loop(0.5);
+    player.pause();
+    player = playing.loadFile(sketchPath() + "/sounds/" + "siren.mp3");
+    player.loop();
   }
 }
 
