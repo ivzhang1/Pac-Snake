@@ -1,6 +1,8 @@
 import java.util.*;
 import processing.sound.*;
 
+private boolean secretMode = true;
+
 private int livesLeft = 3;
 private int countFruits;
 
@@ -61,6 +63,9 @@ public void setup() {
 
 public void setupPImages() {
   String addend = sketchPath() + "/sprites/";
+  if (secretMode) {
+    addend += "secret/";
+  }
   pman = loadImage(addend + main.getDirection() + "PMAN.png");
   blinky = loadImage(addend + "BLINKY.png");
   clyde = loadImage(addend + "CLYDE.png");
@@ -253,7 +258,7 @@ public void mouseClicked() {
     isGameStarted = true;
     playing.stop();
     playing = new SoundFile(this, sketchPath() + "/sounds/" + "siren.mp3");
-    playing.loop(0.7);
+    playing.loop(0.5);
   }
 }
 
@@ -277,5 +282,8 @@ public void keyPressed() {
     break;
   }
   String addend = sketchPath() + "/sprites/";
+  if (secretMode) {
+    addend += "secret/";
+  }
   pman = loadImage(addend + main.getDirection() + "PMAN.png");
 }  
