@@ -134,7 +134,7 @@ Goal: Guide Pacman around the maze and eat all the little white dots whilst avoi
   *Starring:
 	* Mr. K as Pac-Man
 	* Raccoon as Blinky
-	* Mr. DW as Blue Wall
+	* Mr. DW as Blue Wall    
 	* Ivan as Clyde
 	* Deli Hamburger as Fruit
 	* Krokodil as Inky
