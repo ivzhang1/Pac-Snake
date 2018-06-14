@@ -1,7 +1,7 @@
 import java.util.*;
 import ddf.minim.*;
 
-private boolean secretMode = true;
+private boolean secretMode = false;
 
 private int livesLeft = 3;
 private int countFruits;

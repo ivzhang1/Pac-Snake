@@ -128,6 +128,20 @@ Goal: Guide Pacman around the maze and eat all the little white dots whilst avoi
         * Pacman can be eaten by a ghost even when he has triggered their vulnerable mode by eating a big pellet, because their vulnerable status is stripped after the eaten ghosts respawn in the ghost house. 
 
 
+## Top Secret Mode for Top Secret People
+
+* Switching the `secretMode` boolean at the top of the code will start a top secret game.
+  *Starring:
+	* Mr. K as Pac-Man
+	* Raccoon as Blinky
+	* Mr. DW as Blue Wall
+	* Ivan as Clyde
+	* Deli Hamburger as Fruit
+	* Krokodil as Inky
+	* Pellet as Pellet
+	* Crystal as Pinky
+	* Pink Wall as Pink Wall
+	* George as Scared Ghost
 
 
 
