@@ -131,7 +131,7 @@ Goal: Guide Pacman around the maze and eat all the little white dots whilst avoi
 ## Top Secret Mode for Top Secret People
 
 * Switching the `secretMode` boolean at the top of the code will start a top secret game.
-  *Starring:
+  * Starring:
 	* Mr. K as Pac-Man
 	* Raccoon as Blinky
 	* Mr. DW as Blue Wall    
